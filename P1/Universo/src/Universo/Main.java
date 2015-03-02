@@ -14,12 +14,6 @@ import javax.media.j3d.Canvas3D;
  */
 public class Main {
     public static void main(String[] args){
-         // Se obtiene la configuración gráfica del sistema y se crea el Canvas3D que va a mostrar la imagen
-        Canvas3D canvas = new Canvas3D (SimpleUniverse.getPreferredConfiguration());
-        // Se le da el tamaño deseado
-        canvas.setSize(800, 600);
-
-        // Se crea el Universo con dicho Canvas3D
-        Universo universo = new Universo (canvas);
+        
     }
 }

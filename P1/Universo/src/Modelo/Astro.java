@@ -5,6 +5,8 @@
  */
 package Modelo;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author MiKe
@@ -15,6 +17,9 @@ public class Astro {
     private float velRotacion;
     private float distancia;
     private boolean movimiento;
+    private ArrayList<Anillo> anillos; //Lo he puesto como arrayList porq en el diagrama aparece *
+    private ArrayList<Astro> satelites;
+    private ArrayList<Camara> camara; // Lo he puesto como arrayList porq en el diagrama aparece *
     
     public Astro(float dia,float velT,float velR,float dist,boolean mov){
         diametro=dia;
@@ -22,6 +27,13 @@ public class Astro {
         velRotacion=velR;
         distancia=dist;
         movimiento=mov;
+        
+                 
+        
+        //Añadir al contructor ArrayList con satelites
+        //Añadir metodo para añadir satelites al ArrayList de satelites.
+        //Añadir metodo para añadir anillos a saturno
+        
     }
     
     /**

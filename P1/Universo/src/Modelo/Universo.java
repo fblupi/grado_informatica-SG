@@ -26,6 +26,7 @@ import javax.vecmath.Point3d;
  * @author MiKe
  */
 public class Universo extends JFrame {
+    
     public BranchGroup crearGrafoEscena(){
         BranchGroup objRoot = new BranchGroup();
 
