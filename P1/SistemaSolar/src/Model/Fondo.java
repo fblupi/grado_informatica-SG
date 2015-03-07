@@ -12,7 +12,10 @@ import javax.media.j3d.Texture;
 import javax.vecmath.Point3d;
 
 class Fondo extends BranchGroup {
-    public Fondo () {
+    private String textura;
+    public Fondo (String textura) {
+        
+        this.textura = textura;
     
         // Se crea el objeto para el fondo y 
         //     se le asigna un área de influencia
@@ -21,7 +24,7 @@ class Fondo extends BranchGroup {
     
         // Se crea un aspecto basado en la textura a mostrar
         Appearance app = new Appearance ();
-        Texture texture = new TextureLoader ("imgs/back.jpg", null).getTexture();
+        Texture texture = new TextureLoader (this.textura, null).getTexture();
         app.setTexture (texture);
     
         // Se hace la esfera con un determinado radio indicándole:

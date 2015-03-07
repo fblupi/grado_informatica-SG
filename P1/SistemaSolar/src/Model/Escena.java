@@ -5,7 +5,7 @@ import javax.media.j3d.BranchGroup;
 
 class Escena extends BranchGroup {  
     public Escena () { 
-        Sol sol = new Sol(10f, 0l, 5400l, 0f, "imgs/sol.jpg");
+        Sol sol = new Sol(10f, 5400l, "imgs/sol.jpg");
         Astro mercurio =  new Astro(0.49f, 17600l, 11740l, 7f, "imgs/mercurio.jpg");
         Astro venus =  new Astro(1.21f, 44949l, 48600l, 9.5f, "imgs/venus.jpg");
         Astro tierra = new Astro(1.27f, 73050l, 200l, 12.5f, "imgs/tierra.jpg");
@@ -50,8 +50,8 @@ class Escena extends BranchGroup {
         sol.addSatelite(neptuno);
         
         Nave nave = new Nave();
-        this.addChild(nave.dibujar());
         
+        this.addChild(nave.dibujar());
         this.addChild(sol.dibujar());
     }
 }

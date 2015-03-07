@@ -31,7 +31,7 @@ public class Universo {
         BranchGroup root = new BranchGroup();
 
         // Se crea y se añade el fondo
-        background = new Fondo ();
+        background = new Fondo ("imgs/back.jpg");
         root.addChild(background);
 
         // Se crea y se añade la escena al universo
