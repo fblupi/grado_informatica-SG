@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Model;
 
 import com.sun.j3d.utils.geometry.Primitive;
@@ -15,37 +11,33 @@ import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Texture;
 import javax.vecmath.Point3d;
 
-/**
- *
- * @author fvelasco
- */
 class Fondo extends BranchGroup {
-  Fondo () {
+    public Fondo () {
     
-    // Se crea el objeto para el fondo y 
-    //     se le asigna un área de influencia
-    Background background = new Background ();
-    background.setApplicationBounds (new BoundingSphere (new Point3d (0.0, 0.0, 0.0), 100.0));
+        // Se crea el objeto para el fondo y 
+        //     se le asigna un área de influencia
+        Background background = new Background ();
+        background.setApplicationBounds (new BoundingSphere (new Point3d (0.0, 0.0, 0.0), 100.0));
     
-    // Se crea un aspecto basado en la textura a mostrar
-    Appearance app = new Appearance ();
-    Texture texture = new TextureLoader ("imgs/back.jpg", null).getTexture();
-    app.setTexture (texture);
+        // Se crea un aspecto basado en la textura a mostrar
+        Appearance app = new Appearance ();
+        Texture texture = new TextureLoader ("imgs/back.jpg", null).getTexture();
+        app.setTexture (texture);
     
-    // Se hace la esfera con un determinado radio indicándole:
-    //    - Que genere coordenadas de textura
-    //    - Que genere las normales hacia adentro
-    //    - Que tenga el aspecto creado
-    Primitive sphere = new Sphere (1.0f, Primitive.GENERATE_TEXTURE_COORDS | Primitive.GENERATE_NORMALS_INWARD, app);
+        // Se hace la esfera con un determinado radio indicándole:
+        //    - Que genere coordenadas de textura
+        //    - Que genere las normales hacia adentro
+        //    - Que tenga el aspecto creado
+        Primitive sphere = new Sphere (1.0f, Primitive.GENERATE_TEXTURE_COORDS | Primitive.GENERATE_NORMALS_INWARD, app);
     
-    // Se crea la rama para la geometría del fondo, 
-    BranchGroup bgGeometry = new BranchGroup ();
-    // Se le añade la esfera
-    bgGeometry.addChild (sphere);
-    // Y se establece como geometría del objeto background
-    background.setGeometry (bgGeometry);
+        // Se crea la rama para la geometría del fondo, 
+        BranchGroup bgGeometry = new BranchGroup ();
+        // Se le añade la esfera
+        bgGeometry.addChild (sphere);
+        // Y se establece como geometría del objeto background
+        background.setGeometry (bgGeometry);
     
-    // Finalmente, se cuelga el fondo creado
-    this.addChild (background);  
-  }
+        // Finalmente, se cuelga el fondo creado
+        this.addChild (background);  
+    }
 }

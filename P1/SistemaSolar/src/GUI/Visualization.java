@@ -8,10 +8,6 @@ import java.awt.event.WindowEvent;
 import javax.media.j3d.Canvas3D;
 import javax.swing.JDialog;
 
-/**
- *
- * @author fvelasco
- */
 public class Visualization extends JDialog {
   private ControlWindow controlWindow;
 

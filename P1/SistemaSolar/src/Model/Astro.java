@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Model;
 
 import com.sun.j3d.utils.geometry.Primitive;
@@ -37,12 +33,12 @@ public class Astro {
     private RotationInterpolator rotator; // El objeto que controla la rotación continua de la figura
     private RotationInterpolator rotatorAround;
     
-    public Astro(float diametro, long velTraslacion, long velRotacion, float distancia, boolean movimiento, String textura) {
+    public Astro(float diametro, long velTraslacion, long velRotacion, float distancia, String textura) {
         this.diametro = diametro;
         this.velTraslacion = velTraslacion;
         this.velRotacion = velRotacion;
         this.distancia = distancia;
-        this.movimiento = movimiento;
+        this.movimiento = true;
         this.textura = textura;
         satelites = new ArrayList();
     }
@@ -53,6 +49,10 @@ public class Astro {
     
     public void removeSatelite(Astro astro) {
         satelites.remove(astro);
+    }
+    
+    public void setMovimiento(boolean movimiento) {
+        this.movimiento = movimiento;
     }
     
     public BranchGroup dibujar() {

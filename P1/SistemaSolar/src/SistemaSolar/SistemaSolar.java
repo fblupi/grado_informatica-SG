@@ -6,10 +6,6 @@ import Model.Universo;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 import javax.media.j3d.Canvas3D;
 
-/**
- *
- * @author fvelasco
- */
 public class SistemaSolar {
 
   public static void main(String[] args) {
