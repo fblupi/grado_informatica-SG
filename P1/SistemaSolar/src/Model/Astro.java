@@ -9,7 +9,6 @@ import javax.media.j3d.Alpha;
 import javax.media.j3d.Appearance;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
-import javax.media.j3d.Group;
 import javax.media.j3d.RotationInterpolator;
 import javax.media.j3d.Texture;
 import javax.media.j3d.Transform3D;
