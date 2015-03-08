@@ -24,7 +24,8 @@ public class Astro {
     private float distancia;
     private boolean movimiento;
     private String textura;
-    private ArrayList<Astro> satelites;
+    private ArrayList<Astro> satelites;    
+    private ArrayList<Anillo> anillos;
     private RotationInterpolator rotator; // El objeto que controla la rotación continua de la figura
     private RotationInterpolator rotatorAround;
     
@@ -36,6 +37,7 @@ public class Astro {
         this.movimiento = true;
         this.textura = textura;
         satelites = new ArrayList();
+        anillos = new ArrayList();
     }
     
     public void addSatelite(Astro astro) {
@@ -44,6 +46,14 @@ public class Astro {
     
     public void removeSatelite(Astro astro) {
         satelites.remove(astro);
+    }
+    
+    public void addAnillo(Anillo anillo) {
+        anillos.add(anillo);
+    }
+    
+    public void removeAnillo(Anillo anillo) {
+        anillos.remove(anillo);
     }
     
     public void setMovimiento(boolean movimiento) {
@@ -62,6 +72,11 @@ public class Astro {
         for(Astro astro : satelites) {
             BranchGroup bgSatelite = astro.dibujar();
             translation.addChild(bgSatelite);
+        }
+        
+        for(Anillo anillo : anillos) {
+            BranchGroup bgAnillo = anillo.dibujar();
+            translation.addChild(bgAnillo);
         }
         
         TransformGroup rotation = rotar(); // Se crea la transformación para la rotación

@@ -40,6 +40,9 @@ class Escena extends BranchGroup {
         neptuno.addSatelite(triton);
         sol.addSatelite(mercurio); sol.addSatelite(venus); sol.addSatelite(tierra); sol.addSatelite(marte); sol.addSatelite(jupiter); sol.addSatelite(saturno); sol.addSatelite(urano); sol.addSatelite(neptuno);
         
+        Anillo a = new Anillo(2.1f, 4f, 50000l, "imgs/anillo.jpg");
+        saturno.addAnillo(a);
+        
         // Colgamos del BranchGroup escena la nave y los planetas
         this.addChild(nave.dibujar());
         this.addChild(sol.dibujar()); // recursivamente añade el resto de planetas
