@@ -14,11 +14,6 @@ import javax.media.j3d.View;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-/**
- *
- * @author fblupi
- * @author mglmx
- */
 public class Universo {
     // Atributos de relación
     private Fondo background;

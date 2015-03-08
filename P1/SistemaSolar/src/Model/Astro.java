@@ -17,10 +17,6 @@ import javax.media.j3d.TransformGroup;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3f;
 
-/**
- *
- * @author FranciscoJavier
- */
 public class Astro {
     
     private float diametro;
@@ -56,97 +52,77 @@ public class Astro {
     }
     
     public BranchGroup dibujar() {
-        // Se crea la rama desde la que cuelga todo
-        BranchGroup bg = new BranchGroup ();
+        BranchGroup bg = new BranchGroup (); // Se crea la rama desde la que cuelga todo
         
-        // Se crea la transformación para la rotación alrededor
-        TransformGroup rotationAround = rotarAlrededor();
+        TransformGroup rotationAround = rotarAlrededor(); // Se crea la transformación para la rotación alrededor del sol o planeta
         
-        // Se crea la transformación para la traslacion
-        TransformGroup translation = trasladar();
+        TransformGroup translation = trasladar(); // Se crea la transformación para la traslacion
         
+        // Se recorren todos los satelites y colgamos del nodo al que se le 
+        // aplica la rotación alrededor y la traslación
         for(Astro astro : satelites) {
             BranchGroup bgSatelite = astro.dibujar();
             translation.addChild(bgSatelite);
         }
         
-        // Se crea la transformación para la rotación
-        TransformGroup rotation = rotar();
+        TransformGroup rotation = rotar(); // Se crea la transformación para la rotación
         
-        // Se crea la rama desde la que cuelga todo
-        BranchGroup figure = new BranchGroup ();
+        BranchGroup figure = new BranchGroup (); // Se crea la rama desde la que cuelga la geometría y apariencia del astro
 
-        // Se le dan permisos para poder intercambiar las figuras
-        figure.setCapability(Group.ALLOW_CHILDREN_EXTEND);
-        figure.setCapability(Group.ALLOW_CHILDREN_WRITE);
-
-        // Y le ponemos una figura
-        Appearance ap = new Appearance();
-        Texture aTexture = new TextureLoader (textura, null).getTexture();
-        ap.setTexture (aTexture);
-        figure.addChild (new Sphere (diametro/2, Primitive.GENERATE_NORMALS | Primitive.GENERATE_TEXTURE_COORDS, 64, ap));
+        Appearance ap = new Appearance(); // Se crea una nueva apariencia
+        Texture aTexture = new TextureLoader (textura, null).getTexture(); // Se carga la textura
+        ap.setTexture (aTexture); // Se asigna la textura
         
-        rotation.addChild(figure);
+        figure.addChild (new Sphere (diametro/2, Primitive.GENERATE_NORMALS | Primitive.GENERATE_TEXTURE_COORDS, 64, ap)); // se crea la figura y se cuelga del nodo figura 
         
-        translation.addChild(rotation);
-        
-        rotationAround.addChild(translation);
-        
-        bg.addChild(rotationAround);
+        rotation.addChild(figure); // la figura se cuelga de la rotación
+        translation.addChild(rotation); // la rotación se cuelga de la traslación
+        rotationAround.addChild(translation); // la traslación se cuelga de la rotación alrededor
+        bg.addChild(rotationAround); // la rotación alrededor se cuelga del BranchGroup del planeta
 
         return bg;
     }
     
     private TransformGroup rotar() {
-        // Se crea el grupo que contendrá la transformación de rotación
-        // Todo lo que cuelgue de él rotará
-        TransformGroup transform = new TransformGroup ();
-        // Se le permite que se cambie en tiempo de ejecución
-        transform.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-        // Se crea la matriz de rotación
-        Transform3D yAxis = new Transform3D ();
-        // Se crea un interpolador, un valor numérico que se ira modificando en tiempo de ejecución
-        Alpha value = new Alpha (-1, Alpha.INCREASING_ENABLE, 0, 0, velRotacion, 0, 0, 0, 0, 0);
-        // Se crea el interpolador de rotación, las figuras iran rotando
-        rotator = new RotationInterpolator (value, transform, yAxis, 0.0f, (float) Math.PI*2.0f);
-        // Se le pone el entorno de activación y se activa
-        rotator.setSchedulingBounds(new BoundingSphere (new Point3d (0.0, 0.0, 0.0 ), 100.0));
-        rotator.setEnable(true);
-        // Se cuelga del grupo de transformación y este se devuelve
-        transform.addChild(rotator);
+        TransformGroup transform = new TransformGroup (); // Se crea el nodo de transformación: Todo lo que cuelgue de él rotará
+        transform.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE); // Se le permite que se cambie en tiempo de ejecución
+         
+        Transform3D t3d = new Transform3D (); // Se crea la matriz de rotación
+        
+        Alpha value = new Alpha (-1, Alpha.INCREASING_ENABLE, 0, 0, velRotacion, 0, 0, 0, 0, 0); // Valor numérico que se ira modificando en tiempo de ejecución
+        rotator = new RotationInterpolator (value, transform, t3d, 0.0f, (float) Math.PI*2.0f); // Se crea el interpolador de rotación, las figuras iran rotando
+        rotator.setSchedulingBounds(new BoundingSphere (new Point3d (0.0, 0.0, 0.0 ), 100.0)); // Se le pone el entorno de activación
+        rotator.setEnable(true); // Se activa
+        
+        transform.addChild(rotator); // Se cuelga del grupo de transformación
+        
         return transform;
     }
     
     private TransformGroup rotarAlrededor() {
-        // Se crea el grupo que contendrá la transformación de rotación
-        // Todo lo que cuelgue de él rotará
-        TransformGroup transform = new TransformGroup ();
-        // Se le permite que se cambie en tiempo de ejecución
-        transform.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-        // Se crea la matriz de rotación
-        Transform3D yAxis = new Transform3D ();
-        // Se crea un interpolador, un valor numérico que se ira modificando en tiempo de ejecución
-        Alpha value = new Alpha (-1, Alpha.INCREASING_ENABLE, 0, 0, velTraslacion, 0, 0, 0, 0, 0);
-        // Se crea el interpolador de rotación, las figuras iran rotando
-        rotatorAround = new RotationInterpolator (value, transform, yAxis, 0.0f, (float) Math.PI*2.0f);
-        // Se le pone el entorno de activación y se activa
-        rotatorAround.setSchedulingBounds(new BoundingSphere (new Point3d (0.0, 0.0, 0.0 ), 100.0));
-        rotatorAround.setEnable(true);
-        // Se cuelga del grupo de transformación y este se devuelve
-        transform.addChild(rotatorAround);
+        TransformGroup transform = new TransformGroup (); // Se crea el nodo de transformación: Todo lo que cuelgue de él rotará
+        transform.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE); // Se le permite que se cambie en tiempo de ejecución
+        
+        
+        Transform3D t3d = new Transform3D (); // Se crea la matriz de rotación
+        
+        Alpha value = new Alpha (-1, Alpha.INCREASING_ENABLE, 0, 0, velTraslacion, 0, 0, 0, 0, 0); // Valor numérico que se ira modificando en tiempo de ejecución
+        rotatorAround = new RotationInterpolator (value, transform, t3d, 0.0f, (float) Math.PI*2.0f); // Se crea el interpolador de rotación, las figuras iran rotando
+        rotatorAround.setSchedulingBounds(new BoundingSphere (new Point3d (0.0, 0.0, 0.0 ), 100.0)); // Se le pone el entorno de activación
+        rotatorAround.setEnable(true); // Se activa
+        
+        transform.addChild(rotatorAround); // Se cuelga del grupo de transformación
+        
         return transform;
     }
 
     private TransformGroup trasladar() {
-        // Se crea el grupo que contendrá la transformación de rotación
-        // Todo lo que cuelgue de él rotará
-        TransformGroup transform = new TransformGroup ();
-        // Se le permite que se cambie en tiempo de ejecución
-        transform.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-        // Se crea la matriz de rotación
-        Transform3D translation = new Transform3D ();
-        translation.setTranslation(new Vector3f(distancia,0,0) );
-        transform.setTransform(translation);
+        TransformGroup transform = new TransformGroup (); // Se crea el nodo de transformación de traslación en el eje x
+        
+        Transform3D translation = new Transform3D (); // Se crea la matriz de rotación
+        translation.setTranslation(new Vector3f(distancia,0,0) ); // Se define la traslación
+        transform.setTransform(translation); // Se aplica la traslación al nodo de transformación
+        
         return transform;
     }
 }

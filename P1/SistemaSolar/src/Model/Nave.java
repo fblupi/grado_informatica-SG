@@ -18,7 +18,8 @@ public class Nave {
     private ArrayList<Vector3f> angulos;
     
     public Nave() {
-        
+        posiciones = new ArrayList();
+        angulos = new ArrayList();
     }
     
     public void addPunto(Vector3f posicion, Vector3f angulo) {
