@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
-import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 
 public class Nave {
@@ -33,15 +32,16 @@ public class Nave {
     }
     
     public BranchGroup dibujar() {
-        BranchGroup bg = new BranchGroup();
+        BranchGroup bg = new BranchGroup();  // Se crea la rama desde la que cuelga todo
         
-        TransformGroup transform = new TransformGroup ();
-        transform.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-        Transform3D t3d = new Transform3D ();
-        t3d.setScale(new Vector3d(100,100,100));
-        transform.setTransform(t3d);
+        TransformGroup transform = new TransformGroup (); // Se crea el nodo de transformación de traslación
         
-        transform.addChild(importarModelo());
+        Transform3D t3d = new Transform3D (); // Se crea la matriz de rotación
+        t3d.setTranslation(new Vector3f(10,10,10) );  // Se define la traslación
+        transform.setTransform(t3d); // Se aplica la traslación al nodo de transformación
+        
+        transform.addChild(importarModelo()); // la figura se cuelga de la transformación
+        bg.addChild(transform); // la transformación se cuelga del nodo devuelto
         
         return bg;
     }
@@ -51,7 +51,7 @@ public class Nave {
         Scene modelo = null; 
         ObjectFile archivo = new ObjectFile (ObjectFile.RESIZE | ObjectFile.STRIPIFY | ObjectFile.TRIANGULATE );
         try {
-            modelo = archivo.load ("models/nave/naveEspacial.obj");
+            modelo = archivo.load ("models/naveEspacial/naveEspacial.obj");
         } catch (FileNotFoundException | ParsingErrorException | IncorrectFormatException e) {
             System.err.println (e);
             System.exit(1);

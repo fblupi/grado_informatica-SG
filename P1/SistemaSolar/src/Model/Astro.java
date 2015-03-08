@@ -118,9 +118,9 @@ public class Astro {
     private TransformGroup trasladar() {
         TransformGroup transform = new TransformGroup (); // Se crea el nodo de transformación de traslación en el eje x
         
-        Transform3D translation = new Transform3D (); // Se crea la matriz de rotación
-        translation.setTranslation(new Vector3f(distancia,0,0) ); // Se define la traslación
-        transform.setTransform(translation); // Se aplica la traslación al nodo de transformación
+        Transform3D t3d = new Transform3D (); // Se crea la matriz de rotación
+        t3d.setTranslation(new Vector3f(distancia,0,0) ); // Se define la traslación
+        transform.setTransform(t3d); // Se aplica la traslación al nodo de transformación
         
         return transform;
     }
