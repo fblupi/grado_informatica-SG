@@ -11,7 +11,7 @@ class Escena extends BranchGroup {
         // Creación planetas
         Sol sol = new Sol(10f, 5000l, "imgs/sol.jpg");
         Astro mercurio =  new Astro(0.49f, 18000l, 10000l, 7f, "imgs/mercurio.jpg");
-        Astro venus =  new Astro(1.21f, 25000l, 30000l, 9.5f, "imgs/venus.jpg");
+        Astro venus =  new Astro(1.21f, 25000l, -100000l, 9.5f, "imgs/venus.jpg");
         Astro tierra = new Astro(1.27f, 60000l, 3000l, 12.5f, "imgs/tierra.jpg");
         Astro luna = new Astro(0.34f, 9000l, 9000l, 1f, "imgs/luna.jpg");
         Astro marte = new Astro(0.68f, 75000l, 5000l, 15f, "imgs/marte.jpg");
@@ -30,7 +30,7 @@ class Escena extends BranchGroup {
         Astro titania = new Astro(0.16f, 4000l,  4000l, 2.3f, "imgs/titania.jpg");
         Astro oberon = new Astro(0.15f, 5000l, 5000l, 2.76f, "imgs/oberon.jpg");
         Astro neptuno = new Astro(2.5f, 200000l, 2900l, 51f, "imgs/neptuno.jpg");
-        Astro triton = new Astro(0.27f, 3600l, 3600l, 1.6f, "imgs/triton.jpg");
+        Astro triton = new Astro(0.27f, -36000l, -36000l, 1.6f, "imgs/triton.jpg");
         
         // Asignación satélites
         tierra.addSatelite(luna);
