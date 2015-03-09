@@ -6,7 +6,7 @@ import javax.media.j3d.BranchGroup;
 class Escena extends BranchGroup {  
     public Escena () { 
         // Creación nave
-        Nave nave = new Nave();
+        Nave nave = new Nave("models/E-TIE-I/E-TIE-I.obj");
         
         // Creación planetas
         Sol sol = new Sol(10f, 5000l, "imgs/sol.jpg");

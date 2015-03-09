@@ -5,6 +5,7 @@ import com.sun.j3d.loaders.IncorrectFormatException;
 import com.sun.j3d.loaders.ParsingErrorException;
 import com.sun.j3d.loaders.Scene;
 import com.sun.j3d.loaders.objectfile.ObjectFile;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import javax.media.j3d.BranchGroup;
@@ -13,10 +14,12 @@ import javax.media.j3d.TransformGroup;
 import javax.vecmath.Vector3f;
 
 public class Nave {
+    String obj;
     private ArrayList<Vector3f> posiciones;
     private ArrayList<Vector3f> angulos;
     
-    public Nave() {
+    public Nave(String obj) {
+        this.obj = obj;
         posiciones = new ArrayList();
         angulos = new ArrayList();
     }
@@ -47,11 +50,16 @@ public class Nave {
     }
     
     private BranchGroup importarModelo() {
+        File file = new File(obj);
+        String dir = file.getParentFile().getAbsolutePath();
+	String path = file.getAbsolutePath();
+        
         BranchGroup bg = new BranchGroup();
-        Scene modelo = null; 
+        Scene modelo = null;
         ObjectFile archivo = new ObjectFile (ObjectFile.RESIZE | ObjectFile.STRIPIFY | ObjectFile.TRIANGULATE );
         try {
-            modelo = archivo.load ("models/naveEspacial/naveEspacial.obj");
+            archivo.setBasePath(dir);
+            modelo = archivo.load (path);
         } catch (FileNotFoundException | ParsingErrorException | IncorrectFormatException e) {
             System.err.println (e);
             System.exit(1);
