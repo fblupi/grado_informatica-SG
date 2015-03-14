@@ -9,7 +9,6 @@ import javax.media.j3d.GeometryArray;
 import javax.media.j3d.Shape3D;
 import javax.media.j3d.Transform3D;
 import javax.vecmath.Point3f;
-import javax.vecmath.TexCoord2f;
 
 public class Disc extends Shape3D {
     public Disc(float radioInterno, float radioExterno, int res, Appearance app) {
