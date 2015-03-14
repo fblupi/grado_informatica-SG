@@ -1,8 +1,6 @@
 
 package Model;
 
-import com.sun.j3d.utils.geometry.Cone;
-import com.sun.j3d.utils.geometry.Primitive;
 import com.sun.j3d.utils.image.TextureLoader;
 import javax.media.j3d.Alpha;
 import javax.media.j3d.Appearance;
