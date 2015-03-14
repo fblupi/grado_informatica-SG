@@ -12,6 +12,7 @@ import javax.media.j3d.RotationInterpolator;
 import javax.media.j3d.Texture;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
+import javax.vecmath.AxisAngle4f;
 import javax.vecmath.Point3d;
 
 public class Anillo {
@@ -40,8 +41,14 @@ public class Anillo {
         Texture aTexture = new TextureLoader (textura, null).getTexture(); // Se carga la textura
         ap.setTexture (aTexture); // Se asigna la textura
         
-        //figure.addChild (new Sphere (diametro/2, Primitive.GENERATE_NORMALS | Primitive.GENERATE_TEXTURE_COORDS, 64, ap)); // se crea la figura y se cuelga del nodo figura 
-        figure.addChild( new Cone(radioExterno, 0.0005f, Primitive.GENERATE_NORMALS | Primitive.GENERATE_TEXTURE_COORDS, 64, 64, ap));
+        figure.addChild( new Disc(radioInterno,radioExterno,64,ap) ); // Cara superior
+        
+        TransformGroup t = new TransformGroup(); // Grupo de transformación para darle la vuelta al disco
+        Transform3D t3d = new Transform3D(); // Se crea la matriz de rotación
+        t3d.setRotation(new AxisAngle4f(1f,0f,0f,(float)Math.PI)); // Se rota 180 grados
+        t.setTransform(t3d); // Se aplica al nodo de transformación
+        t.addChild( new Disc(radioInterno,radioExterno,64,ap) ); // Cara inferior
+        figure.addChild(t); // Se engancha el nodo con el disco invertido
         
         rotation.addChild(figure); // la figura se cuelga de la rotación
         bg.addChild(rotation); // la rotación se cuelga del BranchGroup del planeta
