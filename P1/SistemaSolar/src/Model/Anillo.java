@@ -39,13 +39,13 @@ public class Anillo {
         Texture aTexture = new TextureLoader (textura, null).getTexture(); // Se carga la textura
         ap.setTexture (aTexture); // Se asigna la textura
         
-        figure.addChild( new Disc(radioInterno,radioExterno,64,ap) ); // Cara superior
+        figure.addChild( new Disco(radioInterno,radioExterno,64,ap) ); // Cara superior
         
         TransformGroup t = new TransformGroup(); // Grupo de transformación para darle la vuelta al disco
         Transform3D t3d = new Transform3D(); // Se crea la matriz de rotación
         t3d.setRotation(new AxisAngle4f(1f,0f,0f,(float)Math.PI)); // Se rota 180 grados
         t.setTransform(t3d); // Se aplica al nodo de transformación
-        t.addChild( new Disc(radioInterno,radioExterno,64,ap) ); // Cara inferior
+        t.addChild( new Disco(radioInterno,radioExterno,64,ap) ); // Cara inferior
         figure.addChild(t); // Se engancha el nodo con el disco invertido
         
         rotation.addChild(figure); // la figura se cuelga de la rotación
