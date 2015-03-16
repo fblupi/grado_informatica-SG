@@ -6,11 +6,14 @@ import javax.media.j3d.Alpha;
 import javax.media.j3d.Appearance;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
+import javax.media.j3d.Material;
 import javax.media.j3d.RotationInterpolator;
 import javax.media.j3d.Texture;
+import javax.media.j3d.TextureAttributes;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.AxisAngle4f;
+import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 
 public class Anillo {
@@ -18,6 +21,7 @@ public class Anillo {
     private float radioInterno;
     private float radioExterno;
     private long velRotacion;
+    private Material material;
     private String textura;
     private RotationInterpolator rotator; // El objeto que controla la rotación continua de la figura
     
@@ -26,6 +30,13 @@ public class Anillo {
         this.radioExterno = radioExterno;
         this.velRotacion = velRotacion;
         this.textura = textura;
+        material = new Material(
+        	new Color3f (0.5f, 0.5f, 0.5f), // Color ambiental
+                new Color3f (0.5f, 0.5f, 0.5f), // Color emisivo
+                new Color3f (0.5f, 0.5f, 0.5f), // Color difuso
+                new Color3f (0.6f, 0.6f, 0.6f), // Color especular
+                10.0f                           // Brillo
+        );
     }
     
     public BranchGroup dibujar() {
@@ -36,8 +47,12 @@ public class Anillo {
         BranchGroup figure = new BranchGroup (); // Se crea la rama desde la que cuelga la geometría y apariencia del astro
 
         Appearance ap = new Appearance(); // Se crea una nueva apariencia
+        TextureAttributes texAttr = new TextureAttributes(); 
+        texAttr.setTextureMode(TextureAttributes.MODULATE);
         Texture aTexture = new TextureLoader (textura, null).getTexture(); // Se carga la textura
         ap.setTexture (aTexture); // Se asigna la textura
+        ap.setTextureAttributes(texAttr); 
+        ap.setMaterial(material);
         
         figure.addChild( new Disco(radioInterno,radioExterno,64,ap) ); // Cara superior
         
