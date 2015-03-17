@@ -21,22 +21,26 @@ public class Anillo {
     private float radioInterno;
     private float radioExterno;
     private long velRotacion;
+    private String texturePath;
+    private Texture texture;
+    private TextureAttributes textureAttributes;
     private Material material;
-    private String textura;
+    private Appearance ap;
     private RotationInterpolator rotator; // El objeto que controla la rotación continua de la figura
     
-    public Anillo(float radioInterno, float radioExterno, long velRotacion, String textura) {
+    public Anillo(float radioInterno, float radioExterno, long velRotacion, String texturePath, Color3f ambiental, Color3f emisivo, Color3f difuso, Color3f especular, float brillo) {
         this.radioInterno = radioInterno;
         this.radioExterno = radioExterno;
         this.velRotacion = velRotacion;
-        this.textura = textura;
-        material = new Material(
-        	new Color3f (0.5f, 0.5f, 0.5f), // Color ambiental
-                new Color3f (0.5f, 0.5f, 0.5f), // Color emisivo
-                new Color3f (0.5f, 0.5f, 0.5f), // Color difuso
-                new Color3f (0.6f, 0.6f, 0.6f), // Color especular
-                10.0f                           // Brillo
-        );
+        this.texturePath = texturePath;
+        texture = new TextureLoader (texturePath, null).getTexture();
+        textureAttributes = new TextureAttributes(); 
+        textureAttributes.setTextureMode(TextureAttributes.MODULATE);
+        material = new Material(ambiental,emisivo,difuso, especular,brillo);
+        ap = new Appearance();
+        ap.setTexture(texture);
+        ap.setTextureAttributes(textureAttributes);
+        ap.setMaterial(material);
     }
     
     public BranchGroup dibujar() {
@@ -46,14 +50,6 @@ public class Anillo {
         
         BranchGroup figure = new BranchGroup (); // Se crea la rama desde la que cuelga la geometría y apariencia del astro
 
-        Appearance ap = new Appearance(); // Se crea una nueva apariencia
-        TextureAttributes texAttr = new TextureAttributes(); 
-        texAttr.setTextureMode(TextureAttributes.MODULATE);
-        Texture aTexture = new TextureLoader (textura, null).getTexture(); // Se carga la textura
-        ap.setTexture (aTexture); // Se asigna la textura
-        ap.setTextureAttributes(texAttr); 
-        ap.setMaterial(material);
-        
         figure.addChild( new Disco(radioInterno,radioExterno,64,ap) ); // Cara superior
         
         TransformGroup t = new TransformGroup(); // Grupo de transformación para darle la vuelta al disco

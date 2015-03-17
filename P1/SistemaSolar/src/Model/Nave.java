@@ -59,7 +59,7 @@ public class Nave {
         ObjectFile archivo = new ObjectFile (ObjectFile.RESIZE | ObjectFile.STRIPIFY | ObjectFile.TRIANGULATE );
         try {
             archivo.setBasePath(dir);
-            modelo = archivo.load (path);
+            modelo = archivo.load(path);
         } catch (FileNotFoundException | ParsingErrorException | IncorrectFormatException e) {
             System.err.println (e);
             System.exit(1);

@@ -21,34 +21,38 @@ import javax.vecmath.Vector3f;
 
 public class Astro {
     
-    private float diametro;
-    private long velTraslacion;
-    private long velRotacion;
-    private float distancia;
-    private boolean movimiento;
-    private String textura;
-    private Material material;
-    private ArrayList<Astro> satelites;    
-    private ArrayList<Anillo> anillos;
-    private RotationInterpolator rotator; // El objeto que controla la rotación continua de la figura
-    private RotationInterpolator rotatorAround;
+    protected float diametro;
+    protected long velTraslacion;
+    protected long velRotacion;
+    protected float distancia;
+    protected boolean movimiento;
+    protected String texturePath;
+    protected Texture texture;
+    protected TextureAttributes textureAttributes;
+    protected Material material;
+    protected Appearance ap;
+    protected ArrayList<Astro> satelites;    
+    protected ArrayList<Anillo> anillos;
+    protected RotationInterpolator rotator; // El objeto que controla la rotación continua de la figura
+    protected RotationInterpolator rotatorAround;
     
-    public Astro(float diametro, long velTraslacion, long velRotacion, float distancia, String textura) {
+    public Astro(float diametro, long velTraslacion, long velRotacion, float distancia, String texturePath, Color3f ambiental, Color3f emisivo, Color3f difuso, Color3f especular, float brillo) {
         this.diametro = diametro;
         this.velTraslacion = velTraslacion;
         this.velRotacion = velRotacion;
         this.distancia = distancia;
         this.movimiento = true;
-        this.textura = textura;
+        this.texturePath = texturePath;
         satelites = new ArrayList();
         anillos = new ArrayList();
-        material = new Material(
-        	new Color3f (0.5f, 0.5f, 0.5f), // Color ambiental
-                new Color3f (0.5f, 0.5f, 0.5f), // Color emisivo
-                new Color3f (0.5f, 0.5f, 0.5f), // Color difuso
-                new Color3f (0.6f, 0.6f, 0.6f), // Color especular
-                10.0f                           // Brillo
-        );
+        texture = new TextureLoader (texturePath, null).getTexture();
+        textureAttributes = new TextureAttributes(); 
+        textureAttributes.setTextureMode(TextureAttributes.MODULATE);
+        material = new Material(ambiental,emisivo,difuso, especular,brillo);
+        ap = new Appearance();
+        ap.setTexture(texture);
+        ap.setTextureAttributes(textureAttributes);
+        ap.setMaterial(material);
     }
     
     public void addSatelite(Astro astro) {
@@ -93,14 +97,6 @@ public class Astro {
         TransformGroup rotation = rotar(); // Se crea la transformación para la rotación
         
         BranchGroup figure = new BranchGroup (); // Se crea la rama desde la que cuelga la geometría y apariencia del astro
-
-        Appearance ap = new Appearance(); // Se crea una nueva apariencia
-        TextureAttributes texAttr = new TextureAttributes(); 
-        texAttr.setTextureMode(TextureAttributes.MODULATE);
-        Texture aTexture = new TextureLoader (textura, null).getTexture(); // Se carga la textura
-        ap.setTexture (aTexture); // Se asigna la textura
-        ap.setTextureAttributes(texAttr); 
-        ap.setMaterial(material);
         
         figure.addChild (new Sphere (diametro/2, Primitive.GENERATE_NORMALS | Primitive.GENERATE_TEXTURE_COORDS, 64, ap)); // se crea la figura y se cuelga del nodo figura 
         
@@ -112,7 +108,7 @@ public class Astro {
         return bg;
     }
     
-    private TransformGroup rotar() {
+    protected TransformGroup rotar() {
         TransformGroup transform = new TransformGroup (); // Se crea el nodo de transformación: Todo lo que cuelgue de él rotará
         transform.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE); // Se le permite que se cambie en tiempo de ejecución
          
@@ -128,7 +124,7 @@ public class Astro {
         return transform;
     }
     
-    private TransformGroup rotarAlrededor() {
+    protected TransformGroup rotarAlrededor() {
         TransformGroup transform = new TransformGroup (); // Se crea el nodo de transformación: Todo lo que cuelgue de él rotará
         transform.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE); // Se le permite que se cambie en tiempo de ejecución
         
@@ -145,7 +141,7 @@ public class Astro {
         return transform;
     }
 
-    private TransformGroup trasladar() {
+    protected TransformGroup trasladar() {
         TransformGroup transform = new TransformGroup (); // Se crea el nodo de transformación de traslación en el eje x
         
         Transform3D t3d = new Transform3D (); // Se crea la matriz de rotación
