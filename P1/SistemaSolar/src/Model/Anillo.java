@@ -14,6 +14,7 @@ import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.AxisAngle4f;
 import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
 
 public class Anillo {
     
@@ -50,6 +51,7 @@ public class Anillo {
         
         BranchGroup figure = new BranchGroup (); // Se crea la rama desde la que cuelga la geometría y apariencia del astro
 
+        /*
         figure.addChild( new Disco(radioInterno,radioExterno,64,ap) ); // Cara superior
         
         TransformGroup t = new TransformGroup(); // Grupo de transformación para darle la vuelta al disco
@@ -58,7 +60,15 @@ public class Anillo {
         t.setTransform(t3d); // Se aplica al nodo de transformación
         t.addChild( new Disco(radioInterno,radioExterno,64,ap) ); // Cara inferior
         figure.addChild(t); // Se engancha el nodo con el disco invertido
+        */
+        TransformGroup t = new TransformGroup(); // Grupo de transformación para darle la vuelta al disco
+        Transform3D t3d = new Transform3D(); // Se crea la matriz de rotación
+        t3d.setScale(new Vector3d(1d,0.1d,1d)); // Se rota 180 grados 
+        t.setTransform(t3d);
+        t.addChild(new Torus(radioInterno,radioExterno,64,64,ap));
+        figure.addChild(t);
         
+                
         rotation.addChild(figure); // la figura se cuelga de la rotación
         bg.addChild(rotation); // la rotación se cuelga del BranchGroup del planeta
         

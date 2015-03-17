@@ -205,22 +205,22 @@ class Escena extends BranchGroup {
         
         // Creación anillos
         Anillo a = new Anillo(
-                3.52f,                          // radio interno
-                4f,                             // radio externo
+                3.76f,                          // radio interno
+                0.24f,                          // radio externo
                 50000l,                         // rotación
                 "imgs/anilloa.jpg",             // path textura
                 materialAnillos                 // material
         );
         Anillo b = new Anillo(
-                2.72f, 
-                3.5f, 
+                3.11f, 
+                0.39f, 
                 50000l, 
                 "imgs/anillob.jpg", 
                 materialAnillos
         );
         Anillo c = new Anillo(
-                2.05f, 
-                2.7f, 
+                2.375f, 
+                0.325f, 
                 50000l, 
                 "imgs/anilloc.jpg", 
                 materialAnillos
