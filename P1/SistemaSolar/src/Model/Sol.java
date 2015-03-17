@@ -5,6 +5,7 @@ import com.sun.j3d.utils.geometry.Primitive;
 import com.sun.j3d.utils.geometry.Sphere;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
+import javax.media.j3d.Material;
 import javax.media.j3d.PointLight;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.Color3f;
@@ -19,16 +20,18 @@ public class Sol extends Astro {
             0l, 
             velRotacion, 
             0f, 
-            textura, 
-            new Color3f (1f, 1f, 1f), 
-            new Color3f (1f, 1f, 1f), 
-            new Color3f (1f, 1f, 1f), 
-            new Color3f (1f, 1f, 1f), 
-            100f
+            textura,
+            new Material(
+                new Color3f (1f, 1f, 1f), 
+                new Color3f (1f, 1f, 1f), 
+                new Color3f (1f, 1f, 1f), 
+                new Color3f (1f, 1f, 1f), 
+                100f
+            )
         );
         luz = new PointLight (
             new Color3f (0.9f, 0.9f, 0.9f), 
-            new Point3f (0f, 0f, 0f),
+            new Point3f (0.0f, 0.0f, 0.0f),
             new Point3f (1.0f, 0.0f, 0.0f)
         );
         luz.setInfluencingBounds (new BoundingSphere (new Point3d (0.0, 0.0, 0.0), 120.0));

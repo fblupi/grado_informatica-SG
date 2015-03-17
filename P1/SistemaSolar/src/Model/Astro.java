@@ -15,7 +15,6 @@ import javax.media.j3d.Texture;
 import javax.media.j3d.TextureAttributes;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
-import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3f;
 
@@ -36,23 +35,24 @@ public class Astro {
     protected RotationInterpolator rotator; // El objeto que controla la rotación continua de la figura
     protected RotationInterpolator rotatorAround;
     
-    public Astro(float diametro, long velTraslacion, long velRotacion, float distancia, String texturePath, Color3f ambiental, Color3f emisivo, Color3f difuso, Color3f especular, float brillo) {
+    public Astro(float diametro, long velTraslacion, long velRotacion, float distancia, String texturePath, Material material) {
         this.diametro = diametro;
         this.velTraslacion = velTraslacion;
         this.velRotacion = velRotacion;
         this.distancia = distancia;
         this.movimiento = true;
         this.texturePath = texturePath;
+        this.material = material;
         satelites = new ArrayList();
         anillos = new ArrayList();
-        texture = new TextureLoader (texturePath, null).getTexture();
+        // creación de la apariencia: textura + material
+        texture = new TextureLoader (this.texturePath, null).getTexture();
         textureAttributes = new TextureAttributes(); 
         textureAttributes.setTextureMode(TextureAttributes.MODULATE);
-        material = new Material(ambiental,emisivo,difuso, especular,brillo);
         ap = new Appearance();
         ap.setTexture(texture);
         ap.setTextureAttributes(textureAttributes);
-        ap.setMaterial(material);
+        ap.setMaterial(this.material);
     }
     
     public void addSatelite(Astro astro) {

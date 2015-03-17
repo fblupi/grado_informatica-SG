@@ -13,7 +13,6 @@ import javax.media.j3d.TextureAttributes;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.AxisAngle4f;
-import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 
 public class Anillo {
@@ -28,19 +27,20 @@ public class Anillo {
     private Appearance ap;
     private RotationInterpolator rotator; // El objeto que controla la rotación continua de la figura
     
-    public Anillo(float radioInterno, float radioExterno, long velRotacion, String texturePath, Color3f ambiental, Color3f emisivo, Color3f difuso, Color3f especular, float brillo) {
+    public Anillo(float radioInterno, float radioExterno, long velRotacion, String texturePath, Material material) {
         this.radioInterno = radioInterno;
         this.radioExterno = radioExterno;
         this.velRotacion = velRotacion;
         this.texturePath = texturePath;
-        texture = new TextureLoader (texturePath, null).getTexture();
+        this.material = material;
+        // creación de la apariencia: textura + material
+        texture = new TextureLoader (this.texturePath, null).getTexture();
         textureAttributes = new TextureAttributes(); 
         textureAttributes.setTextureMode(TextureAttributes.MODULATE);
-        material = new Material(ambiental,emisivo,difuso, especular,brillo);
         ap = new Appearance();
         ap.setTexture(texture);
         ap.setTextureAttributes(textureAttributes);
-        ap.setMaterial(material);
+        ap.setMaterial(this.material);
     }
     
     public BranchGroup dibujar() {

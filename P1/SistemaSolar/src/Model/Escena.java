@@ -2,12 +2,30 @@
 package Model;
 
 import javax.media.j3d.BranchGroup;
+import javax.media.j3d.Material;
 import javax.vecmath.Color3f;
 
 class Escena extends BranchGroup {  
     public Escena () { 
         // Creación nave
         Nave nave = new Nave("models/E-TIE-I/E-TIE-I.obj");
+        
+        // Creación de materiales
+        Material materialAstros = new Material (
+            new Color3f (0.6f, 0.6f, 0.6f), // componente ambiental
+            new Color3f (0.6f, 0.6f, 0.6f), // componente difusa
+            new Color3f (0.6f, 0.6f, 0.6f), // componente emisiva
+            new Color3f (0.2f, 0.2f, 0.2f), // componente especular
+            10f                             // brillo
+        );
+        
+        Material materialAnillos = new Material (
+            new Color3f (0.8f, 0.8f, 0.8f), // componente ambiental
+            new Color3f (0.7f, 0.7f, 0.7f), // componente difusa
+            new Color3f (0.6f, 0.6f, 0.6f), // componente emisiva 
+            new Color3f (0.2f, 0.2f, 0.2f), // componente especualar
+            10f                             // brillo
+        );
         
         // Creación astros
         Sol sol = new Sol(
@@ -21,11 +39,8 @@ class Escena extends BranchGroup {
                 10000l,                         // rotación sobre sí mismo
                 7f,                             // distancia sobre astro
                 "imgs/mercurio.jpg",            // path textura
-                new Color3f (0.6f, 0.6f, 0.6f), // componente ambiental
-                new Color3f (0.6f, 0.6f, 0.6f), // componente difusa
-                new Color3f (0.6f, 0.6f, 0.6f), // componente emisiva
-                new Color3f (0.2f, 0.2f, 0.2f), // componente especular
-                10f                             // brillo
+                materialAstros                  // material
+                
         );
         Astro venus =  new Astro(
                 1.21f, 
@@ -33,11 +48,7 @@ class Escena extends BranchGroup {
                 -100000l, 
                 9.5f, 
                 "imgs/venus.jpg", 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.2f, 0.2f, 0.2f), 
-                10f
+                materialAstros
         );
         Astro tierra = new Astro(
                 1.27f, 
@@ -45,11 +56,7 @@ class Escena extends BranchGroup {
                 3000l, 
                 12.5f, 
                 "imgs/tierra.jpg", 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.2f, 0.2f, 0.2f), 
-                10f
+                materialAstros
         );
         Astro luna = new Astro(
                 0.34f, 
@@ -57,11 +64,7 @@ class Escena extends BranchGroup {
                 9000l, 
                 1f, 
                 "imgs/luna.jpg", 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.2f, 0.2f, 0.2f), 
-                10f
+                materialAstros
         );
         Astro marte = new Astro(
                 0.68f, 
@@ -69,11 +72,7 @@ class Escena extends BranchGroup {
                 5000l, 
                 15f, 
                 "imgs/marte.jpg", 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.2f, 0.2f, 0.2f), 
-                10f
+                materialAstros
         );
         Astro fobos = new Astro(
                 0.11f, 
@@ -81,11 +80,7 @@ class Escena extends BranchGroup {
                 3100l, 
                 0.5f, 
                 "imgs/fobos.jpg", 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.2f, 0.2f, 0.2f), 
-                10f
+                materialAstros
         );
         Astro deimos = new Astro(
                 0.1f, 
@@ -93,11 +88,7 @@ class Escena extends BranchGroup {
                 3200l, 
                 0.7f, 
                 "imgs/deimos.jpg", 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.2f, 0.2f, 0.2f), 
-                10f
+                materialAstros
         );
         Astro jupiter = new Astro(
                 5f, 
@@ -105,11 +96,7 @@ class Escena extends BranchGroup {
                 2900l, 
                 23f, 
                 "imgs/jupiter.jpg", 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.2f, 0.2f, 0.2f), 
-                10f
+                materialAstros
         );
         Astro io = new Astro(
                 0.36f, 
@@ -117,11 +104,7 @@ class Escena extends BranchGroup {
                 3300l, 
                 2.8f, 
                 "imgs/io.jpg", 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.2f, 0.2f, 0.2f), 
-                10f
+                materialAstros
         );
         Astro europa = new Astro(
                 0.31f, 
@@ -129,11 +112,7 @@ class Escena extends BranchGroup {
                 3500l, 
                 3.3f, 
                 "imgs/europa.jpg", 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.2f, 0.2f, 0.2f), 
-                10f
+                materialAstros
         );
         Astro ganimedes = new Astro(
                 0.53f, 
@@ -141,11 +120,7 @@ class Escena extends BranchGroup {
                 3750l, 
                 3.9f, 
                 "imgs/ganimedes.jpg", 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.2f, 0.2f, 0.2f), 
-                10f
+                materialAstros
         );
         Astro calisto = new Astro(
                 0.48f, 
@@ -153,11 +128,7 @@ class Escena extends BranchGroup {
                 6000l, 
                 4.6f, 
                 "imgs/calisto.jpg", 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.2f, 0.2f, 0.2f), 
-                10f
+                materialAstros
         );
         Astro saturno = new Astro(
                 4f, 
@@ -165,11 +136,7 @@ class Escena extends BranchGroup {
                 2900l, 
                 35f, 
                 "imgs/saturno.jpg", 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.2f, 0.2f, 0.2f), 
-                10f
+                materialAstros
         );
         Astro urano = new Astro(
                 2.6f, 
@@ -177,11 +144,7 @@ class Escena extends BranchGroup {
                 2900l, 
                 45f, 
                 "imgs/urano.jpg", 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.2f, 0.2f, 0.2f), 
-                10f
+                materialAstros
         );
         Astro miranda = new Astro(
                 0.12f, 
@@ -189,23 +152,15 @@ class Escena extends BranchGroup {
                 3250l, 
                 1.4f, 
                 "imgs/miranda.jpg", 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.2f, 0.2f, 0.2f), 
-                10f
+                materialAstros
         );
         Astro ariel = new Astro(
                 0.13f, 
                 3400l, 
                 3400l, 
                 1.6f, 
-                "imgs/ariel.jpg", 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.2f, 0.2f, 0.2f), 
-                10f
+                "imgs/ariel.jpg",  
+                materialAstros
         );
         Astro umbriel = new Astro(
                 0.14f, 
@@ -213,11 +168,7 @@ class Escena extends BranchGroup {
                 3550l, 
                 2f, 
                 "imgs/umbriel.jpg", 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.2f, 0.2f, 0.2f), 
-                10f
+                materialAstros
         );
         Astro titania = new Astro(
                 0.16f, 
@@ -225,11 +176,7 @@ class Escena extends BranchGroup {
                 4000l, 
                 2.3f, 
                 "imgs/titania.jpg", 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.2f, 0.2f, 0.2f), 
-                10f
+                materialAstros
         );
         Astro oberon = new Astro(
                 0.15f, 
@@ -237,11 +184,7 @@ class Escena extends BranchGroup {
                 5000l, 
                 2.76f, 
                 "imgs/oberon.jpg", 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.2f, 0.2f, 0.2f), 
-                10f
+                materialAstros
         );
         Astro neptuno = new Astro(
                 2.5f, 
@@ -249,11 +192,7 @@ class Escena extends BranchGroup {
                 2900l, 
                 51f, 
                 "imgs/neptuno.jpg", 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.2f, 0.2f, 0.2f), 
-                10f
+                materialAstros
         );
         Astro triton = new Astro(
                 0.27f, 
@@ -261,11 +200,7 @@ class Escena extends BranchGroup {
                 -36000l, 
                 1.6f, 
                 "imgs/triton.jpg", 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.2f, 0.2f, 0.2f), 
-                10f
+                materialAstros
         );
         
         // Creación anillos
@@ -273,34 +208,22 @@ class Escena extends BranchGroup {
                 3.52f,                          // radio interno
                 4f,                             // radio externo
                 50000l,                         // rotación
-                "imgs/anilloa.jpg",              // path textura
-                new Color3f (0.8f, 0.8f, 0.8f), // componente ambiental
-                new Color3f (0.7f, 0.7f, 0.7f), // componente difusa
-                new Color3f (0.6f, 0.6f, 0.6f), // componente emisiva 
-                new Color3f (0.2f, 0.2f, 0.2f), // componente especualar
-                10f                             // brillo
+                "imgs/anilloa.jpg",             // path textura
+                materialAnillos                 // material
         );
         Anillo b = new Anillo(
                 2.72f, 
                 3.5f, 
                 50000l, 
                 "imgs/anillob.jpg", 
-                new Color3f (0.8f, 0.8f, 0.8f), 
-                new Color3f (0.7f, 0.7f, 0.7f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.2f, 0.2f, 0.2f), 
-                10f
+                materialAnillos
         );
         Anillo c = new Anillo(
                 2.05f, 
                 2.7f, 
                 50000l, 
                 "imgs/anilloc.jpg", 
-                new Color3f (0.8f, 0.8f, 0.8f), 
-                new Color3f (0.7f, 0.7f, 0.7f), 
-                new Color3f (0.6f, 0.6f, 0.6f), 
-                new Color3f (0.2f, 0.2f, 0.2f), 
-                10f
+                materialAnillos
         );
         
         // Asignación satélites
