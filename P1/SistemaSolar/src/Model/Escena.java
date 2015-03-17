@@ -270,10 +270,10 @@ class Escena extends BranchGroup {
         
         // Creación anillos
         Anillo a = new Anillo(
-                3.55f,                          // radio interno
+                3.52f,                          // radio interno
                 4f,                             // radio externo
                 50000l,                         // rotación
-                "imgs/anillo.jpg",              // path textura
+                "imgs/anilloa.jpg",              // path textura
                 new Color3f (0.8f, 0.8f, 0.8f), // componente ambiental
                 new Color3f (0.7f, 0.7f, 0.7f), // componente difusa
                 new Color3f (0.6f, 0.6f, 0.6f), // componente emisiva 
@@ -281,10 +281,10 @@ class Escena extends BranchGroup {
                 10f                             // brillo
         );
         Anillo b = new Anillo(
-                2.7f, 
+                2.72f, 
                 3.5f, 
                 50000l, 
-                "imgs/anillo.jpg", 
+                "imgs/anillob.jpg", 
                 new Color3f (0.8f, 0.8f, 0.8f), 
                 new Color3f (0.7f, 0.7f, 0.7f), 
                 new Color3f (0.6f, 0.6f, 0.6f), 
@@ -292,10 +292,10 @@ class Escena extends BranchGroup {
                 10f
         );
         Anillo c = new Anillo(
-                2.2f, 
-                2.65f, 
+                2.05f, 
+                2.7f, 
                 50000l, 
-                "imgs/anillo.jpg", 
+                "imgs/anilloc.jpg", 
                 new Color3f (0.8f, 0.8f, 0.8f), 
                 new Color3f (0.7f, 0.7f, 0.7f), 
                 new Color3f (0.6f, 0.6f, 0.6f), 
