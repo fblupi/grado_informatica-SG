@@ -8,7 +8,7 @@ import javax.vecmath.Color3f;
 class Escena extends BranchGroup {  
     public Escena () { 
         // Creación nave
-        Nave nave = new Nave("models/E-TIE-I/E-TIE-I.obj");
+        Nave nave = new Nave("models/Arc170/Arc170.obj");
         
         // Creación de materiales
         Material materialAstros = new Material (
