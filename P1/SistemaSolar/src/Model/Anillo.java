@@ -51,12 +51,8 @@ public class Anillo {
         
         BranchGroup figure = new BranchGroup (); // Se crea la rama desde la que cuelga la geometría y apariencia del astro
 
-        TransformGroup t = new TransformGroup(); // Grupo de transformación para darle la vuelta al disco
-        Transform3D t3d = new Transform3D(); // Se crea la matriz de rotación
-        t3d.setScale(new Vector3d(1d,0.1d,1d)); // Se hace casi plano
-        t.setTransform(t3d);
-        t.addChild(new Torus(radioInterno,radioExterno,64,64,ap)); // Se crea el torus
-        figure.addChild(t);
+        //t.addChild(); // Se crea el torus
+        figure.addChild(new Torus(radioInterno,radioExterno,64,2,ap));
         
                 
         rotation.addChild(figure); // la figura se cuelga de la rotación
