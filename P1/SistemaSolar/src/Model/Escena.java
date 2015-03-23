@@ -4,11 +4,17 @@ package Model;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Material;
 import javax.vecmath.Color3f;
+import javax.vecmath.Point3f;
+import javax.vecmath.Quat4f;
 
 class Escena extends BranchGroup {  
     public Escena () { 
         // Creación nave
-        Nave nave = new Nave("models/Arc170/Arc170.obj");
+        Nave nave = new Nave("models/Arc170/Arc170.obj",4,10000);
+        nave.setPunto(0, new Point3f(20f,20f,0f), new Quat4f(-1.0f, 0.0f, 0.0f, 0.0f), 0f);
+        nave.setPunto(1, new Point3f(20f,20f,20f), new Quat4f(0.0f, 0.0f, -1.0f, 0.0f), 0.33f);
+        nave.setPunto(2, new Point3f(0f,20f,20f), new Quat4f(0.0f, 0.0f, 1.0f, 0.0f), 0.66f);
+        nave.setPunto(3, new Point3f(20f,20f,0f), new Quat4f(-1.0f, 0.0f, 0.0f, 0.0f), 1f);
         
         // Creación de materiales
         Material materialAstros = new Material (

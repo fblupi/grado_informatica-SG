@@ -50,10 +50,8 @@ public class Anillo {
         TransformGroup rotation = rotar(); // Se crea la transformación para la rotación
         
         BranchGroup figure = new BranchGroup (); // Se crea la rama desde la que cuelga la geometría y apariencia del astro
-
-        //t.addChild(); // Se crea el torus
-        figure.addChild(new Torus(radioInterno,radioExterno,64,2,ap));
         
+        figure.addChild(new Torus(radioInterno,radioExterno,64,2,ap)); // Anillo Torus con res2=2
                 
         rotation.addChild(figure); // la figura se cuelga de la rotación
         bg.addChild(rotation); // la rotación se cuelga del BranchGroup del planeta
