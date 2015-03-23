@@ -3,18 +3,27 @@ package Model;
 
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Material;
+import javax.vecmath.AxisAngle4f;
 import javax.vecmath.Color3f;
 import javax.vecmath.Point3f;
-import javax.vecmath.Quat4f;
 
 class Escena extends BranchGroup {  
     public Escena () { 
         // Creación nave
-        Nave nave = new Nave("models/Arc170/Arc170.obj",4,10000);
-        nave.setPunto(0, new Point3f(20f,20f,0f), new Quat4f(-1.0f, 0.0f, 0.0f, 0.0f), 0f);
-        nave.setPunto(1, new Point3f(20f,20f,20f), new Quat4f(0.0f, 0.0f, -1.0f, 0.0f), 0.33f);
-        nave.setPunto(2, new Point3f(0f,20f,20f), new Quat4f(0.0f, 0.0f, 1.0f, 0.0f), 0.66f);
-        nave.setPunto(3, new Point3f(20f,20f,0f), new Quat4f(-1.0f, 0.0f, 0.0f, 0.0f), 1f);
+        Nave nave = new Nave(
+            "models/Arc170/Arc170.obj",     // archivo del obj con el modelo
+            8,                              // paso de animación
+            10000                           // tiempo de ciclo de animación
+        );
+        // Asignación de puntos de animación
+        nave.setPunto(0, new Point3f(10f,10f,-10f), new AxisAngle4f(0.0f, 1.0f, 0.0f, (float) Math.toRadians(0)), 0f);
+        nave.setPunto(1, new Point3f(10f,15f,-5f), new AxisAngle4f(1.0f, 0.0f, 0.0f, (float) Math.toRadians(315)), 0.14f);
+        nave.setPunto(2, new Point3f(10f,20f,0f), new AxisAngle4f(0.0f, 1.0f, 0.0f, (float) Math.toRadians(0)), 0.28f);
+        nave.setPunto(3, new Point3f(10f,15f,5f), new AxisAngle4f(1.0f, 0.0f, 0.0f, (float) Math.toRadians(45)), 0.42f);
+        nave.setPunto(4, new Point3f(10f,10f,10f), new AxisAngle4f(0.0f, 1.0f, 0.0f, (float) Math.toRadians(270)), 0.56f);
+        nave.setPunto(5, new Point3f(-10f,10f,10f), new AxisAngle4f(0.0f, 1.0f, 0.0f, (float) Math.toRadians(180)), 0.7f);
+        nave.setPunto(6, new Point3f(-10f,10f,-10f), new AxisAngle4f(0.0f, 1.0f, 0.0f, (float) Math.toRadians(90)), 0.84f);
+        nave.setPunto(7, new Point3f(10f,10f,-10f), new AxisAngle4f(0.0f, 1.0f, 0.0f, (float) Math.toRadians(360)), 1f);
         
         // Creación de materiales
         Material materialAstros = new Material (
@@ -24,7 +33,6 @@ class Escena extends BranchGroup {
             new Color3f (0.2f, 0.2f, 0.2f), // componente especular
             10f                             // brillo
         );
-        
         Material materialAnillos = new Material (
             new Color3f (0.8f, 0.8f, 0.8f), // componente ambiental
             new Color3f (0.7f, 0.7f, 0.7f), // componente difusa

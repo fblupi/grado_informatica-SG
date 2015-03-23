@@ -13,6 +13,7 @@ import javax.media.j3d.BranchGroup;
 import javax.media.j3d.RotPosPathInterpolator;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
+import javax.vecmath.AxisAngle4f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Point3f;
 import javax.vecmath.Quat4f;
@@ -33,10 +34,11 @@ public class Nave {
         angulos = new Quat4f[puntos];
     }
     
-    public void setPunto(int punto, Point3f posicion, Quat4f angulo, float knot) {
+    public void setPunto(int punto, Point3f posicion, AxisAngle4f angulo, float knot) {
         if(punto<posiciones.length && punto>=0) {
             posiciones[punto] = posicion;
-            angulos[punto] = angulo;
+            angulos[punto] = new Quat4f();
+            angulos[punto].set(angulo);
             knots[punto] = knot;
         }
     }
@@ -56,14 +58,14 @@ public class Nave {
         return bg;
     }
     
-        private TransformGroup mover() {
+    private TransformGroup mover() {
         TransformGroup transform = new TransformGroup (); // Se crea el nodo de transformación: Todo lo que cuelgue de él rotará
         transform.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE); // Se le permite que se cambie en tiempo de ejecución
          
         Transform3D t3d = new Transform3D (); // Se crea la matriz de rotación
         
         Alpha value = new Alpha (-1, Alpha.INCREASING_ENABLE, 0, 0, velocidad, 0, 0, 0, 0, 0); // Valor numérico que se ira modificando en tiempo de ejecución
-        interpolator = new RotPosPathInterpolator (value, transform, t3d, knots, angulos, posiciones); // Se crea el interpolador de rotación, las figuras iran rotando
+        interpolator = new RotPosPathInterpolator (value, transform, t3d, knots, angulos, posiciones); // Se crea el interpolador, las figuras iran moviéndose
         interpolator.setSchedulingBounds(new BoundingSphere (new Point3d (0.0, 0.0, 0.0 ), 100.0)); // Se le pone el entorno de activación
         interpolator.setEnable(true); // Se activa
         
