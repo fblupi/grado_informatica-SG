@@ -12,18 +12,27 @@ class Escena extends BranchGroup {
         // Creación nave
         Nave nave = new Nave(
             "models/Arc170/Arc170.obj",     // archivo del obj con el modelo
-            8,                              // paso de animación
-            10000                           // tiempo de ciclo de animación
+            10000,                          // tiempo de ciclo de animación
+            new Point3f[] {                 // puntos
+                new Point3f(10f,10f,-10f), new Point3f(10f,15f,-5f),
+                new Point3f(10f,20f,0f), new Point3f(10f,15f,5f),
+                new Point3f(10f,10f,10f), new Point3f(-10f,10f,10f),
+                new Point3f(-10f,10f,-10f), new Point3f(10f,10f,-10f)
+            },
+            new AxisAngle4f[] {             // angulos
+                new AxisAngle4f(0.0f, 1.0f, 0.0f, (float) Math.toRadians(0)),
+                new AxisAngle4f(1.0f, 0.0f, 0.0f, (float) Math.toRadians(315)),
+                new AxisAngle4f(0.0f, 1.0f, 0.0f, (float) Math.toRadians(0)),
+                new AxisAngle4f(1.0f, 0.0f, 0.0f, (float) Math.toRadians(45)),
+                new AxisAngle4f(0.0f, 1.0f, 0.0f, (float) Math.toRadians(270)),
+                new AxisAngle4f(0.0f, 1.0f, 0.0f, (float) Math.toRadians(180)),
+                new AxisAngle4f(0.0f, 1.0f, 0.0f, (float) Math.toRadians(90)),
+                new AxisAngle4f(0.0f, 1.0f, 0.0f, (float) Math.toRadians(360))
+            },
+            new float[] {                   // knots
+                0f, 0.14f, 0.28f, 0.42f, 0.56f, 0.7f, 0.84f, 1f
+            }
         );
-        // Asignación de puntos de animación
-        nave.setPunto(0, new Point3f(10f,10f,-10f), new AxisAngle4f(0.0f, 1.0f, 0.0f, (float) Math.toRadians(0)), 0f);
-        nave.setPunto(1, new Point3f(10f,15f,-5f), new AxisAngle4f(1.0f, 0.0f, 0.0f, (float) Math.toRadians(315)), 0.14f);
-        nave.setPunto(2, new Point3f(10f,20f,0f), new AxisAngle4f(0.0f, 1.0f, 0.0f, (float) Math.toRadians(0)), 0.28f);
-        nave.setPunto(3, new Point3f(10f,15f,5f), new AxisAngle4f(1.0f, 0.0f, 0.0f, (float) Math.toRadians(45)), 0.42f);
-        nave.setPunto(4, new Point3f(10f,10f,10f), new AxisAngle4f(0.0f, 1.0f, 0.0f, (float) Math.toRadians(270)), 0.56f);
-        nave.setPunto(5, new Point3f(-10f,10f,10f), new AxisAngle4f(0.0f, 1.0f, 0.0f, (float) Math.toRadians(180)), 0.7f);
-        nave.setPunto(6, new Point3f(-10f,10f,-10f), new AxisAngle4f(0.0f, 1.0f, 0.0f, (float) Math.toRadians(90)), 0.84f);
-        nave.setPunto(7, new Point3f(10f,10f,-10f), new AxisAngle4f(0.0f, 1.0f, 0.0f, (float) Math.toRadians(360)), 1f);
         
         // Creación de materiales
         Material materialAstros = new Material (
@@ -269,7 +278,7 @@ class Escena extends BranchGroup {
         saturno.addAnillo(c);
         
         // Colgamos del BranchGroup escena la nave y los planetas
-        this.addChild(nave.dibujar());
-        this.addChild(sol.dibujar()); // recursivamente añade el resto de planetas
+        this.addChild(sol);
+        this.addChild(nave);
     }
 }

@@ -12,11 +12,9 @@ import javax.media.j3d.Texture;
 import javax.media.j3d.TextureAttributes;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
-import javax.vecmath.AxisAngle4f;
 import javax.vecmath.Point3d;
-import javax.vecmath.Vector3d;
 
-public class Anillo {
+public class Anillo extends BranchGroup {
     
     private float radioInterno;
     private float radioExterno;
@@ -27,6 +25,7 @@ public class Anillo {
     private Material material;
     private Appearance ap;
     private RotationInterpolator rotator; // El objeto que controla la rotación continua de la figura
+    private TransformGroup rotation;
     
     public Anillo(float radioInterno, float radioExterno, long velRotacion, String texturePath, Material material) {
         this.radioInterno = radioInterno;
@@ -42,36 +41,25 @@ public class Anillo {
         ap.setTexture(texture);
         ap.setTextureAttributes(textureAttributes);
         ap.setMaterial(this.material);
-    }
-    
-    public BranchGroup dibujar() {
-        BranchGroup bg = new BranchGroup (); // Se crea la rama desde la que cuelga todo
         
-        TransformGroup rotation = rotar(); // Se crea la transformación para la rotación
-        
+        rotation = rotar(); // Se crea la transformación para la rotación
         BranchGroup figure = new BranchGroup (); // Se crea la rama desde la que cuelga la geometría y apariencia del astro
-        
         figure.addChild(new Torus(radioInterno,radioExterno,64,2,ap)); // Anillo Torus con res2=2
-                
         rotation.addChild(figure); // la figura se cuelga de la rotación
-        bg.addChild(rotation); // la rotación se cuelga del BranchGroup del planeta
         
-        return bg;
+        this.addChild(rotation); // la rotación se cuelga del BranchGroup del planeta
     }
     
     private TransformGroup rotar() {
-        TransformGroup transform = new TransformGroup (); // Se crea el nodo de transformación: Todo lo que cuelgue de él rotará
-        transform.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE); // Se le permite que se cambie en tiempo de ejecución
-         
+        TransformGroup t = new TransformGroup (); // Se crea el nodo de transformación: Todo lo que cuelgue de él rotará
+        t.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE); // Se le permite que se cambie en tiempo de ejecución
         Transform3D t3d = new Transform3D (); // Se crea la matriz de rotación
-        
         Alpha value = new Alpha (-1, Alpha.INCREASING_ENABLE, 0, 0, velRotacion, 0, 0, 0, 0, 0); // Valor numérico que se ira modificando en tiempo de ejecución
-        rotator = new RotationInterpolator (value, transform, t3d, 0.0f, (float) Math.PI*2.0f); // Se crea el interpolador de rotación, las figuras iran rotando
+        rotator = new RotationInterpolator (value, t, t3d, 0.0f, (float) Math.PI*2.0f); // Se crea el interpolador de rotación, las figuras iran rotando
         rotator.setSchedulingBounds(new BoundingSphere (new Point3d (0.0, 0.0, 0.0 ), 100.0)); // Se le pone el entorno de activación
         rotator.setEnable(true); // Se activa
+        t.addChild(rotator); // Se cuelga del grupo de transformación
         
-        transform.addChild(rotator); // Se cuelga del grupo de transformación
-        
-        return transform;
+        return t;
     }
 }
