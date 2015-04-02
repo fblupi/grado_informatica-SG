@@ -17,9 +17,9 @@ public class Sol extends Astro {
     public Sol(float diametro, long velRotacion, String textura) {
         super(
             diametro, 
-            0l, 
+            0l, // vel rotación alrededor
             velRotacion, 
-            0f, 
+            0f, // distancia
             textura,
             new Material(
                 new Color3f (1f, 1f, 1f), 

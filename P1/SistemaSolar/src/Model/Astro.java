@@ -57,8 +57,8 @@ public class Astro extends BranchGroup {
         ap.setTextureAttributes(textureAttributes);
         ap.setMaterial(this.material);
         
-        TransformGroup rotationAround = rotarAlrededor(); // Se crea la transformación para la rotación alrededor del sol o planeta
-        TransformGroup translation = trasladar(); // Se crea la transformación para la traslación
+        rotationAround = rotarAlrededor(); // Se crea la transformación para la rotación alrededor del sol o planeta
+        translation = trasladar(); // Se crea la transformación para la traslación
         rotation = rotar(); // Se crea la transformación para la rotación
         BranchGroup figure = new BranchGroup(); // Se crea la rama desde la que cuelga la geometría y apariencia del astro
         figure.addChild(new Sphere (diametro/2, Primitive.GENERATE_NORMALS | Primitive.GENERATE_TEXTURE_COORDS, 64, ap)); // se crea la figura y se cuelga del nodo figura 
@@ -70,11 +70,11 @@ public class Astro extends BranchGroup {
     }
     
     public void addSatelite(Astro astro) {
-        rotation.addChild(astro);
+        translation.addChild(astro);
     }
     
     public void addAnillo(Anillo anillo) {
-        rotation.addChild(anillo);
+        translation.addChild(anillo);
     }
     
     public void setMovimiento(boolean movimiento) {
