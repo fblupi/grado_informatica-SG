@@ -33,6 +33,7 @@ public class Anillo extends BranchGroup {
         this.velRotacion = velRotacion;
         this.texturePath = texturePath;
         this.material = material;
+        
         // creación de la apariencia: textura + material
         texture = new TextureLoader (this.texturePath, null).getTexture();
         textureAttributes = new TextureAttributes(); 
@@ -42,6 +43,7 @@ public class Anillo extends BranchGroup {
         ap.setTextureAttributes(textureAttributes);
         ap.setMaterial(this.material);
         
+        // Se cuelgan del grafo las transformaciones y la figura
         rotation = rotar(); // Se crea la transformación para la rotación
         BranchGroup figure = new BranchGroup (); // Se crea la rama desde la que cuelga la geometría y apariencia del astro
         figure.addChild(new Torus(radioInterno,radioExterno,64,2,ap)); // Anillo Torus con res2=2

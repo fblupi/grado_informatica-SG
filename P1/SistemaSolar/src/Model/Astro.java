@@ -48,6 +48,7 @@ public class Astro extends BranchGroup {
         this.material = material;
         satelites = new ArrayList();
         anillos = new ArrayList();
+        
         // creación de la apariencia: textura + material
         texture = new TextureLoader (this.texturePath, null).getTexture();
         textureAttributes = new TextureAttributes(); 
@@ -57,15 +58,16 @@ public class Astro extends BranchGroup {
         ap.setTextureAttributes(textureAttributes);
         ap.setMaterial(this.material);
         
+        // Se cuelgan del grafo las transformaciones y la figura
         rotationAround = rotarAlrededor(); // Se crea la transformación para la rotación alrededor del sol o planeta
         translation = trasladar(); // Se crea la transformación para la traslación
         rotation = rotar(); // Se crea la transformación para la rotación
         BranchGroup figure = new BranchGroup(); // Se crea la rama desde la que cuelga la geometría y apariencia del astro
+        
         figure.addChild(new Sphere (diametro/2, Primitive.GENERATE_NORMALS | Primitive.GENERATE_TEXTURE_COORDS, 64, ap)); // se crea la figura y se cuelga del nodo figura 
         rotation.addChild(figure); // la figura se cuelga de la rotación
         translation.addChild(rotation); // la rotación se cuelga de la traslación
         rotationAround.addChild(translation); // la traslación se cuelga de la rotación alrededor
-        
         this.addChild(rotationAround); // la rotación alrededor se cuelga del BranchGroup del planeta
     }
     
@@ -84,14 +86,11 @@ public class Astro extends BranchGroup {
     protected TransformGroup rotar() {
         TransformGroup t = new TransformGroup (); // Se crea el nodo de transformación: Todo lo que cuelgue de él rotará
         t.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE); // Se le permite que se cambie en tiempo de ejecución
-         
         Transform3D t3d = new Transform3D (); // Se crea la matriz de rotación
-        
         Alpha value = new Alpha (-1, Alpha.INCREASING_ENABLE, 0, 0, velRotacion, 0, 0, 0, 0, 0); // Valor numérico que se ira modificando en tiempo de ejecución
         rotator = new RotationInterpolator (value, t, t3d, 0.0f, (float) Math.PI*2.0f); // Se crea el interpolador de rotación, las figuras iran rotando
         rotator.setSchedulingBounds(new BoundingSphere (new Point3d (0.0, 0.0, 0.0 ), 100.0)); // Se le pone el entorno de activación
         rotator.setEnable(true); // Se activa
-        
         t.addChild(rotator); // Se cuelga del grupo de transformación
         
         return t;
@@ -100,14 +99,11 @@ public class Astro extends BranchGroup {
     protected TransformGroup rotarAlrededor() {
         TransformGroup t = new TransformGroup (); // Se crea el nodo de transformación: Todo lo que cuelgue de él rotará
         t.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE); // Se le permite que se cambie en tiempo de ejecución
-        
         Transform3D t3d = new Transform3D (); // Se crea la matriz de rotación
-        
         Alpha value = new Alpha (-1, Alpha.INCREASING_ENABLE, 0, 0, velTraslacion, 0, 0, 0, 0, 0); // Valor numérico que se ira modificando en tiempo de ejecución
         rotatorAround = new RotationInterpolator (value, t, t3d, 0.0f, (float) Math.PI*2.0f); // Se crea el interpolador de rotación, las figuras iran rotando
         rotatorAround.setSchedulingBounds(new BoundingSphere (new Point3d (0.0, 0.0, 0.0 ), 100.0)); // Se le pone el entorno de activación
         rotatorAround.setEnable(true); // Se activa
-        
         t.addChild(rotatorAround); // Se cuelga del grupo de transformación
         
         return t;
@@ -115,8 +111,7 @@ public class Astro extends BranchGroup {
 
     protected TransformGroup trasladar() {
         TransformGroup t = new TransformGroup (); // Se crea el nodo de transformación de traslación en el eje x
-        
-        Transform3D t3d = new Transform3D (); // Se crea la matriz de rotación
+        Transform3D t3d = new Transform3D (); // Se crea la matriz de transformación
         t3d.setTranslation(new Vector3f(distancia,0,0) ); // Se define la traslación
         t.setTransform(t3d); // Se aplica la traslación al nodo de transformación
         
