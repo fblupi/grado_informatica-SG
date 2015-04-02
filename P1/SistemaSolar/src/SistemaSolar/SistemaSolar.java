@@ -13,7 +13,7 @@ public class SistemaSolar {
         // Se obtiene la configuración gráfica del sistema y se crea el Canvas3D que va a mostrar la imagen
         Canvas3D canvas = new Canvas3D (SimpleUniverse.getPreferredConfiguration());
         // Se le da el tamaño deseado
-        canvas.setSize(900, 650);
+        canvas.setSize(900, 600);
 
         // Se crea el Universo con dicho Canvas3D
         Universo universe = new Universo (canvas);
