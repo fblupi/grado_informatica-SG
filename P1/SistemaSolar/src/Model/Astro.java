@@ -4,7 +4,6 @@ package Model;
 import com.sun.j3d.utils.geometry.Primitive;
 import com.sun.j3d.utils.geometry.Sphere;
 import com.sun.j3d.utils.image.TextureLoader;
-import java.util.ArrayList;
 import javax.media.j3d.Alpha;
 import javax.media.j3d.Appearance;
 import javax.media.j3d.BoundingSphere;
@@ -30,8 +29,6 @@ public class Astro extends BranchGroup {
     protected TextureAttributes textureAttributes;
     protected Material material;
     protected Appearance ap;
-    protected ArrayList<Astro> satelites;    
-    protected ArrayList<Anillo> anillos;
     protected RotationInterpolator rotator;
     protected RotationInterpolator rotatorAround;
     protected TransformGroup rotationAround;
@@ -46,8 +43,6 @@ public class Astro extends BranchGroup {
         this.movimiento = true;
         this.texturePath = texturePath;
         this.material = material;
-        satelites = new ArrayList();
-        anillos = new ArrayList();
         
         // creación de la apariencia: textura + material
         texture = new TextureLoader (this.texturePath, null).getTexture();

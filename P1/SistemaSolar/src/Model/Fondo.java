@@ -12,7 +12,9 @@ import javax.media.j3d.Texture;
 import javax.vecmath.Point3d;
 
 class Fondo extends BranchGroup {
+    
     private String textura;
+    
     public Fondo (String textura) {
         
         this.textura = textura;

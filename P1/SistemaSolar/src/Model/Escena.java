@@ -8,6 +8,7 @@ import javax.vecmath.Color3f;
 import javax.vecmath.Point3f;
 
 class Escena extends BranchGroup {  
+    
     public Escena () { 
         // Creación nave
         Nave nave = new Nave(
