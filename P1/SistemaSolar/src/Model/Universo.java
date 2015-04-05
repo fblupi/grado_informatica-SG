@@ -56,7 +56,7 @@ public class Universo {
 
         // El comportamiento, para mover la camara con el raton
         OrbitBehavior orbit = new OrbitBehavior(canvas, OrbitBehavior.REVERSE_ALL);
-        orbit.setSchedulingBounds(new BoundingSphere(new Point3d (0.0f, 0.0f, 0.0f), 120.0f));
+        orbit.setSchedulingBounds(new BoundingSphere(new Point3d (0.0f, 0.0f, 0.0f), 200.0f));
         orbit.setZoomFactor (2.0f);
         viewingPlatform.setViewPlatformBehavior(orbit);
 
@@ -64,7 +64,7 @@ public class Universo {
         Viewer viewer = new Viewer (canvas);
         View view = viewer.getView();
         view.setFieldOfView(Math.toRadians(45));
-        view.setBackClipDistance(50.0);
+        view.setBackClipDistance(100.0);
 
         // Se construye y devuelve el Universo con los parametros definidos
         return new SimpleUniverse (viewingPlatform, viewer);

@@ -36,7 +36,7 @@ public class Sol extends Astro {
             new Point3f (0.0f, 0.0f, 0.0f),
             new Point3f (1.0f, 0.0f, 0.0f)
         );
-        luz.setInfluencingBounds (new BoundingSphere (new Point3d (0.0, 0.0, 0.0), 120.0));
+        luz.setInfluencingBounds (new BoundingSphere (new Point3d (0.0, 0.0, 0.0), 200.0));
         luz.setEnable (true);
         
         // Se cuelgan del grafo las transformaciones y la figura

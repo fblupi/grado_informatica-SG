@@ -65,7 +65,7 @@ public class Nave extends BranchGroup {
         Transform3D t3d = new Transform3D (); // Se crea la matriz de transformación
         Alpha value = new Alpha (-1, Alpha.INCREASING_ENABLE, 0, 0, velocidad, 0, 0, 0, 0, 0); // Valor numérico que se ira modificando en tiempo de ejecución
         interpolator = new RotPosPathInterpolator (value, t, t3d, knots, angulos, posiciones); // Se crea el interpolador, las figuras iran moviéndose
-        interpolator.setSchedulingBounds(new BoundingSphere (new Point3d (0.0, 0.0, 0.0 ), 100.0)); // Se le pone el entorno de activación
+        interpolator.setSchedulingBounds(new BoundingSphere (new Point3d (0.0, 0.0, 0.0 ), 200.0)); // Se le pone el entorno de activación
         interpolator.setEnable(true); // Se activa
         t.addChild(interpolator); // Se cuelga del grupo de transformación
         
