@@ -75,7 +75,7 @@ public class Astro extends BranchGroup {
     }
     
     public void addCamara(Camara camara) {
-        translation.addChild(camara);
+        rotationAround.addChild(camara);
     }
     
     public void setMovimiento(boolean movimiento) {
