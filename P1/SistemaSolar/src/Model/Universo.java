@@ -27,8 +27,8 @@ public class Universo {
         
         camaraPlanta = new Camara(false, false, canvas, new Point3d (0,200,0), new Point3d (0,0,0), new Vector3d (0,0,-1), 0.0032f, 0.3f, 100.0f);
         camaraPerspectiva = new Camara(true, true, canvasVariable, new Point3d (80,80,80), new Point3d (0,0,0), new Vector3d (0,1,0), 45.0f, 0.3f, 100.0f);
-        camaraNave = new Camara(true, false, canvasVariable, new Point3d (0.01,0.5,-0.25), new Point3d (0,0,1), new Vector3d (0,1,0), 45.0f, 0.1f, 30.0f);
-        camaraLuna = new Camara(true, false, canvasVariable, new Point3d (0.5,0.15,0), new Point3d (-1,-0.05,0), new Vector3d (1,1,0), 90.0f, 0.005f, 2.5f);
+        camaraNave = new Camara(true, false, canvasVariable, new Point3d (0,0.5,-0.25), new Point3d (0,0,1), new Vector3d (0,1,0), 45.0f, 0.1f, 30.0f);
+        camaraLuna = new Camara(true, false, canvasVariable, new Point3d (1.6,0.5,0), new Point3d (-1,-0.25,0), new Vector3d (1,1,0), 60.0f, 0.1f, 30.0f);
         
         locale.addBranchGraph(camaraPerspectiva);
         locale.addBranchGraph(camaraPlanta);
