@@ -23,47 +23,60 @@ public class Universo {
     private Fondo background;
     private Escena scene;
     
-    private Canvas3D canvas;
     private VirtualUniverse universe;
     private Locale locale;
     private Camara camara;
-    private Camara camaraPlanta;
+    private Camara camaraPlanta;    
+    private Camara camaraLuna;
+    private Camara camaraNave;
 
     // ******* Constructor
   
-    public Universo (Canvas3D canvas) {
+    public Universo (Canvas3D canvas, Canvas3D canvasVariable) {
         
         // Se crea el universo. La parte de la vista
         universe = new VirtualUniverse();
         locale = new Locale(universe);
         
-        camara = new Camara(true, true, canvas, new Point3d (80,80,80), new Point3d (0,0,0), new Vector3d (0,1,0), 45.0f, 0.1f, 100.0f);
-        camaraPlanta = new Camara(false, false, canvas, new Point3d (0,200,0), new Point3d (0,0,0), new Vector3d (0,0,-1), 0.002f, 0.1f, 200.0f);
+        camaraPlanta = new Camara(false, false, canvas, new Point3d (0,200,0), new Point3d (0,0,0), new Vector3d (0,0,-1), 0.003f, 0.1f, 200.0f);
+        camara = new Camara(true, true, canvasVariable, new Point3d (80,80,80), new Point3d (0,0,0), new Vector3d (0,1,0), 45.0f, 0.1f, 100.0f);
+        camaraNave = new Camara(true, false, canvasVariable, new Point3d (1,1,1), new Point3d (0,0,0), new Vector3d (0,1,0), 45.0f, 0.1f, 100.0f);
+        camaraLuna = new Camara(true, false, canvasVariable, new Point3d (1,1,1), new Point3d (0,0,0), new Vector3d (0,1,0), 45.0f, 0.1f, 100.0f);
         
         locale.addBranchGraph(camara);
         locale.addBranchGraph(camaraPlanta);
         
         camara.activar();
-        camara.desactivar();
         camaraPlanta.activar();
         
         background = new Fondo("imgs/back.jpg");
         scene = new Escena(); 
+        
+        scene.addCamaraLuna(camaraLuna);
+        scene.addCamaraNave(camaraNave);
         
         locale.addBranchGraph(background);
         locale.addBranchGraph(scene);
     }
   
     // ******* Public
-
-    public void activarPlanta() {
-        camara.desactivar();
-        camaraPlanta.activar();
+    
+    public void activarCamaraPerspectiva() {
+        camaraLuna.desactivar();
+        camaraNave.desactivar();
+        camara.activar();
     }
     
-    public void activarPerspectiva() {
-        camaraPlanta.desactivar();
-        camara.activar();
+    public void activarCamaraNave() {
+        camaraLuna.desactivar();
+        camara.desactivar();
+        camaraNave.activar();
+    }
+    
+    public void activarCamaraLuna() {
+        camaraNave.desactivar();
+        camara.desactivar();
+        camaraLuna.activar();
     }
     
     public void closeApp (int code) {

@@ -59,6 +59,10 @@ public class Nave extends BranchGroup {
         
     }
     
+    public void addCamara(Camara camara) {
+        transform.addChild(camara);
+    }
+    
     private TransformGroup mover() {
         TransformGroup t = new TransformGroup (); // Se crea el nodo de transformación
         t.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE); // Se le permite que se cambie en tiempo de ejecución

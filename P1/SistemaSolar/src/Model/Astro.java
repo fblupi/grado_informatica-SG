@@ -74,6 +74,10 @@ public class Astro extends BranchGroup {
         translation.addChild(anillo);
     }
     
+    public void addCamara(Camara camara) {
+        translation.addChild(camara);
+    }
+    
     public void setMovimiento(boolean movimiento) {
         this.movimiento = movimiento;
     }

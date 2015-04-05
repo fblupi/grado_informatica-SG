@@ -8,10 +8,14 @@ import javax.vecmath.Color3f;
 import javax.vecmath.Point3f;
 
 class Escena extends BranchGroup {  
+
+    private Nave nave;
+    private Astro luna;
     
-    public Escena () { 
+    public Escena() {
+        
         // Creación nave
-        Nave nave = new Nave(
+        nave = new Nave(
             "models/Arc170/Arc170.obj",     // archivo del obj con el modelo
             10000,                          // tiempo de ciclo de animación
             new Point3f[] {                 // puntos
@@ -82,7 +86,7 @@ class Escena extends BranchGroup {
                 "imgs/tierra.jpg", 
                 materialAstros
         );
-        Astro luna = new Astro(
+        luna = new Astro(
                 0.34f, 
                 9000l, 
                 9000l, 
@@ -281,5 +285,13 @@ class Escena extends BranchGroup {
         // Colgamos del BranchGroup escena la nave y los planetas
         this.addChild(sol);
         this.addChild(nave);
+    }
+    
+    public void addCamaraLuna(Camara camara) {
+        luna.addCamara(camara);
+    }
+    
+    public void addCamaraNave(Camara camara) {
+        nave.addCamara(camara);
     }
 }

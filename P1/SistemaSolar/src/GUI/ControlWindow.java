@@ -10,19 +10,21 @@ import javax.swing.JFrame;
 public class ControlWindow extends JFrame {
   private Universo universe;
 
-  public ControlWindow(Canvas3D canvas, Universo anUniverse) {
+  public ControlWindow(Canvas3D canvas, Canvas3D canvasVariable, Universo anUniverse) {
     super();
     universe = anUniverse;
     initComponents();
-    setLocation (920, 100);
+    setLocation (915, 338);
     addWindowListener(new WindowAdapter() {
       @Override
       public void windowClosing(WindowEvent e) {
         closeApp(0);
       }
     });
-    Visualization visualization = new Visualization (this, false, canvas);
+    Visualization visualization = new Visualization (this, false, canvas, 915, 0);
     visualization.setVisible(true);
+    Visualization visualizationVariable = new Visualization (this, false, canvasVariable, 0, 0);
+    visualizationVariable.setVisible(true);
     pack();
   }
 
@@ -37,22 +39,15 @@ public class ControlWindow extends JFrame {
 
         primitiveGroup = new javax.swing.ButtonGroup();
         appearanceGroup = new javax.swing.ButtonGroup();
-        camaraPlanta = new javax.swing.JButton();
         camaraPerspectiva = new javax.swing.JButton();
+        camaraLuna = new javax.swing.JButton();
+        camaraNave = new javax.swing.JButton();
         exitApp = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Control");
-        setMinimumSize(new java.awt.Dimension(300, 345));
+        setMinimumSize(new java.awt.Dimension(300, 300));
         getContentPane().setLayout(new java.awt.GridLayout(5, 0));
-
-        camaraPlanta.setText("Camara Planta");
-        camaraPlanta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                camaraPlantaActionPerformed(evt);
-            }
-        });
-        getContentPane().add(camaraPlanta);
 
         camaraPerspectiva.setText("Camara Perspectiva");
         camaraPerspectiva.addActionListener(new java.awt.event.ActionListener() {
@@ -61,6 +56,22 @@ public class ControlWindow extends JFrame {
             }
         });
         getContentPane().add(camaraPerspectiva);
+
+        camaraLuna.setText("Camara Luna");
+        camaraLuna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                camaraLunaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(camaraLuna);
+
+        camaraNave.setText("Camara Nave");
+        camaraNave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                camaraNaveActionPerformed(evt);
+            }
+        });
+        getContentPane().add(camaraNave);
 
         exitApp.setText("Salir");
         exitApp.addActionListener(new java.awt.event.ActionListener() {
@@ -78,18 +89,23 @@ public class ControlWindow extends JFrame {
     closeApp(0);
   }//GEN-LAST:event_exitAppActionPerformed
 
-    private void camaraPlantaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camaraPlantaActionPerformed
+    private void camaraLunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camaraLunaActionPerformed
         // TODO add your handling code here:
-        universe.activarPlanta();
-    }//GEN-LAST:event_camaraPlantaActionPerformed
+        universe.activarCamaraLuna();
+    }//GEN-LAST:event_camaraLunaActionPerformed
 
     private void camaraPerspectivaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camaraPerspectivaActionPerformed
         // TODO add your handling code here:
-        universe.activarPerspectiva();
+        universe.activarCamaraPerspectiva();
     }//GEN-LAST:event_camaraPerspectivaActionPerformed
 
+    private void camaraNaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camaraNaveActionPerformed
+        // TODO add your handling code here:
+        universe.activarCamaraNave();
+    }//GEN-LAST:event_camaraNaveActionPerformed
+
   public void showWindow () {
-    setVisible (true);
+    setVisible(true);
   }
 
   void closeApp (int code) {
@@ -98,8 +114,9 @@ public class ControlWindow extends JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup appearanceGroup;
+    private javax.swing.JButton camaraLuna;
+    private javax.swing.JButton camaraNave;
     private javax.swing.JButton camaraPerspectiva;
-    private javax.swing.JButton camaraPlanta;
     private javax.swing.JButton exitApp;
     private javax.swing.ButtonGroup primitiveGroup;
     // End of variables declaration//GEN-END:variables
