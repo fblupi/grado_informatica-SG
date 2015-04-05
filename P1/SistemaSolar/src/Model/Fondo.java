@@ -16,7 +16,6 @@ class Fondo extends BranchGroup {
     private String textura;
     
     public Fondo (String textura) {
-        
         this.textura = textura;
     
         // Se crea el objeto para el fondo y 
@@ -45,4 +44,5 @@ class Fondo extends BranchGroup {
         // Finalmente, se cuelga el fondo creado
         this.addChild (background);  
     }
+    
 }

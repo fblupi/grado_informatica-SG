@@ -13,7 +13,6 @@ class Escena extends BranchGroup {
     private Astro luna;
     
     public Escena() {
-        
         // Creación nave
         nave = new Nave(
             "models/Arc170/Arc170.obj",     // archivo del obj con el modelo
@@ -294,4 +293,5 @@ class Escena extends BranchGroup {
     public void addCamaraNave(Camara camara) {
         nave.addCamara(camara);
     }
+    
 }

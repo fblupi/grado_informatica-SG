@@ -12,6 +12,7 @@ import javax.vecmath.TexCoord2f;
 import javax.vecmath.Vector3f;
 
 public class Torus extends Shape3D {
+    
     public Torus(float rad1, float rad2, int res1, int res2, Appearance ap) {
         if(res1<3) res1 = 3;    // el valor mínimo de resolución es 3
         if(res2<2) res2 = 2;    // el valor mínimo de resolución es 2

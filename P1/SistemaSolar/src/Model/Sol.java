@@ -12,6 +12,7 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Point3f;
 
 public class Sol extends Astro {
+    
     private PointLight luz;
             
     public Sol(float diametro, long velRotacion, String textura) {

@@ -1,9 +1,6 @@
 
 package Model;
 
-import com.sun.j3d.utils.behaviors.vp.OrbitBehavior;
-import com.sun.j3d.utils.universe.SimpleUniverse;
-import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
 import javax.media.j3d.PhysicalBody;
@@ -99,4 +96,5 @@ public class Camara extends BranchGroup {
             activa = false;
         }
     }
+    
 }
