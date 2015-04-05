@@ -37,7 +37,8 @@ public class ControlWindow extends JFrame {
 
         primitiveGroup = new javax.swing.ButtonGroup();
         appearanceGroup = new javax.swing.ButtonGroup();
-        commandsPanel = new javax.swing.JPanel();
+        camaraPlanta = new javax.swing.JButton();
+        camaraPerspectiva = new javax.swing.JButton();
         exitApp = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -45,8 +46,21 @@ public class ControlWindow extends JFrame {
         setMinimumSize(new java.awt.Dimension(300, 345));
         getContentPane().setLayout(new java.awt.GridLayout(5, 0));
 
-        commandsPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 20));
-        getContentPane().add(commandsPanel);
+        camaraPlanta.setText("Camara Planta");
+        camaraPlanta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                camaraPlantaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(camaraPlanta);
+
+        camaraPerspectiva.setText("Camara Perspectiva");
+        camaraPerspectiva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                camaraPerspectivaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(camaraPerspectiva);
 
         exitApp.setText("Salir");
         exitApp.addActionListener(new java.awt.event.ActionListener() {
@@ -64,6 +78,16 @@ public class ControlWindow extends JFrame {
     closeApp(0);
   }//GEN-LAST:event_exitAppActionPerformed
 
+    private void camaraPlantaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camaraPlantaActionPerformed
+        // TODO add your handling code here:
+        universe.activarPlanta();
+    }//GEN-LAST:event_camaraPlantaActionPerformed
+
+    private void camaraPerspectivaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camaraPerspectivaActionPerformed
+        // TODO add your handling code here:
+        universe.activarPerspectiva();
+    }//GEN-LAST:event_camaraPerspectivaActionPerformed
+
   public void showWindow () {
     setVisible (true);
   }
@@ -74,7 +98,8 @@ public class ControlWindow extends JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup appearanceGroup;
-    private javax.swing.JPanel commandsPanel;
+    private javax.swing.JButton camaraPerspectiva;
+    private javax.swing.JButton camaraPlanta;
     private javax.swing.JButton exitApp;
     private javax.swing.ButtonGroup primitiveGroup;
     // End of variables declaration//GEN-END:variables
