@@ -9,6 +9,7 @@ import javax.media.j3d.Appearance;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Material;
+import javax.media.j3d.Node;
 import javax.media.j3d.RotationInterpolator;
 import javax.media.j3d.Texture;
 import javax.media.j3d.TextureAttributes;
@@ -23,7 +24,6 @@ public class Astro extends BranchGroup {
     protected long velTraslacion;
     protected long velRotacion;
     protected float distancia;
-    protected boolean movimiento;
     protected String texturePath;
     protected Texture texture;
     protected TextureAttributes textureAttributes;
@@ -40,7 +40,6 @@ public class Astro extends BranchGroup {
         this.velTraslacion = velTraslacion;
         this.velRotacion = velRotacion;
         this.distancia = distancia;
-        this.movimiento = true;
         this.texturePath = texturePath;
         this.material = material;
         
@@ -64,6 +63,8 @@ public class Astro extends BranchGroup {
         translation.addChild(rotation); // la rotación se cuelga de la traslación
         rotationAround.addChild(translation); // la traslación se cuelga de la rotación alrededor
         this.addChild(rotationAround); // la rotación alrededor se cuelga del BranchGroup del planeta
+        
+        this.setCapability(Node.ENABLE_PICK_REPORTING);
     }
     
     public void addSatelite(Astro astro) {
@@ -78,8 +79,8 @@ public class Astro extends BranchGroup {
         rotationAround.addChild(camara);
     }
     
-    public void setMovimiento(boolean movimiento) {
-        this.movimiento = movimiento;
+    public void setRotationOnOff(boolean onOff) {
+        rotator.setEnable(onOff);
     }
     
     protected TransformGroup rotar() {

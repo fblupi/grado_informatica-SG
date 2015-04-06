@@ -17,6 +17,7 @@ public class Universo {
     private Camara camaraPlanta;    
     private Camara camaraLuna;
     private Camara camaraNave;
+    private Pick pick;
 
     // ******* Constructor
   
@@ -37,10 +38,15 @@ public class Universo {
         camaraPlanta.activar();
         
         background = new Fondo("imgs/back.jpg");
-        scene = new Escena(); 
+        scene = new Escena();
         
         scene.addCamaraLuna(camaraLuna);
         scene.addCamaraNave(camaraNave);
+
+        pick = new Pick(canvasVariable);
+        scene.setPickable(true);
+        scene.addChild(pick);
+        pick.initSearch(scene);
         
         locale.addBranchGraph(background);
         locale.addBranchGraph(scene);
