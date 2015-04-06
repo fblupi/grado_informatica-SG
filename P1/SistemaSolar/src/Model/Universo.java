@@ -1,6 +1,8 @@
 
 package Model;
 
+import com.sun.j3d.utils.behaviors.picking.PickRotateBehavior;
+import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.Canvas3D;
 import javax.media.j3d.Locale;
 import javax.media.j3d.VirtualUniverse;
@@ -18,6 +20,7 @@ public class Universo {
     private Camara camaraLuna;
     private Camara camaraNave;
     private Pick pick;
+    private PickRotateBehavior pickR;
 
     // ******* Constructor
   
@@ -42,11 +45,15 @@ public class Universo {
         
         scene.addCamaraLuna(camaraLuna);
         scene.addCamaraNave(camaraNave);
-
+        
         pick = new Pick(canvasVariable);
-        scene.setPickable(true);
+        pick.setSchedulingBounds(new BoundingSphere (new Point3d (0.0, 0.0, 0.0 ), 200.0));
         scene.addChild(pick);
         pick.initSearch(scene);
+        
+        
+        pickR = new PickRotateBehavior(scene, canvasVariable, new BoundingSphere (new Point3d (0.0, 0.0, 0.0 ), 200.0));
+        scene.addChild(pickR);
         
         locale.addBranchGraph(background);
         locale.addBranchGraph(scene);

@@ -20,6 +20,7 @@ import javax.vecmath.Vector3f;
 
 public class Astro extends BranchGroup {
     
+    protected boolean movimiento;
     protected float diametro;
     protected long velTraslacion;
     protected long velRotacion;
@@ -36,6 +37,8 @@ public class Astro extends BranchGroup {
     protected TransformGroup translation;
     
     public Astro(float diametro, long velTraslacion, long velRotacion, float distancia, String texturePath, Material material) {
+        this.setPickable(true);
+        this.movimiento = true;
         this.diametro = diametro;
         this.velTraslacion = velTraslacion;
         this.velRotacion = velRotacion;
@@ -79,8 +82,9 @@ public class Astro extends BranchGroup {
         rotationAround.addChild(camara);
     }
     
-    public void setRotationOnOff(boolean onOff) {
-        rotator.setEnable(onOff);
+    public void setRotationOnOff() {
+        movimiento = !movimiento;
+        rotator.setEnable(movimiento);
     }
     
     protected TransformGroup rotar() {

@@ -28,6 +28,7 @@ public class Anillo extends BranchGroup {
     private TransformGroup rotation;
     
     public Anillo(float radioInterno, float radioExterno, long velRotacion, String texturePath, Material material) {
+        this.setPickable(false);
         this.radioInterno = radioInterno;
         this.radioExterno = radioExterno;
         this.velRotacion = velRotacion;

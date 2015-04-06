@@ -30,6 +30,7 @@ public class Camara extends BranchGroup {
     private double planoTrasero;
     
     public Camara(boolean perspectiva, boolean movimiento, Canvas3D canvas, Point3d posicion, Point3d interes, Vector3d vUp, double anguloOEscala, double planoDelantero, double planoTrasero) {
+        this.setPickable(false);
         this.activa = false;
         this.perspectiva = perspectiva;
         this.movimiento = movimiento;

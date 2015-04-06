@@ -16,6 +16,7 @@ class Fondo extends BranchGroup {
     private String textura;
     
     public Fondo (String textura) {
+        this.setPickable(false);
         this.textura = textura;
     
         // Se crea el objeto para el fondo y 

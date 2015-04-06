@@ -29,6 +29,7 @@ public class Nave extends BranchGroup {
     private TransformGroup transform;
     
     public Nave(String obj, long velocidad, Point3f[] posiciones, AxisAngle4f[] angulos, float[] knots) {
+        this.setPickable(false);
         this.obj = obj;
         this.velocidad = velocidad;
         this.posiciones = new Point3f[posiciones.length];

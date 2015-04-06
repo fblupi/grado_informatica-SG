@@ -16,6 +16,7 @@ class Escena extends BranchGroup {
     private Anillo a, b, c;
     
     public Escena() {
+        //this.setPickable(true);
         // Creación nave
         nave = new Nave(
             "models/Arc170/Arc170.obj",     // archivo del obj con el modelo
