@@ -10,7 +10,10 @@ import javax.vecmath.Point3f;
 class Escena extends BranchGroup {  
 
     private Nave nave;
-    private Astro luna;
+    private Astro sol, mercurio, venus, tierra, luna, marte, deimos, fobos, jupiter,
+            io, europa, ganimedes, calisto, saturno, urano, miranda, ariel, umbriel,
+            titania, oberon, neptuno, triton;
+    private Anillo a, b, c;
     
     public Escena() {
         // Creación nave
@@ -55,12 +58,12 @@ class Escena extends BranchGroup {
         );
         
         // Creación astros
-        Sol sol = new Sol(
+        sol = new Sol(
                 10f,                            // diametro
                 5000l,                          // rotación sobre sí mismo
                 "imgs/sol.jpg"                  // path textura
         );
-        Astro mercurio =  new Astro(
+        mercurio =  new Astro(
                 0.49f,                          // diametro
                 18000l,                         // rotación sobre astro 
                 10000l,                         // rotación sobre sí mismo
@@ -69,7 +72,7 @@ class Escena extends BranchGroup {
                 materialAstros                  // material
                 
         );
-        Astro venus =  new Astro(
+        venus =  new Astro(
                 1.21f, 
                 25000l, 
                 -100000l, 
@@ -77,7 +80,7 @@ class Escena extends BranchGroup {
                 "imgs/venus.jpg", 
                 materialAstros
         );
-        Astro tierra = new Astro(
+        tierra = new Astro(
                 1.27f, 
                 60000l, 
                 3000l, 
@@ -93,7 +96,7 @@ class Escena extends BranchGroup {
                 "imgs/luna.jpg", 
                 materialAstros
         );
-        Astro marte = new Astro(
+        marte = new Astro(
                 0.68f, 
                 75000l, 
                 5000l, 
@@ -101,7 +104,7 @@ class Escena extends BranchGroup {
                 "imgs/marte.jpg", 
                 materialAstros
         );
-        Astro fobos = new Astro(
+        fobos = new Astro(
                 0.11f, 
                 3100l, 
                 3100l, 
@@ -109,7 +112,7 @@ class Escena extends BranchGroup {
                 "imgs/fobos.jpg", 
                 materialAstros
         );
-        Astro deimos = new Astro(
+        deimos = new Astro(
                 0.1f, 
                 3200l, 
                 3200l, 
@@ -117,7 +120,7 @@ class Escena extends BranchGroup {
                 "imgs/deimos.jpg", 
                 materialAstros
         );
-        Astro jupiter = new Astro(
+        jupiter = new Astro(
                 5f, 
                 90000l, 
                 2900l, 
@@ -125,7 +128,7 @@ class Escena extends BranchGroup {
                 "imgs/jupiter.jpg", 
                 materialAstros
         );
-        Astro io = new Astro(
+        io = new Astro(
                 0.36f, 
                 3300l, 
                 3300l, 
@@ -133,7 +136,7 @@ class Escena extends BranchGroup {
                 "imgs/io.jpg", 
                 materialAstros
         );
-        Astro europa = new Astro(
+        europa = new Astro(
                 0.31f, 
                 3500l, 
                 3500l, 
@@ -141,7 +144,7 @@ class Escena extends BranchGroup {
                 "imgs/europa.jpg", 
                 materialAstros
         );
-        Astro ganimedes = new Astro(
+        ganimedes = new Astro(
                 0.53f, 
                 3750l, 
                 3750l, 
@@ -149,7 +152,7 @@ class Escena extends BranchGroup {
                 "imgs/ganimedes.jpg", 
                 materialAstros
         );
-        Astro calisto = new Astro(
+        calisto = new Astro(
                 0.48f, 
                 6000l, 
                 6000l, 
@@ -157,7 +160,7 @@ class Escena extends BranchGroup {
                 "imgs/calisto.jpg", 
                 materialAstros
         );
-        Astro saturno = new Astro(
+        saturno = new Astro(
                 4f, 
                 120000l, 
                 2900l, 
@@ -165,7 +168,7 @@ class Escena extends BranchGroup {
                 "imgs/saturno.jpg", 
                 materialAstros
         );
-        Astro urano = new Astro(
+        urano = new Astro(
                 2.6f, 
                 150000l, 
                 2900l, 
@@ -173,7 +176,7 @@ class Escena extends BranchGroup {
                 "imgs/urano.jpg", 
                 materialAstros
         );
-        Astro miranda = new Astro(
+        miranda = new Astro(
                 0.12f, 
                 3250l, 
                 3250l, 
@@ -181,7 +184,7 @@ class Escena extends BranchGroup {
                 "imgs/miranda.jpg", 
                 materialAstros
         );
-        Astro ariel = new Astro(
+        ariel = new Astro(
                 0.13f, 
                 3400l, 
                 3400l, 
@@ -189,7 +192,7 @@ class Escena extends BranchGroup {
                 "imgs/ariel.jpg",  
                 materialAstros
         );
-        Astro umbriel = new Astro(
+        umbriel = new Astro(
                 0.14f, 
                 3550l, 
                 3550l, 
@@ -197,7 +200,7 @@ class Escena extends BranchGroup {
                 "imgs/umbriel.jpg", 
                 materialAstros
         );
-        Astro titania = new Astro(
+        titania = new Astro(
                 0.16f, 
                 4000l,  
                 4000l, 
@@ -205,7 +208,7 @@ class Escena extends BranchGroup {
                 "imgs/titania.jpg", 
                 materialAstros
         );
-        Astro oberon = new Astro(
+        oberon = new Astro(
                 0.15f, 
                 5000l, 
                 5000l, 
@@ -213,7 +216,7 @@ class Escena extends BranchGroup {
                 "imgs/oberon.jpg", 
                 materialAstros
         );
-        Astro neptuno = new Astro(
+        neptuno = new Astro(
                 2.5f, 
                 200000l, 
                 2900l, 
@@ -221,7 +224,7 @@ class Escena extends BranchGroup {
                 "imgs/neptuno.jpg", 
                 materialAstros
         );
-        Astro triton = new Astro(
+        triton = new Astro(
                 0.27f, 
                 -36000l, 
                 -36000l, 
@@ -231,21 +234,21 @@ class Escena extends BranchGroup {
         );
         
         // Creación anillos
-        Anillo a = new Anillo(
+        a = new Anillo(
                 3.76f,                          // radio interno
                 0.24f,                          // radio externo
                 50000l,                         // rotación
                 "imgs/anilloa.jpg",             // path textura
                 materialAnillos                 // material
         );
-        Anillo b = new Anillo(
+        b = new Anillo(
                 3.11f, 
                 0.39f, 
                 50000l, 
                 "imgs/anillob.jpg", 
                 materialAnillos
         );
-        Anillo c = new Anillo(
+        c = new Anillo(
                 2.375f, 
                 0.325f, 
                 50000l, 
