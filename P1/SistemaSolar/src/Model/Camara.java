@@ -60,11 +60,12 @@ public class Camara extends BranchGroup {
             BoundingSphere mouseBounds = new BoundingSphere(new Point3d(), 200.0);
             
             MouseRotate myMouseRotate = new MouseRotate(MouseBehavior.INVERT_INPUT);
+            myMouseRotate.setFactor(0.005);
             myMouseRotate.setTransformGroup(tg);
             myMouseRotate.setSchedulingBounds(mouseBounds);
 
             MouseTranslate myMouseTranslate = new MouseTranslate(MouseBehavior.INVERT_INPUT);
-            myMouseTranslate.setFactor(0.5);
+            myMouseTranslate.setFactor(0.1);
             myMouseTranslate.setTransformGroup(tg);
             myMouseTranslate.setSchedulingBounds(mouseBounds);
 
