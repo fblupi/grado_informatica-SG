@@ -41,11 +41,7 @@ public class Astro extends BranchGroup {
         this.movimiento = true;
         this.diametro = diametro;
         this.velTraslacion = velTraslacion;
-        if(velTraslacion != 0) {
-            this.velRotacion = velRotacion*velTraslacion;
-        } else {
-            this.velRotacion = velRotacion;
-        }
+        this.velRotacion = velRotacion;
         this.distancia = distancia;
         this.texturePath = texturePath;
         this.material = material;
@@ -89,7 +85,7 @@ public class Astro extends BranchGroup {
     public void setRotationOnOff() {
         movimiento = !movimiento;
         rotator.setEnable(movimiento);
-        System.out.println(texturePath + " polopos " + movimiento);
+        System.out.println(texturePath);
     }
     
     protected TransformGroup rotar() {

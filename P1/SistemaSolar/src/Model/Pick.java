@@ -21,7 +21,6 @@ public class Pick extends Behavior {
     public Pick(Canvas3D aCanvas) {
         canvas = aCanvas;
         condition = new WakeupOnAWTEvent(MouseEvent.MOUSE_CLICKED);
-        System.out.println("creado");
     }
 
     public void initSearch(BranchGroup bg) {
@@ -30,19 +29,16 @@ public class Pick extends Behavior {
         pickCanvas.setMode(PickInfo.PICK_GEOMETRY);
         pickCanvas.setFlags(PickInfo.SCENEGRAPHPATH | PickInfo.CLOSEST_INTERSECTION_POINT);
         setEnable(true);
-        System.out.println("initSearch");
     }
 
     @Override
     public void initialize() {
         setEnable(false);
         wakeupOn(condition);
-        System.out.println("inicializado");
     }
 
     @Override
     public void processStimulus(Enumeration cond) {
-        System.out.println("estímulo");
         WakeupOnAWTEvent c = (WakeupOnAWTEvent) cond.nextElement();
         AWTEvent[] e = c.getAWTEvent();
         MouseEvent mouse = (MouseEvent) e[0];
@@ -50,12 +46,9 @@ public class Pick extends Behavior {
         PickInfo pi = pickCanvas.pickClosest();
         if(pi != null) {
             SceneGraphPath sgp = pi.getSceneGraphPath();
-            System.out.println(sgp.toString());
-            Astro a = (Astro)sgp.getNode(0);
+            Astro a = (Astro)sgp.getNode(sgp.nodeCount()-2);
             a.setRotationOnOff();
         }
-        // Selecciona el Astro y realiza el método setRotationOnOff()
-        
         wakeupOn(condition);
     }
 }
