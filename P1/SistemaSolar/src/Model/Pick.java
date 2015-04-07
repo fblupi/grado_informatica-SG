@@ -48,12 +48,12 @@ public class Pick extends Behavior {
         MouseEvent mouse = (MouseEvent) e[0];
         pickCanvas.setShapeLocation(mouse);
         PickInfo pi = pickCanvas.pickClosest();
-        SceneGraphPath sgp = pi.getSceneGraphPath();
-        
-        //System.out.println(sgp.toString());
+        if(pi != null) {
+            SceneGraphPath sgp = pi.getSceneGraphPath();
+            System.out.println(sgp.toString());
+        }
         // Selecciona el Astro y realiza el método setRotationOnOff()
         
-        setEnable(false);
         wakeupOn(condition);
     }
 }

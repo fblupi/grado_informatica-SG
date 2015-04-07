@@ -1,7 +1,6 @@
 
 package Model;
 
-import com.sun.j3d.utils.behaviors.picking.PickRotateBehavior;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.Canvas3D;
 import javax.media.j3d.Locale;
@@ -20,7 +19,6 @@ public class Universo {
     private Camara camaraLuna;
     private Camara camaraNave;
     private Pick pick;
-    private PickRotateBehavior pickR;
 
     // ******* Constructor
   
@@ -32,7 +30,7 @@ public class Universo {
         camaraPlanta = new Camara(false, false, canvas, new Point3d (0,200,0), new Point3d (0,0,0), new Vector3d (0,0,-1), 0.0032f, 0.3f, 100.0f);
         camaraPerspectiva = new Camara(true, true, canvasVariable, new Point3d (80,80,80), new Point3d (0,0,0), new Vector3d (0,1,0), 45.0f, 0.3f, 100.0f);
         camaraNave = new Camara(true, false, canvasVariable, new Point3d (0,0.5,-0.25), new Point3d (0,0,1), new Vector3d (0,1,0), 45.0f, 0.1f, 30.0f);
-        camaraLuna = new Camara(true, false, canvasVariable, new Point3d (1.6,0.5,0), new Point3d (-1,-0.25,0), new Vector3d (1,1,0), 60.0f, 0.1f, 30.0f);
+        camaraLuna = new Camara(true, false, canvasVariable, new Point3d (0,0.45,0), new Point3d (-1,-0.25,0), new Vector3d (1,1,0), 90.0f, 0.05f, 15.0f);
         
         locale.addBranchGraph(camaraPerspectiva);
         locale.addBranchGraph(camaraPlanta);
@@ -41,22 +39,16 @@ public class Universo {
         camaraPlanta.activar();
         
         background = new Fondo("imgs/back.jpg");
-        scene = new Escena();
-        
-        scene.addCamaraLuna(camaraLuna);
-        scene.addCamaraNave(camaraNave);
+        scene = new Escena(camaraLuna, camaraNave);
         
         pick = new Pick(canvasVariable);
         pick.setSchedulingBounds(new BoundingSphere (new Point3d (0.0, 0.0, 0.0 ), 200.0));
         scene.addChild(pick);
-        pick.initSearch(scene);
-        
-        
-        pickR = new PickRotateBehavior(scene, canvasVariable, new BoundingSphere (new Point3d (0.0, 0.0, 0.0 ), 200.0));
-        scene.addChild(pickR);
         
         locale.addBranchGraph(background);
         locale.addBranchGraph(scene);
+        
+        pick.initSearch(scene);
     }
   
     // ******* Public

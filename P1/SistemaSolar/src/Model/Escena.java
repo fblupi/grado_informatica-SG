@@ -8,17 +8,11 @@ import javax.vecmath.Color3f;
 import javax.vecmath.Point3f;
 
 class Escena extends BranchGroup {  
-
-    private Nave nave;
-    private Astro sol, mercurio, venus, tierra, luna, marte, deimos, fobos, jupiter,
-            io, europa, ganimedes, calisto, saturno, urano, miranda, ariel, umbriel,
-            titania, oberon, neptuno, triton;
-    private Anillo a, b, c;
     
-    public Escena() {
+    public Escena(Camara camaraLuna, Camara camaraNave) {
         //this.setPickable(true);
         // Creación nave
-        nave = new Nave(
+        Nave nave = new Nave(
             "models/Arc170/Arc170.obj",     // archivo del obj con el modelo
             10000,                          // tiempo de ciclo de animación
             new Point3f[] {                 // puntos
@@ -59,12 +53,12 @@ class Escena extends BranchGroup {
         );
         
         // Creación astros
-        sol = new Sol(
+        Sol sol = new Sol(
                 10f,                            // diametro
                 5000l,                          // rotación sobre sí mismo
                 "imgs/sol.jpg"                  // path textura
         );
-        mercurio =  new Astro(
+        Astro mercurio =  new Astro(
                 0.49f,                          // diametro
                 18000l,                         // rotación sobre astro 
                 10000l,                         // rotación sobre sí mismo
@@ -73,7 +67,7 @@ class Escena extends BranchGroup {
                 materialAstros                  // material
                 
         );
-        venus =  new Astro(
+        Astro venus =  new Astro(
                 1.21f, 
                 25000l, 
                 -100000l, 
@@ -81,7 +75,7 @@ class Escena extends BranchGroup {
                 "imgs/venus.jpg", 
                 materialAstros
         );
-        tierra = new Astro(
+        Astro tierra = new Astro(
                 1.27f, 
                 60000l, 
                 3000l, 
@@ -89,7 +83,7 @@ class Escena extends BranchGroup {
                 "imgs/tierra.jpg", 
                 materialAstros
         );
-        luna = new Astro(
+        Astro luna = new Astro(
                 0.34f, 
                 9000l, 
                 9000l, 
@@ -97,7 +91,7 @@ class Escena extends BranchGroup {
                 "imgs/luna.jpg", 
                 materialAstros
         );
-        marte = new Astro(
+        Astro marte = new Astro(
                 0.68f, 
                 75000l, 
                 5000l, 
@@ -105,7 +99,7 @@ class Escena extends BranchGroup {
                 "imgs/marte.jpg", 
                 materialAstros
         );
-        fobos = new Astro(
+        Astro fobos = new Astro(
                 0.11f, 
                 3100l, 
                 3100l, 
@@ -113,7 +107,7 @@ class Escena extends BranchGroup {
                 "imgs/fobos.jpg", 
                 materialAstros
         );
-        deimos = new Astro(
+        Astro deimos = new Astro(
                 0.1f, 
                 3200l, 
                 3200l, 
@@ -121,7 +115,7 @@ class Escena extends BranchGroup {
                 "imgs/deimos.jpg", 
                 materialAstros
         );
-        jupiter = new Astro(
+        Astro jupiter = new Astro(
                 5f, 
                 90000l, 
                 2900l, 
@@ -129,7 +123,7 @@ class Escena extends BranchGroup {
                 "imgs/jupiter.jpg", 
                 materialAstros
         );
-        io = new Astro(
+        Astro io = new Astro(
                 0.36f, 
                 3300l, 
                 3300l, 
@@ -137,7 +131,7 @@ class Escena extends BranchGroup {
                 "imgs/io.jpg", 
                 materialAstros
         );
-        europa = new Astro(
+        Astro europa = new Astro(
                 0.31f, 
                 3500l, 
                 3500l, 
@@ -145,7 +139,7 @@ class Escena extends BranchGroup {
                 "imgs/europa.jpg", 
                 materialAstros
         );
-        ganimedes = new Astro(
+        Astro ganimedes = new Astro(
                 0.53f, 
                 3750l, 
                 3750l, 
@@ -153,7 +147,7 @@ class Escena extends BranchGroup {
                 "imgs/ganimedes.jpg", 
                 materialAstros
         );
-        calisto = new Astro(
+        Astro calisto = new Astro(
                 0.48f, 
                 6000l, 
                 6000l, 
@@ -161,7 +155,7 @@ class Escena extends BranchGroup {
                 "imgs/calisto.jpg", 
                 materialAstros
         );
-        saturno = new Astro(
+        Astro saturno = new Astro(
                 4f, 
                 120000l, 
                 2900l, 
@@ -169,7 +163,7 @@ class Escena extends BranchGroup {
                 "imgs/saturno.jpg", 
                 materialAstros
         );
-        urano = new Astro(
+        Astro urano = new Astro(
                 2.6f, 
                 150000l, 
                 2900l, 
@@ -177,7 +171,7 @@ class Escena extends BranchGroup {
                 "imgs/urano.jpg", 
                 materialAstros
         );
-        miranda = new Astro(
+        Astro miranda = new Astro(
                 0.12f, 
                 3250l, 
                 3250l, 
@@ -185,7 +179,7 @@ class Escena extends BranchGroup {
                 "imgs/miranda.jpg", 
                 materialAstros
         );
-        ariel = new Astro(
+        Astro ariel = new Astro(
                 0.13f, 
                 3400l, 
                 3400l, 
@@ -193,7 +187,7 @@ class Escena extends BranchGroup {
                 "imgs/ariel.jpg",  
                 materialAstros
         );
-        umbriel = new Astro(
+        Astro umbriel = new Astro(
                 0.14f, 
                 3550l, 
                 3550l, 
@@ -201,7 +195,7 @@ class Escena extends BranchGroup {
                 "imgs/umbriel.jpg", 
                 materialAstros
         );
-        titania = new Astro(
+        Astro titania = new Astro(
                 0.16f, 
                 4000l,  
                 4000l, 
@@ -209,7 +203,7 @@ class Escena extends BranchGroup {
                 "imgs/titania.jpg", 
                 materialAstros
         );
-        oberon = new Astro(
+        Astro oberon = new Astro(
                 0.15f, 
                 5000l, 
                 5000l, 
@@ -217,7 +211,7 @@ class Escena extends BranchGroup {
                 "imgs/oberon.jpg", 
                 materialAstros
         );
-        neptuno = new Astro(
+        Astro neptuno = new Astro(
                 2.5f, 
                 200000l, 
                 2900l, 
@@ -225,7 +219,7 @@ class Escena extends BranchGroup {
                 "imgs/neptuno.jpg", 
                 materialAstros
         );
-        triton = new Astro(
+        Astro triton = new Astro(
                 0.27f, 
                 -36000l, 
                 -36000l, 
@@ -235,21 +229,21 @@ class Escena extends BranchGroup {
         );
         
         // Creación anillos
-        a = new Anillo(
+        Anillo a = new Anillo(
                 3.76f,                          // radio interno
                 0.24f,                          // radio externo
                 50000l,                         // rotación
                 "imgs/anilloa.jpg",             // path textura
                 materialAnillos                 // material
         );
-        b = new Anillo(
+        Anillo b = new Anillo(
                 3.11f, 
                 0.39f, 
                 50000l, 
                 "imgs/anillob.jpg", 
                 materialAnillos
         );
-        c = new Anillo(
+        Anillo c = new Anillo(
                 2.375f, 
                 0.325f, 
                 50000l, 
@@ -288,14 +282,9 @@ class Escena extends BranchGroup {
         // Colgamos del BranchGroup escena la nave y los planetas
         this.addChild(sol);
         this.addChild(nave);
-    }
-    
-    public void addCamaraLuna(Camara camara) {
-        luna.addCamara(camara);
-    }
-    
-    public void addCamaraNave(Camara camara) {
-        nave.addCamara(camara);
+        
+        luna.addCamara(camaraLuna);
+        nave.addCamara(camaraNave);
     }
     
 }
