@@ -51,6 +51,8 @@ public class Pick extends Behavior {
         if(pi != null) {
             SceneGraphPath sgp = pi.getSceneGraphPath();
             System.out.println(sgp.toString());
+            Astro a = (Astro)sgp.getNode(0);
+            a.setRotationOnOff();
         }
         // Selecciona el Astro y realiza el método setRotationOnOff()
         

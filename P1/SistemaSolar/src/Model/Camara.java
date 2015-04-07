@@ -1,6 +1,12 @@
 
 package Model;
 
+import com.sun.j3d.utils.behaviors.mouse.MouseBehavior;
+import com.sun.j3d.utils.behaviors.mouse.MouseRotate;
+import com.sun.j3d.utils.behaviors.mouse.MouseTranslate;
+import com.sun.j3d.utils.behaviors.mouse.MouseWheelZoom;
+import com.sun.j3d.utils.behaviors.mouse.MouseZoom;
+import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
 import javax.media.j3d.PhysicalBody;
@@ -49,14 +55,28 @@ public class Camara extends BranchGroup {
         
         vp = new ViewPlatform();
         
-        /*
         if(this.movimiento) {
-            OrbitBehavior orbit = new OrbitBehavior(canvas, OrbitBehavior.REVERSE_ALL);
-            orbit.setSchedulingBounds(new BoundingSphere(new Point3d (0.0f, 0.0f, 0.0f), 200.0f));
-            orbit.setZoomFactor (2.0f);
-            vp.setViewPlatformBehavior(orbit);
+            tg.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+            BoundingSphere mouseBounds = new BoundingSphere(new Point3d(), 200.0);
+            
+            MouseRotate myMouseRotate = new MouseRotate(MouseBehavior.INVERT_INPUT);
+            myMouseRotate.setTransformGroup(tg);
+            myMouseRotate.setSchedulingBounds(mouseBounds);
+
+            MouseTranslate myMouseTranslate = new MouseTranslate(MouseBehavior.INVERT_INPUT);
+            myMouseTranslate.setFactor(0.5);
+            myMouseTranslate.setTransformGroup(tg);
+            myMouseTranslate.setSchedulingBounds(mouseBounds);
+
+            MouseWheelZoom myMouseZoom = new MouseWheelZoom(MouseBehavior.INVERT_INPUT);
+            myMouseZoom.setFactor(2.0);
+            myMouseZoom.setTransformGroup(tg);
+            myMouseZoom.setSchedulingBounds(mouseBounds);
+            
+            this.addChild(myMouseRotate);
+            this.addChild(myMouseTranslate);
+            this.addChild(myMouseZoom);
         }
-        */
        
         tg.addChild(vp);
         

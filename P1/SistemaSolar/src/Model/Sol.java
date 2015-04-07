@@ -31,7 +31,6 @@ public class Sol extends Astro {
             )
         );
         // Se crea la luz
-        
         luz = new PointLight (
             new Color3f (0.9f, 0.9f, 0.9f), 
             new Point3f (0.0f, 0.0f, 0.0f),

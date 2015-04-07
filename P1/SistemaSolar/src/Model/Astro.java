@@ -41,7 +41,11 @@ public class Astro extends BranchGroup {
         this.movimiento = true;
         this.diametro = diametro;
         this.velTraslacion = velTraslacion;
-        this.velRotacion = velRotacion;
+        if(velTraslacion != 0) {
+            this.velRotacion = velRotacion*velTraslacion;
+        } else {
+            this.velRotacion = velRotacion;
+        }
         this.distancia = distancia;
         this.texturePath = texturePath;
         this.material = material;
@@ -85,16 +89,17 @@ public class Astro extends BranchGroup {
     public void setRotationOnOff() {
         movimiento = !movimiento;
         rotator.setEnable(movimiento);
+        System.out.println(texturePath + " polopos " + movimiento);
     }
     
     protected TransformGroup rotar() {
         TransformGroup t = new TransformGroup (); // Se crea el nodo de transformación: Todo lo que cuelgue de él rotará
         t.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE); // Se le permite que se cambie en tiempo de ejecución
         Transform3D t3d = new Transform3D (); // Se crea la matriz de rotación
-        Alpha value = new Alpha (-1, Alpha.INCREASING_ENABLE, 0, 0, velRotacion*velTraslacion, 0, 0, 0, 0, 0); // Valor numérico que se ira modificando en tiempo de ejecución
+        Alpha value = new Alpha (-1, Alpha.INCREASING_ENABLE, 0, 0, velRotacion, 0, 0, 0, 0, 0); // Valor numérico que se ira modificando en tiempo de ejecución
         rotator = new RotationInterpolator (value, t, t3d, 0.0f, (float) Math.PI*2.0f); // Se crea el interpolador de rotación, las figuras iran rotando
         rotator.setSchedulingBounds(new BoundingSphere (new Point3d (0.0, 0.0, 0.0 ), 200.0)); // Se le pone el entorno de activación
-        rotator.setEnable(movimiento); // Se activa
+        rotator.setEnable(true); // Se activa
         t.addChild(rotator); // Se cuelga del grupo de transformación
         
         return t;
