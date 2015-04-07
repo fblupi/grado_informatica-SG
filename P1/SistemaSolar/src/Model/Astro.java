@@ -85,7 +85,6 @@ public class Astro extends BranchGroup {
     public void setRotationOnOff() {
         movimiento = !movimiento;
         rotator.setEnable(movimiento);
-        System.out.println(texturePath);
     }
     
     protected TransformGroup rotar() {
