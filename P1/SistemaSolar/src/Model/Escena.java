@@ -10,7 +10,6 @@ import javax.vecmath.Point3f;
 class Escena extends BranchGroup {  
     
     public Escena(Camara camaraLuna, Camara camaraNave) {
-        //this.setPickable(true);
         // Creación nave
         Nave nave = new Nave(
             "models/Arc170/Arc170.obj",     // archivo del obj con el modelo
