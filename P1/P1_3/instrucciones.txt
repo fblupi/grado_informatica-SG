@@ -1,0 +1,6 @@
+Las cámaras se cambian mediante los botones de la GUI.
+La cámara en perspectiva:
+ - Se mueve pulsando el botón izquierdo y moviendo el ratón.
+ - Se desplaza pulsando el botón derecho y moviendo el ratón.
+ - Se hace zoom con la rueda.
+Para hacer pick y parar la rotación sobre el mismo eje de un astro se hace click izquierdo sobre este.
