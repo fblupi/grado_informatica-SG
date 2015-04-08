@@ -68,9 +68,9 @@ public class Camara extends BranchGroup {
             myMouseZoom.setTransformGroup(tg);
             myMouseZoom.setSchedulingBounds(new BoundingSphere(new Point3d(), 200.0));
             
-            this.addChild(myMouseRotate);
-            this.addChild(myMouseTranslate);
-            this.addChild(myMouseZoom);
+            tg.addChild(myMouseRotate);
+            tg.addChild(myMouseTranslate);
+            tg.addChild(myMouseZoom);
         }
        
         tg.addChild(vp); // Se agrega el ViewPlatform al nodo de transformación
