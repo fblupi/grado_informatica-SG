@@ -20,13 +20,10 @@ import javax.vecmath.Vector3d;
 public class Camara extends BranchGroup {
     
     private boolean activa;
-    private Transform3D transform;
     private TransformGroup tg;
     private ViewPlatform vp;
     private View view;
     private Canvas3D canvas;
-    private boolean perspectiva;
-    private boolean movimiento;
     private Point3d posicion;
     private Point3d interes;
     private Vector3d vUp;
@@ -37,8 +34,6 @@ public class Camara extends BranchGroup {
     public Camara(boolean perspectiva, boolean movimiento, Canvas3D canvas, Point3d posicion, Point3d interes, Vector3d vUp, double anguloOEscala, double planoDelantero, double planoTrasero) {
         this.setPickable(false);
         this.activa = false;
-        this.perspectiva = perspectiva;
-        this.movimiento = movimiento;
         this.posicion = posicion;
         this.interes = interes;
         this.vUp = vUp;
@@ -46,7 +41,7 @@ public class Camara extends BranchGroup {
         this.planoDelantero = planoDelantero;
         this.planoTrasero = planoTrasero;
         
-        transform = new Transform3D();
+        Transform3D transform = new Transform3D();
         transform.lookAt(this.posicion,this.interes,this.vUp);
         transform.invert();
         
@@ -54,7 +49,7 @@ public class Camara extends BranchGroup {
         
         vp = new ViewPlatform();
         
-        if(this.movimiento) {
+        if(movimiento) {
             tg.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
             BoundingSphere mouseBounds = new BoundingSphere(new Point3d(), 200.0);
             
@@ -84,7 +79,7 @@ public class Camara extends BranchGroup {
         view.setPhysicalBody(new PhysicalBody());
         view.setPhysicalEnvironment(new PhysicalEnvironment());
         
-        if(this.perspectiva) {
+        if(perspectiva) {
             view.setProjectionPolicy(View.PERSPECTIVE_PROJECTION);
             view.setFieldOfView(Math.toRadians(this.anguloOEscala));
             view.setFrontClipDistance(this.planoDelantero);

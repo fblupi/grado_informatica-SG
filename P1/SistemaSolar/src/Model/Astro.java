@@ -25,7 +25,6 @@ public class Astro extends BranchGroup {
     protected long velTraslacion;
     protected long velRotacion;
     protected float distancia;
-    protected String texturePath;
     protected Texture texture;
     protected TextureAttributes textureAttributes;
     protected Material material;
@@ -38,16 +37,17 @@ public class Astro extends BranchGroup {
     
     public Astro(float diametro, long velTraslacion, long velRotacion, float distancia, String texturePath, Material material) {
         this.setPickable(true);
+        this.setCapability(Node.ENABLE_PICK_REPORTING);
+        
         this.movimiento = true;
         this.diametro = diametro;
         this.velTraslacion = velTraslacion;
         this.velRotacion = velRotacion;
         this.distancia = distancia;
-        this.texturePath = texturePath;
         this.material = material;
         
         // creación de la apariencia: textura + material
-        texture = new TextureLoader (this.texturePath, null).getTexture();
+        texture = new TextureLoader (texturePath, null).getTexture();
         textureAttributes = new TextureAttributes(); 
         textureAttributes.setTextureMode(TextureAttributes.MODULATE);
         ap = new Appearance();
@@ -66,8 +66,6 @@ public class Astro extends BranchGroup {
         translation.addChild(rotation); // la rotación se cuelga de la traslación
         rotationAround.addChild(translation); // la traslación se cuelga de la rotación alrededor
         this.addChild(rotationAround); // la rotación alrededor se cuelga del BranchGroup del planeta
-        
-        this.setCapability(Node.ENABLE_PICK_REPORTING);
     }
     
     public void addSatelite(Astro astro) {

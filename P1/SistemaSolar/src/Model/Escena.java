@@ -85,7 +85,7 @@ class Escena extends BranchGroup {
         Astro luna = new Astro(
                 0.34f, 
                 9000l, 
-                81000000l, 
+                0l, // para que la cámara mire a la Tierra siempre
                 1f, 
                 "imgs/luna.jpg", 
                 materialAstros

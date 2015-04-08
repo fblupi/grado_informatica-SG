@@ -20,7 +20,6 @@ import javax.vecmath.Quat4f;
 
 public class Nave extends BranchGroup {
     
-    private String obj;
     private long velocidad;
     private float[] knots;
     private Point3f[] posiciones;
@@ -30,7 +29,6 @@ public class Nave extends BranchGroup {
     
     public Nave(String obj, long velocidad, Point3f[] posiciones, AxisAngle4f[] angulos, float[] knots) {
         this.setPickable(false);
-        this.obj = obj;
         this.velocidad = velocidad;
         this.posiciones = new Point3f[posiciones.length];
         this.angulos = new Quat4f[posiciones.length];
@@ -52,7 +50,7 @@ public class Nave extends BranchGroup {
         scale.setTransform(t3d); // Se aplica el escalado al nodo de transformación
         
         BranchGroup figure = new BranchGroup (); // Se crea la rama desde la que cuelga la geometría y apariencia de la nave
-        figure.addChild(importarModelo()); // la figura se cuelga de la transformación
+        figure.addChild(importarModelo(obj)); // la figura se cuelga de la transformación
         
         scale.addChild(figure);  // la figura se cuelga del escalado
         transform.addChild(scale); // la figura escalada se cuelga de la transformación
@@ -77,7 +75,7 @@ public class Nave extends BranchGroup {
         return t;
     }
     
-    private BranchGroup importarModelo() {
+    private BranchGroup importarModelo(String obj) {
         File file = new File(obj);
         String dir = file.getParentFile().getAbsolutePath();
 	String path = file.getAbsolutePath();

@@ -19,7 +19,6 @@ public class Anillo extends BranchGroup {
     private float radioInterno;
     private float radioExterno;
     private long velRotacion;
-    private String texturePath;
     private Texture texture;
     private TextureAttributes textureAttributes;
     private Material material;
@@ -32,11 +31,10 @@ public class Anillo extends BranchGroup {
         this.radioInterno = radioInterno;
         this.radioExterno = radioExterno;
         this.velRotacion = velRotacion;
-        this.texturePath = texturePath;
         this.material = material;
         
         // creación de la apariencia: textura + material
-        texture = new TextureLoader (this.texturePath, null).getTexture();
+        texture = new TextureLoader (texturePath, null).getTexture();
         textureAttributes = new TextureAttributes(); 
         textureAttributes.setTextureMode(TextureAttributes.MODULATE);
         ap = new Appearance();
