@@ -21,20 +21,20 @@ import javax.vecmath.Vector3f;
 
 public class Astro extends BranchGroup {
     
-    protected boolean movimiento;
+    private boolean movimiento;
     protected float diametro;
-    protected long velTraslacion;
-    protected long velRotacion;
-    protected float distancia;
-    protected Texture texture;
-    protected TextureAttributes textureAttributes;
-    protected Material material;
+    private long velTraslacion;
+    private long velRotacion;
+    private float distancia;
+    private Texture texture;
+    private TextureAttributes textureAttributes;
+    private Material material;
     protected Appearance ap;
-    protected RotationInterpolator rotator;
-    protected RotationInterpolator rotatorAround;
-    protected TransformGroup rotationAround;
+    private RotationInterpolator rotator;
+    private RotationInterpolator rotatorAround;
+    private TransformGroup rotationAround;
     protected TransformGroup rotation;
-    protected TransformGroup translation;
+    private TransformGroup translation;
     
     public Astro(float diametro, long velTraslacion, long velRotacion, float distancia, String texturePath, Material material) {
         this.setPickable(true);
@@ -62,7 +62,7 @@ public class Astro extends BranchGroup {
         rotation = rotar(); // Se crea la transformación para la rotación
         BranchGroup figure = new BranchGroup(); // Se crea la rama desde la que cuelga la geometría y apariencia del astro
         
-        figure.addChild(new Sphere (diametro/2, Primitive.GENERATE_NORMALS | Primitive.GENERATE_TEXTURE_COORDS, 64, ap)); // se crea la figura y se cuelga del nodo figura 
+        figure.addChild(new Sphere (this.diametro/2, Primitive.GENERATE_NORMALS | Primitive.GENERATE_TEXTURE_COORDS, 64, ap)); // se crea la figura y se cuelga del nodo figura 
         rotation.addChild(figure); // la figura se cuelga de la rotación
         translation.addChild(rotation); // la rotación se cuelga de la traslación
         rotationAround.addChild(translation); // la traslación se cuelga de la rotación alrededor
@@ -126,7 +126,7 @@ public class Astro extends BranchGroup {
         return t;
     }
     
-    protected TransformGroup rotarAlrededor() {
+    private TransformGroup rotarAlrededor() {
         TransformGroup t = new TransformGroup (); // Se crea el nodo de transformación: Todo lo que cuelgue de él rotará
         t.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE); // Se le permite que se cambie en tiempo de ejecución
         Transform3D t3d = new Transform3D (); // Se crea la matriz de rotación
@@ -139,7 +139,7 @@ public class Astro extends BranchGroup {
         return t;
     }
 
-    protected TransformGroup trasladar() {
+    private TransformGroup trasladar() {
         TransformGroup t = new TransformGroup (); // Se crea el nodo de transformación de traslación en el eje x
         Transform3D t3d = new Transform3D (); // Se crea la matriz de transformación
         t3d.setTranslation(new Vector3f(distancia,0,0) ); // Se define la traslación
