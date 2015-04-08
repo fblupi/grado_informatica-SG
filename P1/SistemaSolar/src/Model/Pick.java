@@ -25,15 +25,15 @@ public class Pick extends Behavior {
 
     public void initSearch(BranchGroup bg) {
         pickCanvas = new PickCanvas(canvas, bg);
-        pickCanvas.setTolerance(0.0f);
-        pickCanvas.setMode(PickInfo.PICK_GEOMETRY);
-        pickCanvas.setFlags(PickInfo.SCENEGRAPHPATH | PickInfo.CLOSEST_INTERSECTION_POINT);
-        setEnable(true);
+        pickCanvas.setTolerance(0.0f); // Tolerancia mínima
+        pickCanvas.setMode(PickInfo.PICK_GEOMETRY); // Se hará pick sobre geometrías
+        pickCanvas.setFlags(PickInfo.SCENEGRAPHPATH | PickInfo.CLOSEST_INTERSECTION_POINT); // Se recoge el punto intersecado más cercano y el grafo desde el origen a este
+        setEnable(true); // Se habilita el pick
     }
 
     @Override
     public void initialize() {
-        setEnable(false);
+        setEnable(false); // El pick comienza deshabilitado esperando al initSearch
         wakeupOn(condition);
     }
 
@@ -44,10 +44,10 @@ public class Pick extends Behavior {
         MouseEvent mouse = (MouseEvent) e[0];
         pickCanvas.setShapeLocation(mouse);
         PickInfo pi = pickCanvas.pickClosest();
-        if(pi != null) {
+        if(pi != null) { // Si hay algo seleccionado
             SceneGraphPath sgp = pi.getSceneGraphPath();
-            Astro a = (Astro)sgp.getNode(sgp.nodeCount()-2);
-            a.setRotationOnOff();
+            Astro a = (Astro)sgp.getNode(sgp.nodeCount()-2); // Se recoge el objeto astro seleccionado
+            a.setRotationOnOff(); // Se para o vuelve a iniciar la rotación
         }
         wakeupOn(condition);
     }

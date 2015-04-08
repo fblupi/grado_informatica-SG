@@ -21,9 +21,9 @@ import javax.vecmath.Quat4f;
 public class Nave extends BranchGroup {
     
     private long velocidad;
-    private float[] knots;
-    private Point3f[] posiciones;
-    private Quat4f[] angulos;
+    private float[] knots;          // alphas
+    private Point3f[] posiciones;   // posiciones por donde pasa
+    private Quat4f[] angulos;       // ángulos en cada posición
     private RotPosPathInterpolator interpolator;
     private TransformGroup transform;
     
@@ -33,7 +33,7 @@ public class Nave extends BranchGroup {
         this.posiciones = new Point3f[posiciones.length];
         this.angulos = new Quat4f[posiciones.length];
         this.knots = new float[posiciones.length];
-        for(int i=0; i<posiciones.length; i++) {
+        for(int i=0; i<posiciones.length; i++) { // Se crean los puntos ángulos y knots
             this.posiciones[i] = posiciones[i];
             this.angulos[i] = new Quat4f();
             this.angulos[i].set(angulos[i]);

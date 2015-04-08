@@ -24,15 +24,16 @@ public class Camara extends BranchGroup {
     private ViewPlatform vp;
     private View view;
     private Canvas3D canvas;
-    private Point3d posicion;
-    private Point3d interes;
-    private Vector3d vUp;
+    private Point3d posicion;   // Posición de la cámara
+    private Point3d interes;    // Dónde mira
+    private Vector3d vUp;       // View Up
     private double anguloOEscala;
     private double planoDelantero;
     private double planoTrasero;
     
     public Camara(boolean perspectiva, boolean movimiento, Canvas3D canvas, Point3d posicion, Point3d interes, Vector3d vUp, double anguloOEscala, double planoDelantero, double planoTrasero) {
         this.setPickable(false);
+        
         this.activa = false;
         this.posicion = posicion;
         this.interes = interes;
@@ -40,42 +41,41 @@ public class Camara extends BranchGroup {
         this.anguloOEscala = anguloOEscala;
         this.planoDelantero = planoDelantero;
         this.planoTrasero = planoTrasero;
+        this.canvas = canvas;
         
-        Transform3D transform = new Transform3D();
-        transform.lookAt(this.posicion,this.interes,this.vUp);
+        Transform3D transform = new Transform3D(); // Se crea la matriz de transformación para colocar la cámara
+        transform.lookAt(this.posicion, this.interes, this.vUp); // Se define la posición y hacia donde mira la cámara
         transform.invert();
         
-        tg = new TransformGroup(transform);
+        tg = new TransformGroup(transform); // Se aplica la transformación al nodo de transformación
+        vp = new ViewPlatform(); // Se crea el ViewPlatform
         
-        vp = new ViewPlatform();
-        
-        if(movimiento) {
+        if(movimiento) { // Si se permite mover la cámara se crean los comportamientos del ratón
             tg.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-            BoundingSphere mouseBounds = new BoundingSphere(new Point3d(), 200.0);
             
             MouseRotate myMouseRotate = new MouseRotate(MouseBehavior.INVERT_INPUT);
             myMouseRotate.setFactor(0.005);
             myMouseRotate.setTransformGroup(tg);
-            myMouseRotate.setSchedulingBounds(mouseBounds);
+            myMouseRotate.setSchedulingBounds(new BoundingSphere(new Point3d(), 200.0));
 
             MouseTranslate myMouseTranslate = new MouseTranslate(MouseBehavior.INVERT_INPUT);
             myMouseTranslate.setFactor(0.1);
             myMouseTranslate.setTransformGroup(tg);
-            myMouseTranslate.setSchedulingBounds(mouseBounds);
+            myMouseTranslate.setSchedulingBounds(new BoundingSphere(new Point3d(), 200.0));
 
             MouseWheelZoom myMouseZoom = new MouseWheelZoom(MouseBehavior.INVERT_INPUT);
             myMouseZoom.setFactor(2.0);
             myMouseZoom.setTransformGroup(tg);
-            myMouseZoom.setSchedulingBounds(mouseBounds);
+            myMouseZoom.setSchedulingBounds(new BoundingSphere(new Point3d(), 200.0));
             
             this.addChild(myMouseRotate);
             this.addChild(myMouseTranslate);
             this.addChild(myMouseZoom);
         }
        
-        tg.addChild(vp);
+        tg.addChild(vp); // Se agrega el ViewPlatform al nodo de transformación
         
-        view = new View();
+        view = new View(); // Se crea el view
         view.setPhysicalBody(new PhysicalBody());
         view.setPhysicalEnvironment(new PhysicalEnvironment());
         
@@ -92,23 +92,20 @@ public class Camara extends BranchGroup {
             view.setBackClipDistance(this.planoTrasero);
         }
         
-        this.canvas = canvas;
-        
-        view.attachViewPlatform(vp);
-        
-        this.addChild(tg);
+        view.attachViewPlatform(vp); // Se agrega el ViewPlatform al View
+        this.addChild(tg); // Se agrega el nodo de transformación al BranchGroup de salida
     }
     
     public void activar() {
-        if(!activa) {
-            view.addCanvas3D(this.canvas);
+        if(!activa) { // Si no está activa
+            view.addCanvas3D(this.canvas); // Se agrega el Canvas al View
             activa = true;
         }
     }
     
     public void desactivar() {
-        if(activa) {
-            view.removeCanvas3D(this.canvas);
+        if(activa) { // Si está activa
+            view.removeCanvas3D(this.canvas); // Se quita el Canvas al View
             activa = false;
         }
     }

@@ -23,11 +23,12 @@ public class Anillo extends BranchGroup {
     private TextureAttributes textureAttributes;
     private Material material;
     private Appearance ap;
-    private RotationInterpolator rotator; // El objeto que controla la rotación continua de la figura
+    private RotationInterpolator rotator;
     private TransformGroup rotation;
     
     public Anillo(float radioInterno, float radioExterno, long velRotacion, String texturePath, Material material) {
         this.setPickable(false);
+        
         this.radioInterno = radioInterno;
         this.radioExterno = radioExterno;
         this.velRotacion = velRotacion;

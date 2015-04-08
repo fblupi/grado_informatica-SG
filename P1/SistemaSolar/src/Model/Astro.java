@@ -15,6 +15,7 @@ import javax.media.j3d.Texture;
 import javax.media.j3d.TextureAttributes;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
+import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3f;
 
@@ -68,6 +69,33 @@ public class Astro extends BranchGroup {
         this.addChild(rotationAround); // la rotación alrededor se cuelga del BranchGroup del planeta
     }
     
+    // Este constructor será llamado desde la subclase Sol
+    public Astro(float diametro, long velRotacion, String texturePath) {
+        this.setPickable(true);
+        this.setCapability(Node.ENABLE_PICK_REPORTING);
+        
+        this.diametro = diametro;
+        this.velTraslacion = 0l;
+        this.velRotacion = velRotacion;
+        this.distancia = 0.0f;
+        this.material = new Material(
+            new Color3f (1f, 1f, 1f), 
+            new Color3f (1f, 1f, 1f), 
+            new Color3f (1f, 1f, 1f), 
+            new Color3f (1f, 1f, 1f), 
+            100f
+        );
+        
+        // creación de la apariencia: textura + material
+        texture = new TextureLoader (texturePath, null).getTexture();
+        textureAttributes = new TextureAttributes(); 
+        textureAttributes.setTextureMode(TextureAttributes.MODULATE);
+        ap = new Appearance();
+        ap.setTexture(texture);
+        ap.setTextureAttributes(textureAttributes);
+        ap.setMaterial(this.material);
+    }
+    
     public void addSatelite(Astro astro) {
         translation.addChild(astro);
     }
@@ -81,8 +109,8 @@ public class Astro extends BranchGroup {
     }
     
     public void setRotationOnOff() {
-        movimiento = !movimiento;
-        rotator.setEnable(movimiento);
+        movimiento = !movimiento; // Si se mueve se para, si no se hace mover
+        rotator.setEnable(movimiento); // Se habilita o deshabilita el interpolador
     }
     
     protected TransformGroup rotar() {
