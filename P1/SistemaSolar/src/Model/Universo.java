@@ -33,6 +33,10 @@ public class Universo {
         camaraNave = new Camara(true, false, canvasVariable, new Point3d (0,0.5,-0.25), new Point3d (0,0,1), new Vector3d (0,1,0), 45.0f, 0.1f, 30.0f);
         camaraLuna = new Camara(true, false, canvasVariable, new Point3d (0,0.5,0), new Point3d (-1,-0.25,0), new Vector3d (1,1,0), 100.0f, 0.05f, 15.0f);
         
+        // Se compilan los BG de las cámaras que cuelgan del locale
+        camaraPerspectiva.compile();
+        camaraPlanta.compile();
+        
         // Se cuelgan las cámaras de perspectiva y de planta del locale
         locale.addBranchGraph(camaraPerspectiva);
         locale.addBranchGraph(camaraPlanta);
@@ -48,6 +52,10 @@ public class Universo {
         pick = new Pick(canvasVariable);
         pick.setSchedulingBounds(new BoundingSphere (new Point3d (0.0, 0.0, 0.0 ), 200.0));
         scene.addChild(pick);
+        
+        // Se compilan los BG del background y la escena
+        background.compile();
+        scene.compile();
         
         // Se cuelgan el background y la escena dle locale
         locale.addBranchGraph(background);
