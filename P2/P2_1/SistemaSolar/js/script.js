@@ -108,20 +108,13 @@ gl_FragColor = texture2D(sampler, vUV);\n\
 
     GL.useProgram(SHADER_PROGRAM); // Se ha terminado de enlazar, se le indica a webgl que puede usar el SHADER_PROGRAM para renderizar
     GL.uniform1i(_sampler, 0); // _sampler es el canal de textura número 0
+    
+    //SHADERS.initialize(GL);
 
-    /*========================= THE SPHERE ===================== */
-    //POINTS :
-    var cube_vertex = SPHERE.getSphereVertex(2, 32);
-
-    var CUBE_VERTEX = GL.createBuffer (); // Se crea el Vertex Buffer Object de los vértices del cubo
-    GL.bindBuffer(GL.ARRAY_BUFFER, CUBE_VERTEX); // Se enlazan los vértices
-    GL.bufferData(GL.ARRAY_BUFFER, new Float32Array(cube_vertex), GL.STATIC_DRAW); // Se le asignan los valores
-
-    //FACES :
-    var cube_faces = SPHERE.getShereFaces(32);
-    var CUBE_FACES = GL.createBuffer(); // Se crea el Vertex Buffer Object de las caras del cubo
-    GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, CUBE_FACES); // Se enlazan las caras
-    GL.bufferData(GL.ELEMENT_ARRAY_BUFFER, new Uint16Array(cube_faces), GL.STATIC_DRAW); // Se le asignan los valores
+    /*========================= THE MODEL ====================== */
+    
+    var tierra = new Astro();
+    tierra.model(GL, 2, "res/tierra.jpg");
 
     /*========================= MATRIX ========================= */
 
@@ -134,48 +127,14 @@ gl_FragColor = texture2D(sampler, vUV);\n\
     var THETA = 0, PHI = 0; // Variables usadas para el movimiento
 
     /*========================= TEXTURES ========================= */
-    var get_texture = function (image_URL) { // Función para hacer una textura webgl
-        var image = new Image(); // se crea un objeto image javaScript
-
-        image.src = image_URL; // Se guardará la textura webgl como una propidad de la imagen
-        image.webglTexture = false;
-        
-        image.onload = function (e) { // Esta función crea el objeto textura webgl cuando la imagen ha sido cargada
-            var texture = GL.createTexture(); // Se crea la textura
-            GL.pixelStorei(GL.UNPACK_FLIP_Y_WEBGL, true); // Se invierte el orden de los pixels verticales
-            GL.bindTexture(GL.TEXTURE_2D, texture); // Se hace un emlace con el contexto
-            GL.texImage2D(GL.TEXTURE_2D, 0, GL.RGBA, GL.RGBA, GL.UNSIGNED_BYTE, image); // Se envían los datos de la imagen a la textura
-            GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_MAG_FILTER, GL.LINEAR); // Se establece el filtro de ampliación
-            GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_MIN_FILTER, GL.NEAREST_MIPMAP_LINEAR); // Se establece el filtro de reducción
-            GL.generateMipmap(GL.TEXTURE_2D); // Se generan texturas distintas para distintas resoluciones
-            GL.bindTexture(GL.TEXTURE_2D, null); // Se libera el contexto 
-            image.webglTexture = texture;
-        };
-
-        return image;
-    };
-
-    var cube_texture = get_texture("res/tierra.jpg"); // Se crea la textura desde el recurso de imagen
+    var tierra_texture = TEXTURE.getTexture(GL,"res/tierra.jpg"); // Se crea la textura desde el recurso de imagen
+    var luna_texture = TEXTURE.getTexture(GL,"res/luna.jpg");
 
     /*========================= DRAWING ========================= */
     GL.enable(GL.DEPTH_TEST); // Se habilita el buffer test de profundidad
     GL.depthFunc(GL.LEQUAL); // Especifica el valor usado para las comparaciones del buffer de profundidad
     GL.clearColor(0.0, 0.0, 0.0, 0.0); // Se asigna el clear color como transparente
     GL.clearDepth(1.0); // Se asigna el valor de limpieza para el buffer de profundidad a 1
-    
-    var dibujarCubo = function () {
-        if (cube_texture.webglTexture) { // Si tiene textura
-            GL.activeTexture(GL.TEXTURE0); // Se activa la textura
-            GL.bindTexture(GL.TEXTURE_2D, cube_texture.webglTexture); // Se enlaza la textura
-        }
-        
-        GL.bindBuffer(GL.ARRAY_BUFFER, CUBE_VERTEX); // Se enlazan los vértices
-        GL.vertexAttribPointer(_position, 3, GL.FLOAT, false, 4 * (3 + 2), 0) ; // Se define el "puntero" a los vértices
-        GL.vertexAttribPointer(_uv, 2, GL.FLOAT, false, 4 * (3 + 2), 3 * 4) ; // Se define el "puntero" a las coords. de textura
-
-        GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, CUBE_FACES); // Se enlazan las caras
-        GL.drawElements(GL.TRIANGLES, cube_faces.length, GL.UNSIGNED_SHORT, 0); // Se pintan 6 caras * 2 triángulos/cara * 3 puntos/triángulo
-    };
     
     var draw = function () { // Esta función dibuja la escena
         LIBS.set_I4(MOVEMATRIX); // Se le da la matriz de identidad como valor a la matriz de movimiento
@@ -189,7 +148,7 @@ gl_FragColor = texture2D(sampler, vUV);\n\
         GL.uniformMatrix4fv(_Vmatrix, false, VIEWMATRIX); // Se asigna la matriz de vista
         GL.uniformMatrix4fv(_Mmatrix, false, MOVEMATRIX); // Se asigna la matriz de modelo
         
-        dibujarCubo(); // Se dibuja el cubo
+        tierra.draw(GL, _position, _uv);
 
         GL.flush(); // Se fuerza el dibujado
         window.requestAnimationFrame(draw); // Vuelve a pintar la escena
