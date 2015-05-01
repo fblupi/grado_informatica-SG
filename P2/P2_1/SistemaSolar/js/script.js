@@ -109,64 +109,16 @@ gl_FragColor = texture2D(sampler, vUV);\n\
     GL.useProgram(SHADER_PROGRAM); // Se ha terminado de enlazar, se le indica a webgl que puede usar el SHADER_PROGRAM para renderizar
     GL.uniform1i(_sampler, 0); // _sampler es el canal de textura número 0
 
-    /*========================= THE CUBE ========================= */
+    /*========================= THE SPHERE ===================== */
     //POINTS :
-    var cube_vertex = [ // Coordenadas del cubo (posición y textura)
-        -1,-1,-1,    0,0,
-        1,-1,-1,     1,0,
-        1, 1,-1,     1,1,
-        -1, 1,-1,    0,1,
-
-        -1,-1, 1,    0,0,
-        1,-1, 1,     1,0,
-        1, 1, 1,     1,1,
-        -1, 1, 1,    0,1,
-
-        -1,-1,-1,    0,0,
-        -1, 1,-1,    1,0,
-        -1, 1, 1,    1,1,
-        -1,-1, 1,    0,1,
-
-        1,-1,-1,     0,0,
-        1, 1,-1,     1,0,
-        1, 1, 1,     1,1,
-        1,-1, 1,     0,1,
-
-        -1,-1,-1,    0,0,
-        -1,-1, 1,    1,0,
-        1,-1, 1,     1,1,
-        1,-1,-1,     0,1,
-
-        -1, 1,-1,    0,0,
-        -1, 1, 1,    1,0,
-        1, 1, 1,     1,1,
-        1, 1,-1,     0,1
-    ];
+    var cube_vertex = SPHERE.getSphereVertex(2, 32);
 
     var CUBE_VERTEX = GL.createBuffer (); // Se crea el Vertex Buffer Object de los vértices del cubo
     GL.bindBuffer(GL.ARRAY_BUFFER, CUBE_VERTEX); // Se enlazan los vértices
     GL.bufferData(GL.ARRAY_BUFFER, new Float32Array(cube_vertex), GL.STATIC_DRAW); // Se le asignan los valores
 
     //FACES :
-    var cube_faces = [
-        0,1,2,
-        0,2,3,
-
-        4,5,6,
-        4,6,7,
-
-        8,9,10,
-        8,10,11,
-
-        12,13,14,
-        12,14,15,
-
-        16,17,18,
-        16,18,19,
-
-        20,21,22,
-        20,22,23
-    ];
+    var cube_faces = SPHERE.getShereFaces(32);
     var CUBE_FACES = GL.createBuffer(); // Se crea el Vertex Buffer Object de las caras del cubo
     GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, CUBE_FACES); // Se enlazan las caras
     GL.bufferData(GL.ELEMENT_ARRAY_BUFFER, new Uint16Array(cube_faces), GL.STATIC_DRAW); // Se le asignan los valores
@@ -203,7 +155,7 @@ gl_FragColor = texture2D(sampler, vUV);\n\
         return image;
     };
 
-    var cube_texture = get_texture("res/texture.png"); // Se crea la textura desde el recurso de imagen
+    var cube_texture = get_texture("res/tierra.jpg"); // Se crea la textura desde el recurso de imagen
 
     /*========================= DRAWING ========================= */
     GL.enable(GL.DEPTH_TEST); // Se habilita el buffer test de profundidad
@@ -222,7 +174,7 @@ gl_FragColor = texture2D(sampler, vUV);\n\
         GL.vertexAttribPointer(_uv, 2, GL.FLOAT, false, 4 * (3 + 2), 3 * 4) ; // Se define el "puntero" a las coords. de textura
 
         GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, CUBE_FACES); // Se enlazan las caras
-        GL.drawElements(GL.TRIANGLES, 6 * 2 * 3, GL.UNSIGNED_SHORT, 0); // Se pintan 6 caras * 2 triángulos/cara * 3 puntos/triángulo
+        GL.drawElements(GL.TRIANGLES, cube_faces.length, GL.UNSIGNED_SHORT, 0); // Se pintan 6 caras * 2 triángulos/cara * 3 puntos/triángulo
     };
     
     var draw = function () { // Esta función dibuja la escena

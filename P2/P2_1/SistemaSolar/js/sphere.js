@@ -1,44 +1,49 @@
-var vertexPositionData = [];
-var normalData = [];
-var textureCoordData = [];
-for (var latNumber = 0; latNumber <= latitudeBands; latNumber++) {
-    var theta = latNumber * Math.PI / latitudeBands;
-    var sinTheta = Math.sin(theta);
-    var cosTheta = Math.cos(theta);
+var SPHERE = {
+    getSphereVertex: function (radius, res) {
+        var vertexData = [];
+        for (var i = 0; i <= res; i++) {
+            var theta = i * Math.PI / res;
+            var sinTheta = Math.sin(theta);
+            var cosTheta = Math.cos(theta);
 
-    for (var longNumber = 0; longNumber <= longitudeBands; longNumber++) {
-        var phi = longNumber * 2 * Math.PI / longitudeBands;
-        var sinPhi = Math.sin(phi);
-        var cosPhi = Math.cos(phi);
+            for (var j = 0; j <= res; j++) {
+                var phi = j * 2 * Math.PI / res;
+                var sinPhi = Math.sin(phi);
+                var cosPhi = Math.cos(phi);
 
-        var x = cosPhi * sinTheta;
-        var y = cosTheta;
-        var z = sinPhi * sinTheta;
-        var u = 1 - (longNumber / longitudeBands);
-        var v = 1 - (latNumber / latitudeBands);
+                var x = cosPhi * sinTheta;
+                var y = cosTheta;
+                var z = sinPhi * sinTheta;
+                var u = 1 - (j / res);
+                var v = 1 - (i / res);
 
-        normalData.push(x);
-        normalData.push(y);
-        normalData.push(z);
-        textureCoordData.push(u);
-        textureCoordData.push(v);
-        vertexPositionData.push(radius * x);
-        vertexPositionData.push(radius * y);
-        vertexPositionData.push(radius * z);
+                vertexData.push(radius * x);
+                vertexData.push(radius * y);
+                vertexData.push(radius * z);
+                vertexData.push(u);
+                vertexData.push(v);
+                //vertexData.push(x);
+                //vertexData.push(y);
+                //vertexData.push(z);
+            }
+        }
+        return vertexData;
+    },
+    
+    getShereFaces: function (res) {
+        var indexData = [];
+        for (var i = 0; i < res; i++) {
+            for (var j = 0; j < res; j++) {
+                var first = (i * (res + 1)) + j;
+                var second = first + res + 1;
+                indexData.push(first);
+                indexData.push(second);
+                indexData.push(first + 1);
+                indexData.push(second);
+                indexData.push(second + 1);
+                indexData.push(first + 1);
+            }
+        }
+        return indexData;
     }
-}
-
-var indexData = [];
-for (var latNumber = 0; latNumber < latitudeBands; latNumber++) {
-    for (var longNumber = 0; longNumber < longitudeBands; longNumber++) {
-        var first = (latNumber * (longitudeBands + 1)) + longNumber;
-        var second = first + longitudeBands + 1;
-        indexData.push(first);
-        indexData.push(second);
-        indexData.push(first + 1);
-
-        indexData.push(second);
-        indexData.push(second + 1);
-        indexData.push(first + 1);
-    }
-}
+};
