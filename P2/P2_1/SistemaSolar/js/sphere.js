@@ -20,11 +20,11 @@ var SPHERE = {
                 vertexData.push(radius * x);
                 vertexData.push(radius * y);
                 vertexData.push(radius * z);
+                vertexData.push(x);
+                vertexData.push(y);
+                vertexData.push(z);
                 vertexData.push(u);
                 vertexData.push(v);
-                //vertexData.push(x);
-                //vertexData.push(y);
-                //vertexData.push(z);
             }
         }
         return vertexData;

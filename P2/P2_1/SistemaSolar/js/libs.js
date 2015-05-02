@@ -3,7 +3,7 @@ var LIBS = {
         return (angle * Math.PI / 180);
     },
 
-    get_projection: function (angle, a, zMin, zMax) {
+    getProjection: function (angle, a, zMin, zMax) {
         var tan = Math.tan(LIBS.degToRad(0.5 * angle)),
             A = -(zMax + zMin) / (zMax - zMin),
             B = (-2 * zMax * zMin) / (zMax - zMin);
@@ -16,14 +16,14 @@ var LIBS = {
         ];
     },
 
-    get_I4: function () {
+    getI4: function () {
         return [1, 0, 0, 0,
                 0, 1, 0, 0,
                 0, 0, 1, 0,
                 0, 0, 0, 1];
     },
 
-    set_I4: function (m) {
+    setI4: function (m) {
         m[0] = 1;  m[1] = 0;  m[2] = 0;  m[3] = 0;
         m[4] = 0;  m[5] = 1;  m[6] = 0;  m[7] = 0;
         m[8] = 0;  m[9] = 0;  m[10] = 1; m[11] = 0;
