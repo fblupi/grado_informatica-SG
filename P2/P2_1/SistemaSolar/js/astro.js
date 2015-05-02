@@ -1,4 +1,4 @@
-function Astro(distancia, velRotOrb, velRot) {
+function Astro(distancia, velRotOrb, velRot, stoppable) {
     this.vertex = null;
     this.faces = null;
     this.VERTEX = null;
@@ -10,7 +10,8 @@ function Astro(distancia, velRotOrb, velRot) {
     this.rot = 0;
     this.rotOrb = 0;
     this.satelites = [];
-    this.MATRIX = null
+    this.MATRIX = null;
+    this.stoppable = stoppable;
     
     this.addSatelite = function(satelite) {
         this.satelites.push(satelite);
@@ -40,10 +41,10 @@ function Astro(distancia, velRotOrb, velRot) {
         var MATRIX_DIS = LIBS.getI4();
         var MATRIX_ROT = LIBS.getI4();
         
-        // Rotación orbital
-        this.rotOrb += this.velRotOrb; // Aumenta el ángulo de rotación orbital
-        LIBS.rotateY(MATRIX_ROT_ORB, this.rotOrb); // Rota sobre su astro de referencia
-        this.MATRIX = LIBS.mul(this.MATRIX, MATRIX_ROT_ORB); // Se multiplica por la matriz del astro
+        // Rotación
+        this.rot += this.velRot; // Aumenta el ángulo de rotación sobre si mismo
+        LIBS.rotateY(MATRIX_ROT, this.rot); // Rota sobre si mismo
+        this.MATRIX = LIBS.mul(this.MATRIX, MATRIX_ROT); // Se multiplica por la matriz del astro
         
         // Desplazamiento
         LIBS.translateZ(MATRIX_DIS, this.distancia); // Se desplaza a su posición en la órbita
@@ -54,10 +55,12 @@ function Astro(distancia, velRotOrb, velRot) {
             this.satelites[i].draw(GL, this.MATRIX); // Dibuja cada satélite 
         }
         
-        // Rotación
-        this.rot += this.velRot; // Aumenta el ángulo de rotación sobre si mismo
-        LIBS.rotateY(MATRIX_ROT, this.rot); // Rota sobre si mismo
-        this.MATRIX = LIBS.mul(this.MATRIX, MATRIX_ROT); // Se multiplica por la matriz del astro
+        // Rotación orbital
+        if(!this.stoppable || !MOUSE.click) { // No es parable o no está pulsado el ratón
+            this.rotOrb += this.velRotOrb; // Aumenta el ángulo de rotación orbital
+        }
+            LIBS.rotateY(MATRIX_ROT_ORB, this.rotOrb); // Rota sobre su astro de referencia
+        this.MATRIX = LIBS.mul(this.MATRIX, MATRIX_ROT_ORB); // Se multiplica por la matriz del astro
         
         GL.uniformMatrix4fv(SHADERS._Mmatrix, false, this.MATRIX); // Se asigna la matriz de modelo 
         

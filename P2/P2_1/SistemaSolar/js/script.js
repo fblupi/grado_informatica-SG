@@ -5,40 +5,7 @@ var main = function () {
 
     /*========================= CAPTURE MOUSE EVENTS ========================= */
     
-    var drag = false,
-        old_x, old_y, 
-        dX = 0, dY = 0;
-
-    var mouseDown = function (e) { // El botón está pulsado
-        drag = true;
-        old_x = e.pageX;
-        old_y = e.pageY;
-        e.preventDefault();
-        return false;
-    };
-
-    var mouseUp = function (e) { // El botón se suelta
-        drag = false;
-    };
-
-    var mouseMove = function (e) { // Se mueve el ratón
-        if (!drag) {
-            return false;
-        }
-        dX = (e.pageX - old_x) * Math.PI / CANVAS.width;
-        dY = (e.pageY - old_y) * Math.PI / CANVAS.height;
-        THETA += dX;
-        PHI += dY;
-        old_x = e.pageX;
-        old_y = e.pageY;
-        e.preventDefault();
-    };
-
-    // Se asignan los listeners
-    CANVAS.addEventListener("mousedown", mouseDown, false);
-    CANVAS.addEventListener("mouseup", mouseUp, false);
-    CANVAS.addEventListener("mouseout", mouseUp, false);
-    CANVAS.addEventListener("mousemove", mouseMove, false);
+    MOUSE.initialize(CANVAS);
 
     /*========================= GET WEBGL CONTEXT ========================= */
     var GL; // Se crea la variable webl
@@ -55,11 +22,10 @@ var main = function () {
 
     /*========================= THE MODEL ====================== */
     
-    
-    var tierra = new Astro(0, 0, 0.005);
+    var tierra = new Astro(0, 0, 0.005, false);
     tierra.model(GL, 1.27 / 2, "res/tierra.jpg");
      
-    var luna = new Astro(1, 0.01, 0.01);
+    var luna = new Astro(1, 0.01, 0.01, true);
     luna.model(GL, 0.34 / 2, "res/luna.jpg");
     tierra.addSatelite(luna);
 
