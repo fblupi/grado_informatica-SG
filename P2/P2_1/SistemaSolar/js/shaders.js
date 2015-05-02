@@ -6,6 +6,7 @@ var SHADERS = {
     _uv: null,
     _position: null,
     _normal: null,
+    
     initialize: function (GL) {
         // Vertex Shader
         var shaderVertexSource = "\n\

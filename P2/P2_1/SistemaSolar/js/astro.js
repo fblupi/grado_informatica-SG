@@ -10,14 +10,15 @@ function Astro(distancia, velRotOrb, velRot) {
     this.rot = 0;
     this.rotOrb = 0;
     this.satelites = [];
+    this.MATRIX = null
     
     this.addSatelite = function(satelite) {
         this.satelites.push(satelite);
     };
     
     this.model = function (GL, radius, textureURL) {
-        this.vertex = SPHERE.getSphereVertex(radius, 64); // Se obtiene el array de vértices
-        this.faces = SPHERE.getShereFaces(64); // Se obtiene el array de caras
+        this.vertex = SPHERE.getSphereVertex(radius, 32); // Se obtiene el array de vértices
+        this.faces = SPHERE.getShereFaces(32); // Se obtiene el array de caras
         
         this.VERTEX = GL.createBuffer(); // Se crea el Vertex Buffer Object de los vértices del cubo
         GL.bindBuffer(GL.ARRAY_BUFFER, this.VERTEX); // Se enlazan los vértices
@@ -30,27 +31,35 @@ function Astro(distancia, velRotOrb, velRot) {
         this.texture = TEXTURE.getTexture(GL, textureURL); // Se genera la textura
     };
     
-    this.draw = function (GL, MOVEMATRIX) {
+    this.draw = function (GL, MATRIX) {
+        
+        this.MATRIX = MATRIX; // Asignamos a la matriz del astro el valor de entrada
+        
+        // Matrices auxiliares para cada una de las transformaciones
+        var MATRIX_ROT_ORB = LIBS.getI4();
+        var MATRIX_DIS = LIBS.getI4();
+        var MATRIX_ROT = LIBS.getI4();
         
         // Rotación orbital
-        this.rotOrb += this.velRotOrb;
-        LIBS.rotateY(MOVEMATRIX, this.rotOrb);
+        this.rotOrb += this.velRotOrb; // Aumenta el ángulo de rotación orbital
+        LIBS.rotateY(MATRIX_ROT_ORB, this.rotOrb); // Rota sobre su astro de referencia
+        this.MATRIX = LIBS.mul(this.MATRIX, MATRIX_ROT_ORB); // Se multiplica por la matriz del astro
         
         // Desplazamiento
-        LIBS.translateZ(MOVEMATRIX, this.distancia);
+        LIBS.translateZ(MATRIX_DIS, this.distancia); // Se desplaza a su posición en la órbita
+        this.MATRIX = LIBS.mul(this.MATRIX, MATRIX_DIS); // Se multiplica por la matriz del astro
         
         // Satélites
-        var MOVEMATRIX_old = MOVEMATRIX;
         for(var i = 0; i < this.satelites.length; i++) {
-            this.satelites[i].draw(GL, MOVEMATRIX);    
+            this.satelites[i].draw(GL, this.MATRIX); // Dibuja cada satélite 
         }
-        MOVEMATRIX = MOVEMATRIX_old;
         
         // Rotación
-        this.rot += this.velRot;
-        LIBS.rotateY(MOVEMATRIX, this.rot);
+        this.rot += this.velRot; // Aumenta el ángulo de rotación sobre si mismo
+        LIBS.rotateY(MATRIX_ROT, this.rot); // Rota sobre si mismo
+        this.MATRIX = LIBS.mul(this.MATRIX, MATRIX_ROT); // Se multiplica por la matriz del astro
         
-        GL.uniformMatrix4fv(SHADERS._Mmatrix, false, MOVEMATRIX); // Se asigna la matriz de modelo 
+        GL.uniformMatrix4fv(SHADERS._Mmatrix, false, this.MATRIX); // Se asigna la matriz de modelo 
         
         if (this.texture.webglTexture) { // Si tiene textura
             GL.activeTexture(GL.TEXTURE0); // Se activa la textura
@@ -59,9 +68,8 @@ function Astro(distancia, velRotOrb, velRot) {
         
         GL.bindBuffer(GL.ARRAY_BUFFER, this.VERTEX); // Se enlazan los vértices
         GL.vertexAttribPointer(SHADERS._position, 3, GL.FLOAT, false, 4 * (3 + 3 + 2), 0); // Se define el "puntero" a los vértices
-        GL.vertexAttribPointer(SHADERS._normal, 3, GL.FLOAT, false, 4 * (3 + 3 + 2), 3 * 4);
+        GL.vertexAttribPointer(SHADERS._normal, 3, GL.FLOAT, false, 4 * (3 + 3 + 2), 3 * 4); // Se define el "puntero" a las normales
         GL.vertexAttribPointer(SHADERS._uv, 2, GL.FLOAT, false, 4 * (3 + 3 + 2), (3 + 3) * 4); // Se define el "puntero" a las coords. de textura
-        
         
         GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, this.FACES); // Se enlazan las caras
         GL.drawElements(GL.TRIANGLES, this.faces.length, GL.UNSIGNED_SHORT, 0); // Se pintan 6 caras * 2 triángulos/cara * 3 puntos/triángulo
