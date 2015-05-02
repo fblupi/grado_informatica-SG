@@ -20,15 +20,15 @@ function Astro() {
         this.texture = TEXTURE.getTexture(GL, textureURL); // Se genera la textura
     };
     
-    this.draw = function (GL, _position, _uv) {
+    this.draw = function (GL) {
         if (this.texture.webglTexture) { // Si tiene textura
             GL.activeTexture(GL.TEXTURE0); // Se activa la textura
             GL.bindTexture(GL.TEXTURE_2D, this.texture.webglTexture); // Se enlaza la textura
         }
         
         GL.bindBuffer(GL.ARRAY_BUFFER, this.VERTEX); // Se enlazan los vértices
-        GL.vertexAttribPointer(_position, 3, GL.FLOAT, false, 4 * (3 + 2), 0); // Se define el "puntero" a los vértices
-        GL.vertexAttribPointer(_uv, 2, GL.FLOAT, false, 4 * (3 + 2), 3 * 4); // Se define el "puntero" a las coords. de textura
+        GL.vertexAttribPointer(SHADERS._position, 3, GL.FLOAT, false, 4 * (3 + 2), 0); // Se define el "puntero" a los vértices
+        GL.vertexAttribPointer(SHADERS._uv, 2, GL.FLOAT, false, 4 * (3 + 2), 3 * 4); // Se define el "puntero" a las coords. de textura
 
         GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, this.FACES); // Se enlazan las caras
         GL.drawElements(GL.TRIANGLES, this.faces.length, GL.UNSIGNED_SHORT, 0); // Se pintan 6 caras * 2 triángulos/cara * 3 puntos/triángulo

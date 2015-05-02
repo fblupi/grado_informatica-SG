@@ -6,6 +6,7 @@ var SHADERS = {
     _uv: null,
     _position: null,
     initialize: function (GL) {
+        // Vertex Shader
         var shaderVertexSource = "\n\
 attribute vec3 position;\n\
 uniform mat4 Pmatrix;\n\
@@ -17,7 +18,7 @@ void main(void) { //pre-built function\n\
 gl_Position = Pmatrix*Vmatrix*Mmatrix*vec4(position, 1.);\n\
 vUV=uv;\n\
 }";
-
+        // Fragment Shader
         var shaderFragmentSource = "\n\
 precision mediump float;\n\
 uniform sampler2D sampler;\n\
@@ -27,7 +28,6 @@ varying vec2 vUV;\n\
 void main(void) {\n\
 gl_FragColor = texture2D(sampler, vUV);\n\
 }";
-        
         var getShader = function (source, type, typeString) { // Función usada para compilar un shader
             var shader = GL.createShader(type);
             GL.shaderSource(shader, source);
@@ -56,10 +56,10 @@ gl_FragColor = texture2D(sampler, vUV);\n\
         SHADERS._uv = GL.getAttribLocation(SHADER_PROGRAM, "uv");               // "Puntero" a la variable _uv (coordenadas de textura)
         SHADERS._position = GL.getAttribLocation(SHADER_PROGRAM, "position");   // "Puntero" a la variable _position
 
-        GL.enableVertexAttribArray(_uv);        // Se habilita la variable _uv
-        GL.enableVertexAttribArray(_position);  // Se habilita la variable _position
+        GL.enableVertexAttribArray(SHADERS._uv);        // Se habilita la variable _uv
+        GL.enableVertexAttribArray(SHADERS._position);  // Se habilita la variable _position
 
         GL.useProgram(SHADER_PROGRAM); // Se ha terminado de enlazar, se le indica a webgl que puede usar el SHADER_PROGRAM para renderizar
-        GL.uniform1i(_sampler, 0); // _sampler es el canal de textura número 0
+        GL.uniform1i(SHADERS._sampler, 0); // _sampler es el canal de textura número 0
     }
 };
