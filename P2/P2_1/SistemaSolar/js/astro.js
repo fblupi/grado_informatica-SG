@@ -1,9 +1,19 @@
-function Astro() {
+function Astro(distancia, velRotOrb, velRot) {
     this.vertex = null;
     this.faces = null;
     this.VERTEX = null;
     this.FACES = null;
     this.texture = null;
+    this.distancia = distancia;
+    this.velRotOrb = velRotOrb;
+    this.velRot = velRot;
+    this.rot = 0;
+    this.rotOrb = 0;
+    this.satelites = [];
+    
+    this.addSatelite = function(satelite) {
+        this.satelites.push(satelite);
+    };
     
     this.model = function (GL, radius, textureURL) {
         this.vertex = SPHERE.getSphereVertex(radius, 64); // Se obtiene el array de vértices
@@ -20,7 +30,28 @@ function Astro() {
         this.texture = TEXTURE.getTexture(GL, textureURL); // Se genera la textura
     };
     
-    this.draw = function (GL) {
+    this.draw = function (GL, MOVEMATRIX) {
+        
+        // Rotación orbital
+        this.rotOrb += this.velRotOrb;
+        LIBS.rotateY(MOVEMATRIX, this.rotOrb);
+        
+        // Desplazamiento
+        LIBS.translateZ(MOVEMATRIX, this.distancia);
+        
+        // Satélites
+        var MOVEMATRIX_old = MOVEMATRIX;
+        for(var i = 0; i < this.satelites.length; i++) {
+            this.satelites[i].draw(GL, MOVEMATRIX);    
+        }
+        MOVEMATRIX = MOVEMATRIX_old;
+        
+        // Rotación
+        this.rot += this.velRot;
+        LIBS.rotateY(MOVEMATRIX, this.rot);
+        
+        GL.uniformMatrix4fv(SHADERS._Mmatrix, false, MOVEMATRIX); // Se asigna la matriz de modelo 
+        
         if (this.texture.webglTexture) { // Si tiene textura
             GL.activeTexture(GL.TEXTURE0); // Se activa la textura
             GL.bindTexture(GL.TEXTURE_2D, this.texture.webglTexture); // Se enlaza la textura
@@ -30,7 +61,8 @@ function Astro() {
         GL.vertexAttribPointer(SHADERS._position, 3, GL.FLOAT, false, 4 * (3 + 3 + 2), 0); // Se define el "puntero" a los vértices
         GL.vertexAttribPointer(SHADERS._normal, 3, GL.FLOAT, false, 4 * (3 + 3 + 2), 3 * 4);
         GL.vertexAttribPointer(SHADERS._uv, 2, GL.FLOAT, false, 4 * (3 + 3 + 2), (3 + 3) * 4); // Se define el "puntero" a las coords. de textura
-
+        
+        
         GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, this.FACES); // Se enlazan las caras
         GL.drawElements(GL.TRIANGLES, this.faces.length, GL.UNSIGNED_SHORT, 0); // Se pintan 6 caras * 2 triángulos/cara * 3 puntos/triángulo
     };

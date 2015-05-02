@@ -1,5 +1,5 @@
 var SPHERE = {
-    getSphereVertex: function (radius, res) {
+    getSphereVertex: function (radius, res) { // Se obtienen los vértices, normales y coordenadas de textura
         var vertexData = [];
         for (var i = 0; i <= res; i++) {
             var theta = i * Math.PI / res;
@@ -17,12 +17,15 @@ var SPHERE = {
                 var u = 1 - (j / res);
                 var v = 1 - (i / res);
 
+                // Vértices
                 vertexData.push(radius * x);
                 vertexData.push(radius * y);
                 vertexData.push(radius * z);
+                // Normales
                 vertexData.push(x);
                 vertexData.push(y);
                 vertexData.push(z);
+                // Coordenadas de textura
                 vertexData.push(u);
                 vertexData.push(v);
             }
@@ -30,7 +33,7 @@ var SPHERE = {
         return vertexData;
     },
     
-    getShereFaces: function (res) {
+    getShereFaces: function (res) { // Se obtienen los índices para crear las caras
         var indexData = [];
         for (var i = 0; i < res; i++) {
             for (var j = 0; j < res; j++) {

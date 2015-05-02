@@ -55,8 +55,13 @@ var main = function () {
 
     /*========================= THE MODEL ====================== */
     
-    var tierra = new Astro();
-    tierra.model(GL, 2, "res/tierra.jpg");
+    
+    var tierra = new Astro(0, 0, 0.005);
+    tierra.model(GL, 1.27, "res/tierra.jpg");
+     
+    var luna = new Astro(1, 0.01, 0.01);
+    luna.model(GL, 0.34, "res/luna.jpg");
+    tierra.addSatelite(luna);
 
     /*========================= MATRIX ========================= */
 
@@ -64,7 +69,7 @@ var main = function () {
     var MOVEMATRIX = LIBS.getI4(); // Se inicia la matriz de movimiento como la matriz identidad
     var VIEWMATRIX = LIBS.getI4(); // Se inicia la matriz de vista como la matriz identidad
 
-    LIBS.translateZ(VIEWMATRIX, -6); // Se traslada la cámara hacia atrás realizando una traslación sobre la matriz de vista
+    LIBS.translateZ(VIEWMATRIX, -10); // Se traslada la cámara hacia atrás realizando una traslación sobre la matriz de vista
     
     var THETA = 0, PHI = 0; // Variables usadas para el movimiento
 
@@ -75,18 +80,18 @@ var main = function () {
     GL.clearDepth(1.0); // Se asigna el valor de limpieza para el buffer de profundidad a 1
     
     var draw = function () { // Esta función dibuja la escena
-        LIBS.setI4(MOVEMATRIX); // Se le da la matriz de identidad como valor a la matriz de movimiento
+        LIBS.setI4(MOVEMATRIX);             // Se le da la matriz de identidad como valor a la matriz de movimiento
         LIBS.rotateY(MOVEMATRIX, THETA);    // Se gira THETA grados en el eje de la Y
         LIBS.rotateX(MOVEMATRIX, PHI);      // Se gira PHI grados en el eje de la X
-
+        
         GL.viewport(0.0, 0.0, CANVAS.width, CANVAS.height); // Establece el área de dibujado
         GL.clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT); // La limpia
         
         GL.uniformMatrix4fv(SHADERS._Pmatrix, false, PROJMATRIX); // Se asigna la matriz de proyección
         GL.uniformMatrix4fv(SHADERS._Vmatrix, false, VIEWMATRIX); // Se asigna la matriz de vista
-        GL.uniformMatrix4fv(SHADERS._Mmatrix, false, MOVEMATRIX); // Se asigna la matriz de modelo
         
-        tierra.draw(GL);
+        //tierra.draw(GL, MOVEMATRIX);
+        luna.draw(GL, MOVEMATRIX);
 
         GL.flush(); // Se fuerza el dibujado
         window.requestAnimationFrame(draw); // Vuelve a pintar la escena
