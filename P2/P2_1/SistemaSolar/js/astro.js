@@ -10,7 +10,7 @@ function Astro(distancia, velRotOrb, velRot, stoppable) {
     this.rot = 0;
     this.rotOrb = 0;
     this.satelites = [];
-    this.MATRIX = null;
+    this.stack = null;
     this.stoppable = stoppable;
     
     this.addSatelite = function(satelite) {
@@ -32,37 +32,40 @@ function Astro(distancia, velRotOrb, velRot, stoppable) {
         this.texture = TEXTURE.getTexture(GL, textureURL); // Se genera la textura
     };
     
-    this.draw = function (GL, MATRIX) {
+    this.draw = function (GL, stack) {
         
-        this.MATRIX = MATRIX; // Asignamos a la matriz del astro el valor de entrada
+        this.stack = new Stack(); // Se crea una nueva pila
+        this.stack.copy(stack); // Se copian los valores de la anterior
         
         // Matrices auxiliares para cada una de las transformaciones
         var MATRIX_ROT_ORB = LIBS.getI4();
         var MATRIX_DIS = LIBS.getI4();
         var MATRIX_ROT = LIBS.getI4();
         
-        // Rotación
-        this.rot += this.velRot; // Aumenta el ángulo de rotación sobre si mismo
-        LIBS.rotateY(MATRIX_ROT, this.rot); // Rota sobre si mismo
-        this.MATRIX = LIBS.mul(this.MATRIX, MATRIX_ROT); // Se multiplica por la matriz del astro
-        
-        // Desplazamiento
-        LIBS.translateZ(MATRIX_DIS, this.distancia); // Se desplaza a su posición en la órbita
-        this.MATRIX = LIBS.mul(this.MATRIX, MATRIX_DIS); // Se multiplica por la matriz del astro
-        
-        // Satélites
-        for(var i = 0; i < this.satelites.length; i++) {
-            this.satelites[i].draw(GL, this.MATRIX); // Dibuja cada satélite 
-        }
-        
         // Rotación orbital
         if(!this.stoppable || !MOUSE.click) { // No es parable o no está pulsado el ratón
             this.rotOrb += this.velRotOrb; // Aumenta el ángulo de rotación orbital
         }
-            LIBS.rotateY(MATRIX_ROT_ORB, this.rotOrb); // Rota sobre su astro de referencia
-        this.MATRIX = LIBS.mul(this.MATRIX, MATRIX_ROT_ORB); // Se multiplica por la matriz del astro
+        LIBS.rotateY(MATRIX_ROT_ORB, this.rotOrb); // Rota sobre su astro de referencia
+        this.stack.add(MATRIX_ROT_ORB); // Se añade a la pila la rotación orbital
         
-        GL.uniformMatrix4fv(SHADERS._Mmatrix, false, this.MATRIX); // Se asigna la matriz de modelo 
+        // Desplazamiento
+        LIBS.translateZ(MATRIX_DIS, this.distancia); // Se desplaza a su posición en la órbita
+        this.stack.add(MATRIX_DIS); // Se añade a la pila la traslación
+        
+        // Satélites
+        for(var i = 0; i < this.satelites.length; i++) {
+            this.satelites[i].draw(GL, this.stack); // Dibuja cada satélite 
+        }
+        
+        // Rotación
+        this.rot += this.velRot; // Aumenta el ángulo de rotación sobre si mismo
+        LIBS.rotateY(MATRIX_ROT, this.rot); // Rota sobre si mismo
+        this.stack.add(MATRIX_ROT); // Se añade a la pila la rotación
+        
+        var MATRIX = this.stack.evaluate(); // El valor de la matriz es la evaluación de la pila
+        
+        GL.uniformMatrix4fv(SHADERS._Mmatrix, false, MATRIX); // Se asigna la matriz de modelo 
         
         if (this.texture.webglTexture) { // Si tiene textura
             GL.activeTexture(GL.TEXTURE0); // Se activa la textura

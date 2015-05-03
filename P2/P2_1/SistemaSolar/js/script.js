@@ -27,6 +27,7 @@ var main = function () {
      
     var luna = new Astro(1, 0.01, 0.01, true);
     luna.model(GL, 0.34 / 2, "res/luna.jpg");
+    
     tierra.addSatelite(luna);
 
     /*========================= MATRIX ========================= */
@@ -55,7 +56,7 @@ var main = function () {
         GL.uniformMatrix4fv(SHADERS._Pmatrix, false, PROJMATRIX); // Se asigna la matriz de proyección
         GL.uniformMatrix4fv(SHADERS._Vmatrix, false, VIEWMATRIX); // Se asigna la matriz de vista
         
-        tierra.draw(GL, MOVEMATRIX);
+        tierra.draw(GL, new Stack()); // Astro sobre el que giran el resto de astros
 
         GL.flush(); // Se fuerza el dibujado
         window.requestAnimationFrame(draw); // Vuelve a pintar la escena
