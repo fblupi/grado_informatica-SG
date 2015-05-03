@@ -1,22 +1,17 @@
 var SPHERE = {
     getSphereVertex: function (radius, res) { // Se obtienen los vértices, normales y coordenadas de textura
-        var vertexData = [];
-        for (var i = 0; i <= res; i++) {
-            var theta = i * Math.PI / res;
-            var sinTheta = Math.sin(theta);
-            var cosTheta = Math.cos(theta);
-
-            for (var j = 0; j <= res; j++) {
-                var phi = j * 2 * Math.PI / res;
-                var sinPhi = Math.sin(phi);
-                var cosPhi = Math.cos(phi);
-
-                var x = cosPhi * sinTheta;
-                var y = cosTheta;
-                var z = sinPhi * sinTheta;
-                var u = 1 - (j / res);
-                var v = 1 - (i / res);
-
+        var vertexData = [], alpha, beta, x, y, z, u, v; 
+        for (var i = 0; i <= res; i++) { // Se recorren las latitudes
+            alpha = i * Math.PI / res; // Ángulo latitud
+            for (var j = 0; j <= res; j++) { // Se recorren las longitudes
+                beta = j * 2 * Math.PI / res; // Ángulo longitud
+                // Cálculo de x, y, z para vértices y normales
+                x = Math.cos(beta) * Math.sin(alpha);
+                y = Math.cos(alpha);
+                z = Math.sin(beta) * Math.sin(alpha);
+                // Cálculo de u, v para las coordenadas de textura
+                u = 1 - (j / res);
+                v = 1 - (i / res);
                 // Vértices
                 vertexData.push(radius * x);
                 vertexData.push(radius * y);
@@ -34,17 +29,20 @@ var SPHERE = {
     },
     
     getShereFaces: function (res) { // Se obtienen los índices para crear las caras
-        var indexData = [];
-        for (var i = 0; i < res; i++) {
-            for (var j = 0; j < res; j++) {
-                var first = (i * (res + 1)) + j;
-                var second = first + res + 1;
-                indexData.push(first);
-                indexData.push(second);
-                indexData.push(first + 1);
-                indexData.push(second);
-                indexData.push(second + 1);
-                indexData.push(first + 1);
+        var indexData = [], first, second;
+        for (var i = 0; i < res; i++) { // Se recorren las latitudes
+            for (var j = 0; j < res; j++) { // Se recorren las longitudes
+                // Cálculo de las esquinas superior e inferior izquierda
+                first = (i * (res + 1)) + j;
+                second = first + res + 1;
+                // Cara par
+                indexData.push(first); // Esquina superior izquierda
+                indexData.push(second); // Esquina inferior izquierda
+                indexData.push(first + 1); // Esquina superior derecha
+                // Cara impar
+                indexData.push(second); // Esquina inferior izquierda
+                indexData.push(second + 1); // Esquina inferior derecha
+                indexData.push(first + 1); // Esquina superior derecha
             }
         }
         return indexData;
