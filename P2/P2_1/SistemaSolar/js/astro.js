@@ -1,4 +1,4 @@
-function Astro(distancia, velRotOrb, velRot, stoppable) {
+function Astro (distancia, velRotOrb, velRot, stoppable) {
     this.vertex = null;
     this.faces = null;
     this.VERTEX = null;
@@ -13,7 +13,7 @@ function Astro(distancia, velRotOrb, velRot, stoppable) {
     this.stack = null;
     this.stoppable = stoppable;
     
-    this.addSatelite = function(satelite) {
+    this.addSatelite = function (satelite) {
         this.satelites.push(satelite);
     };
     
