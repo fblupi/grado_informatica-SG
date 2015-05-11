@@ -25,7 +25,7 @@ var main = function () {
     var tierra = new Astro(0, 0, 0.005, false);
     tierra.model(GL, 1.27 / 2, "res/tierra.jpg");
      
-    var luna = new Astro(1, 0.01, 0.01, true);
+    var luna = new Astro(1, 0.01, 0, true);
     luna.model(GL, 0.34 / 2, "res/luna.jpg");
     
     tierra.addSatelite(luna);
