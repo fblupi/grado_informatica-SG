@@ -8,7 +8,6 @@ function Astro (radio, urlTextura, distancia, velRotOrb, velRot, stoppable, luz)
     this.stoppable = stoppable;
     this.luz = luz;
     this.sphere = null;
-    this.satelites = [];
     this.bg = null;
     this.tgRot = null;
     this.tgRotOrb = null;
@@ -58,7 +57,11 @@ function Astro (radio, urlTextura, distancia, velRotOrb, velRot, stoppable, luz)
         var disMatrix = new THREE.Matrix4().makeTranslation(this.distancia / 100, 0, 0);
         var rotMatrix = new THREE.Matrix4().makeRotationY(this.velRot);
         
-        this.tgRotOrb.rotation.y += this.velRotOrb;
+        if(!this.stoppable || !MOUSE.click) {
+            this.tgRotOrb.rotation.y += this.velRotOrb;
+        } else {
+            this.tgRotOrb.rotation.y += 0;    
+        }
         this.tgDis.position.x = this.distancia;
         this.tgRot.rotation.y += this.velRot;
     };

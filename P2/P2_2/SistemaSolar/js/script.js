@@ -15,6 +15,9 @@ function main() {
     renderer.setClearColor(0x000000, 0.0);
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMapEnabled = true;
+    
+    // Eventos del raton
+    MOUSE.initialize("#canvas");
 
     // Añadir cámara
     camera.position.x = 0;
