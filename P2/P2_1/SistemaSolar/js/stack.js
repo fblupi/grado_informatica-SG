@@ -6,7 +6,7 @@ var Stack = function () {
     }
     
     this.evaluate = function () {
-        var result = this.values[this.values.length - 1]; // El primer valor de la salida es la identidad
+        var result = this.values[this.values.length - 1];
         for (var i = this.values.length - 2; i >= 0; i--) {
             result = LIBS.mul(result, this.values[i]); // Se van sacando los elementos de la pila multiplicando por la salida
         }
