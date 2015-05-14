@@ -14,13 +14,12 @@ function Astro (radio, urlTextura, distancia, velRotOrb, velRot, stoppable, luz)
     this.tgDis = null;
     
     this.model = function () {
-        var sphereTexture = THREE.ImageUtils.loadTexture(this.urlTextura),
-            sphereGeometry = new THREE.SphereGeometry(this.radio, this.RESOLUCION, this.RESOLUCION),
+        var sphereGeometry = new THREE.SphereGeometry(this.radio, this.RESOLUCION, this.RESOLUCION),
             sphereMaterial;
         if (this.luz) {
-            sphereMaterial = new THREE.MeshBasicMaterial({map: sphereTexture});
+            sphereMaterial = new THREE.MeshBasicMaterial({map: THREE.ImageUtils.loadTexture(this.urlTextura)});
         } else {
-            sphereMaterial = new THREE.MeshPhongMaterial({map: sphereTexture});
+            sphereMaterial = new THREE.MeshPhongMaterial({map: THREE.ImageUtils.loadTexture(this.urlTextura)});
         }
         this.sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
         this.sphere.position.x = 0;
