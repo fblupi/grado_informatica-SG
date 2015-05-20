@@ -4,11 +4,16 @@
      xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" 
      xsd:noNamespaceSchemaLocation="http://www.web3d.org/specifications/x3d-3.1.xsd">
     <Scene>
+        <NavigationInfo headlight="false" transitionType="ANIMATE" type="EXAMINE"/>
+        
         <!-- Fondo -->
         <Background backUrl="res/bgBack.jpg" bottomUrl="res/bgBottom.jpg" 
                     frontUrl="res/bgFront.jpg" leftUrl="res/bgLeft.jpg" 
                     rightUrl="res/bgRight.jpg" topUrl="res/bgTop.jpg">
         </Background>
+        
+        <!-- Luz -->
+        <PointLight ambientIntensity="1"/>
      
         <!-- Sol -->
         <Transform DEF="rotacionSol">
@@ -16,6 +21,7 @@
                 <Sphere radius="5"/>
                 <Appearance>
                     <ImageTexture url="res/sol.jpg"/>
+                    <Material diffuseColor="1 1 1" ambientIntensity="1.0"/>
                 </Appearance>
             </Shape>
         </Transform>
@@ -28,6 +34,7 @@
                         <Sphere radius="0.245"/>
                         <Appearance>
                             <ImageTexture url="res/mercurio.jpg"/>
+                            <Material diffuseColor="0.4 0.4 0.4"/>
                         </Appearance>
                     </Shape>
                 </Transform>
@@ -39,9 +46,10 @@
             <Transform DEF="traslacionVenus" translation="9.5 0 0">
                 <Transform DEF="rotacionVenus">
                     <Shape DEF="venus">
-                        <Sphere radius="0.605"/>
+                        <Sphere radius="0.605" solid="true"/>
                         <Appearance>
                             <ImageTexture url="res/venus.jpg"/>
+                            <Material diffuseColor="0.4 0.4 0.4"/>
                         </Appearance>
                     </Shape>
                 </Transform>
@@ -56,6 +64,7 @@
                         <Sphere radius="0.635"/>
                         <Appearance>
                             <ImageTexture url="res/tierra.jpg"/>
+                            <Material diffuseColor="0.4 0.4 0.4"/>
                         </Appearance>
                     </Shape>
                 </Transform>
@@ -68,6 +77,7 @@
                                 <Sphere radius="0.17"/>
                                 <Appearance>
                                     <ImageTexture url="res/luna.jpg"/>
+                                    <Material diffuseColor="0.4 0.4 0.4"/>
                                 </Appearance>
                             </Shape>
                         </Transform>
@@ -85,6 +95,7 @@
                         <Sphere radius="0.34"/>
                         <Appearance>
                             <ImageTexture url="res/marte.jpg"/>
+                            <Material diffuseColor="0.4 0.4 0.4"/>
                         </Appearance>
                     </Shape>
                 </Transform>
@@ -97,6 +108,7 @@
                                 <Sphere radius="0.01"/>
                                 <Appearance>
                                     <ImageTexture url="res/fobos.jpg"/>
+                                    <Material diffuseColor="0.4 0.4 0.4"/>
                                 </Appearance>
                             </Shape>
                         </Transform>
@@ -111,6 +123,7 @@
                                 <Sphere radius="0.005"/>
                                 <Appearance>
                                     <ImageTexture url="res/deimos.jpg"/>
+                                    <Material diffuseColor="0.4 0.4 0.4"/>
                                 </Appearance>
                             </Shape>
                         </Transform>
@@ -128,6 +141,7 @@
                         <Sphere radius="2.5"/>
                         <Appearance>
                             <ImageTexture url="res/jupiter.jpg"/>
+                            <Material diffuseColor="0.4 0.4 0.4"/>
                         </Appearance>
                     </Shape>
                 </Transform>
@@ -140,6 +154,7 @@
                                 <Sphere radius="0.18"/>
                                 <Appearance>
                                     <ImageTexture url="res/io.jpg"/>
+                                    <Material diffuseColor="0.4 0.4 0.4"/>
                                 </Appearance>
                             </Shape>
                         </Transform>
@@ -154,6 +169,7 @@
                                 <Sphere radius="0.155"/>
                                 <Appearance>
                                     <ImageTexture url="res/europa.jpg"/>
+                                    <Material diffuseColor="0.4 0.4 0.4"/>
                                 </Appearance>
                             </Shape>
                         </Transform>
@@ -168,6 +184,7 @@
                                 <Sphere radius="0.265"/>
                                 <Appearance>
                                     <ImageTexture url="res/ganimedes.jpg"/>
+                                    <Material diffuseColor="0.4 0.4 0.4"/>
                                 </Appearance>
                             </Shape>
                         </Transform>
@@ -182,6 +199,7 @@
                                 <Sphere radius="0.24"/>
                                 <Appearance>
                                     <ImageTexture url="res/calisto.jpg"/>
+                                    <Material diffuseColor="0.4 0.4 0.4"/>
                                 </Appearance>
                             </Shape>
                         </Transform>
@@ -199,38 +217,48 @@
                         <Sphere radius="2"/>
                         <Appearance>
                             <ImageTexture url="res/saturno.jpg"/>
+                            <Material diffuseColor="0.4 0.4 0.4"/>
                         </Appearance>
                     </Shape>
                 </Transform>
                 
                 <!-- Anillo A -->
-                <Transform DEF="escaladoAnilloA" scale="1 1 0" rotation="1 0 0 1.5708">
-                    <Shape DEF="anilloA">
-                        <Torus innerRadius="0.24" outerRadius="4.2"/>
-                        <Appearance>
-                            <ImageTexture url="res/anilloa.jpg"/>
-                        </Appearance>
-                    </Shape>
+                <Transform DEF="rotacionAnilloA">
+                    <Transform DEF="escaladoAnilloA" scale="1 1 0" rotation="1 0 0 1.5708">
+                        <Shape DEF="anilloA">
+                            <Torus innerRadius="0.24" outerRadius="4.2"/>
+                            <Appearance>
+                                <ImageTexture url="res/anilloa.jpg"/>
+                                <Material diffuseColor="0.4 0.4 0.4"/>
+                            </Appearance>
+                        </Shape>
+                    </Transform>
                 </Transform>
                 
                 <!-- Anillo B -->
-                <Transform DEF="escaladoAnilloB" scale="1 1 0" rotation="1 0 0 1.5708">
-                    <Shape DEF="anilloB">
-                        <Torus innerRadius="0.39" outerRadius="3.5"/>
-                        <Appearance>
-                            <ImageTexture url="res/anillob.jpg"/>
-                        </Appearance>
-                    </Shape>
+                <Transform DEF="rotacionAnilloB">
+                    <Transform DEF="escaladoAnilloB" scale="1 1 0" rotation="1 0 0 1.5708">
+                        <Shape DEF="anilloB">
+                            <Torus innerRadius="0.39" outerRadius="3.5"/>
+                            <Appearance>
+                                <ImageTexture url="res/anillob.jpg"/>
+                                <Material diffuseColor="0.4 0.4 0.4"/>
+                            </Appearance>
+                        </Shape>
+                    </Transform>
                 </Transform>
                 
                 <!-- Anillo C -->
-                <Transform DEF="escaladoAnilloC" scale="1 1 0" rotation="1 0 0 1.5708">
-                    <Shape DEF="anilloC">
-                        <Torus innerRadius="0.325" outerRadius="2.7"/>
-                        <Appearance>
-                            <ImageTexture url="res/anilloc.jpg"/>
-                        </Appearance>
-                    </Shape>
+                <Transform DEF="rotacionAnilloC">
+                    <Transform DEF="escaladoAnilloC" scale="1 1 0" rotation="1 0 0 1.5708">
+                        <Shape DEF="anilloC">
+                            <Torus innerRadius="0.325" outerRadius="2.7"/>
+                            <Appearance>
+                                <ImageTexture url="res/anilloc.jpg"/>
+                                <Material diffuseColor="0.4 0.4 0.4"/>
+                            </Appearance>
+                        </Shape>
+                    </Transform>
                 </Transform>
                 
             </Transform>
@@ -244,6 +272,7 @@
                         <Sphere radius="1.3"/>
                         <Appearance>
                             <ImageTexture url="res/urano.jpg"/>
+                            <Material diffuseColor="0.4 0.4 0.4"/>
                         </Appearance>
                     </Shape>
                 </Transform>
@@ -256,6 +285,7 @@
                                 <Sphere radius="0.02"/>
                                 <Appearance>
                                     <ImageTexture url="res/miranda.jpg"/>
+                                    <Material diffuseColor="0.4 0.4 0.4"/>
                                 </Appearance>
                             </Shape>
                         </Transform>
@@ -270,6 +300,7 @@
                                 <Sphere radius="0.05"/>
                                 <Appearance>
                                     <ImageTexture url="res/ariel.jpg"/>
+                                    <Material diffuseColor="0.4 0.4 0.4"/>
                                 </Appearance>
                             </Shape>
                         </Transform>
@@ -284,6 +315,7 @@
                                 <Sphere radius="0.06"/>
                                 <Appearance>
                                     <ImageTexture url="res/umbriel.jpg"/>
+                                    <Material diffuseColor="0.4 0.4 0.4"/>
                                 </Appearance>
                             </Shape>
                         </Transform>
@@ -298,6 +330,7 @@
                                 <Sphere radius="0.08"/>
                                 <Appearance>
                                     <ImageTexture url="res/titania.jpg"/>
+                                    <Material diffuseColor="0.4 0.4 0.4"/>
                                 </Appearance>
                             </Shape>
                         </Transform>
@@ -312,6 +345,7 @@
                                 <Sphere radius="0.075"/>
                                 <Appearance>
                                     <ImageTexture url="res/oberon.jpg"/>
+                                    <Material diffuseColor="0.4 0.4 0.4"/>
                                 </Appearance>
                             </Shape>
                         </Transform>
@@ -329,6 +363,7 @@
                         <Sphere radius="1.25"/>
                         <Appearance>
                             <ImageTexture url="res/neptuno.jpg"/>
+                            <Material diffuseColor="0.4 0.4 0.4"/>
                         </Appearance>
                     </Shape>
                 </Transform>
@@ -341,6 +376,7 @@
                                 <Sphere radius="0.135"/>
                                 <Appearance>
                                     <ImageTexture url="res/triton.jpg"/>
+                                    <Material diffuseColor="0.4 0.4 0.4"/>
                                 </Appearance>
                             </Shape>
                         </Transform>
