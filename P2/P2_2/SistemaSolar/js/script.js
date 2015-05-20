@@ -31,13 +31,13 @@ function main() {
     
     // Modelo
     sol = new Astro(6 / 2, "res/sol.jpg", 0, 0, 0.002, false, true);
-    sol.model(scene);
+    sol.model();
     
     tierra = new Astro(1.27 / 2, "res/tierra.jpg", 6, 0.001, 0.005, false, false);
-    tierra.model(scene);
+    tierra.model();
     
     luna = new Astro(0.34 / 2, "res/luna.jpg", 1, 0.01, 0, true, false);
-    luna.model(scene);
+    luna.model();
     
     scene.add(sol.get());
     sol.addSatelite(tierra.get());

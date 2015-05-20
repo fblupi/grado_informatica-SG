@@ -52,10 +52,6 @@ function Astro (radio, urlTextura, distancia, velRotOrb, velRot, stoppable, luz)
     };
     
     this.animate = function () {        
-        var rotOrbMatrix = new THREE.Matrix4().makeRotationY(this.velRotOrb);
-        var disMatrix = new THREE.Matrix4().makeTranslation(this.distancia / 100, 0, 0);
-        var rotMatrix = new THREE.Matrix4().makeRotationY(this.velRot);
-        
         if(!this.stoppable || !MOUSE.click) {
             this.tgRotOrb.rotation.y += this.velRotOrb;
         } else {
