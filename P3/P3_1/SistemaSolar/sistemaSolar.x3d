@@ -6,14 +6,14 @@
     <Scene>
         <NavigationInfo headlight="false" transitionType="ANIMATE" type="EXAMINE"/>
         
+        <!-- Cámara -->
+        <Viewpoint DEF="camara" orientation="0 0 0 1" position="0 0 30"/>
+        
         <!-- Fondo -->
         <Background backUrl="res/bgBack.jpg" bottomUrl="res/bgBottom.jpg" 
                     frontUrl="res/bgFront.jpg" leftUrl="res/bgLeft.jpg" 
                     rightUrl="res/bgRight.jpg" topUrl="res/bgTop.jpg">
         </Background>
-        
-        <!-- Luz -->
-        <PointLight ambientIntensity="1"/>
      
         <!-- Sol -->
         <Transform DEF="rotacionSol">
@@ -24,6 +24,14 @@
                     <Material diffuseColor="1 1 1" ambientIntensity="1.0"/>
                 </Appearance>
             </Shape>
+            
+            <!-- Luz -->
+            <PointLight ambientIntensity="1"/>
+            
+            <OrientationInterpolator DEF="InterpoladorSol" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+            <TimeSensor DEF="TimeSol" cycleInterval="5" loop="true"></TimeSensor>
+            <ROUTE fromNode="TimeSol" fromField="fraction_changed" toNode="InterpoladorSol" toField="set_fraction"></ROUTE>
+            <ROUTE fromNode="InterpoladorSol" fromField="value_changed" toNode="rotacionSol" toField="set_rotation"></ROUTE>
         </Transform>
         
         <!-- Mercurio -->
@@ -37,8 +45,16 @@
                             <Material diffuseColor="0.4 0.4 0.4"/>
                         </Appearance>
                     </Shape>
+                    <OrientationInterpolator DEF="InterpoladorMercurio" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+                    <TimeSensor DEF="TimeMercurio" cycleInterval="10" loop="true"></TimeSensor>
+                    <ROUTE fromNode="TimeMercurio" fromField="fraction_changed" toNode="InterpoladorMercurio" toField="set_fraction"></ROUTE>
+                    <ROUTE fromNode="InterpoladorMercurio" fromField="value_changed" toNode="rotacionMercurio" toField="set_rotation"></ROUTE>
                 </Transform>
             </Transform>
+            <OrientationInterpolator DEF="InterpoladorOrbitalMercurio" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+            <TimeSensor DEF="TimeOrbitalMercurio" cycleInterval="18" loop="true"></TimeSensor>
+            <ROUTE fromNode="TimeOrbitalMercurio" fromField="fraction_changed" toNode="InterpoladorOrbitalMercurio" toField="set_fraction"></ROUTE>
+            <ROUTE fromNode="InterpoladorOrbitalMercurio" fromField="value_changed" toNode="rotacionOrbitalMercurio" toField="set_rotation"></ROUTE>
         </Transform>
         
         <!-- Venus -->
@@ -52,8 +68,16 @@
                             <Material diffuseColor="0.4 0.4 0.4"/>
                         </Appearance>
                     </Shape>
+                    <OrientationInterpolator DEF="InterpoladorVenus" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 6.28317  0 1 0 4.71239  0 1 0 3.14159  0 1 0 1.57079  0 1 0 0"></OrientationInterpolator>
+                    <TimeSensor DEF="TimeVenus" cycleInterval="100" loop="true"></TimeSensor>
+                    <ROUTE fromNode="TimeVenus" fromField="fraction_changed" toNode="InterpoladorVenus" toField="set_fraction"></ROUTE>
+                    <ROUTE fromNode="InterpoladorVenus" fromField="value_changed" toNode="rotacionVenus" toField="set_rotation"></ROUTE>
                 </Transform>
             </Transform>
+            <OrientationInterpolator DEF="InterpoladorOrbitalVenus" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+            <TimeSensor DEF="TimeOrbitalVenus" cycleInterval="25" loop="true"></TimeSensor>
+            <ROUTE fromNode="TimeOrbitalVenus" fromField="fraction_changed" toNode="InterpoladorOrbitalVenus" toField="set_fraction"></ROUTE>
+            <ROUTE fromNode="InterpoladorOrbitalVenus" fromField="value_changed" toNode="rotacionOrbitalVenus" toField="set_rotation"></ROUTE>
         </Transform>
         
         <!-- Tierra -->
@@ -67,24 +91,34 @@
                             <Material diffuseColor="0.4 0.4 0.4"/>
                         </Appearance>
                     </Shape>
+                    <OrientationInterpolator DEF="InterpoladorTierra" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+                    <TimeSensor DEF="TimeTierra" cycleInterval="3" loop="true"></TimeSensor>
+                    <ROUTE fromNode="TimeTierra" fromField="fraction_changed" toNode="InterpoladorTierra" toField="set_fraction"></ROUTE>
+                    <ROUTE fromNode="InterpoladorTierra" fromField="value_changed" toNode="rotacionTierra" toField="set_rotation"></ROUTE>
                 </Transform>
                 
                 <!-- Luna -->
                 <Transform DEF="rotacionOrbitalLuna">
                     <Transform DEF="traslacionLuna" translation="1 0 0">
-                        <Transform DEF="rotacionLuna">
-                            <Shape DEF="luna">
-                                <Sphere radius="0.17"/>
-                                <Appearance>
-                                    <ImageTexture url="res/luna.jpg"/>
-                                    <Material diffuseColor="0.4 0.4 0.4"/>
-                                </Appearance>
-                            </Shape>
-                        </Transform>
+                        <Shape DEF="luna">
+                            <Sphere radius="0.17"/>
+                            <Appearance>
+                                <ImageTexture url="res/luna.jpg"/>
+                                <Material diffuseColor="0.4 0.4 0.4"/>
+                            </Appearance>
+                        </Shape>
                     </Transform>
+                    <OrientationInterpolator DEF="InterpoladorOrbitalLuna" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+                    <TimeSensor DEF="TimeOrbitalLuna" cycleInterval="9" loop="true"></TimeSensor>
+                    <ROUTE fromNode="TimeOrbitalLuna" fromField="fraction_changed" toNode="InterpoladorOrbitalLuna" toField="set_fraction"></ROUTE>
+                    <ROUTE fromNode="InterpoladorOrbitalLuna" fromField="value_changed" toNode="rotacionOrbitalLuna" toField="set_rotation"></ROUTE>
                 </Transform>
                 
             </Transform>
+            <OrientationInterpolator DEF="InterpoladorOrbitalTierra" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+            <TimeSensor DEF="TimeOrbitalTierra" cycleInterval="60" loop="true"></TimeSensor>
+            <ROUTE fromNode="TimeOrbitalTierra" fromField="fraction_changed" toNode="InterpoladorOrbitalTierra" toField="set_fraction"></ROUTE>
+            <ROUTE fromNode="InterpoladorOrbitalTierra" fromField="value_changed" toNode="rotacionOrbitalTierra" toField="set_rotation"></ROUTE>
         </Transform>
         
         <!-- Marte -->
@@ -98,39 +132,51 @@
                             <Material diffuseColor="0.4 0.4 0.4"/>
                         </Appearance>
                     </Shape>
+                    <OrientationInterpolator DEF="InterpoladorMarte" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+                    <TimeSensor DEF="TimeMarte" cycleInterval="5" loop="true"></TimeSensor>
+                    <ROUTE fromNode="TimeMarte" fromField="fraction_changed" toNode="InterpoladorMarte" toField="set_fraction"></ROUTE>
+                    <ROUTE fromNode="InterpoladorMarte" fromField="value_changed" toNode="rotacionMarte" toField="set_rotation"></ROUTE>
                 </Transform>
                 
                 <!-- Fobos -->
                 <Transform DEF="rotacionOrbitalFobos">
                     <Transform DEF="traslacionFobos" translation="0.45 0 0">
-                        <Transform DEF="rotacionFobos">
-                            <Shape DEF="fobos">
-                                <Sphere radius="0.01"/>
-                                <Appearance>
-                                    <ImageTexture url="res/fobos.jpg"/>
-                                    <Material diffuseColor="0.4 0.4 0.4"/>
-                                </Appearance>
-                            </Shape>
-                        </Transform>
+                        <Shape DEF="fobos">
+                            <Sphere radius="0.01"/>
+                            <Appearance>
+                                <ImageTexture url="res/fobos.jpg"/>
+                                <Material diffuseColor="0.4 0.4 0.4"/>
+                            </Appearance>
+                        </Shape>
                     </Transform>
+                    <OrientationInterpolator DEF="InterpoladorOrbitalFobos" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+                    <TimeSensor DEF="TimeOrbitalFobos" cycleInterval="3.1" loop="true"></TimeSensor>
+                    <ROUTE fromNode="TimeOrbitalFobos" fromField="fraction_changed" toNode="InterpoladorOrbitalFobos" toField="set_fraction"></ROUTE>
+                    <ROUTE fromNode="InterpoladorOrbitalFobos" fromField="value_changed" toNode="rotacionOrbitalFobos" toField="set_rotation"></ROUTE>
                 </Transform>
                 
                 <!-- Deimos -->
                 <Transform DEF="rotacionOrbitalDeimos">
                     <Transform DEF="traslacionDeimos" translation="0.57 0 0">
-                        <Transform DEF="rotacionDeimos">
-                            <Shape DEF="deimos">
-                                <Sphere radius="0.005"/>
-                                <Appearance>
-                                    <ImageTexture url="res/deimos.jpg"/>
-                                    <Material diffuseColor="0.4 0.4 0.4"/>
-                                </Appearance>
-                            </Shape>
-                        </Transform>
+                        <Shape DEF="deimos">
+                            <Sphere radius="0.005"/>
+                            <Appearance>
+                                <ImageTexture url="res/deimos.jpg"/>
+                                <Material diffuseColor="0.4 0.4 0.4"/>
+                            </Appearance>
+                        </Shape>
                     </Transform>
+                    <OrientationInterpolator DEF="InterpoladorOrbitalDeimos" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+                    <TimeSensor DEF="TimeOrbitalDeimos" cycleInterval="3.2" loop="true"></TimeSensor>
+                    <ROUTE fromNode="TimeOrbitalDeimos" fromField="fraction_changed" toNode="InterpoladorOrbitalDeimos" toField="set_fraction"></ROUTE>
+                    <ROUTE fromNode="InterpoladorOrbitalDeimos" fromField="value_changed" toNode="rotacionOrbitalDeimos" toField="set_rotation"></ROUTE>
                 </Transform>
                 
             </Transform>
+            <OrientationInterpolator DEF="InterpoladorOrbitalMarte" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+            <TimeSensor DEF="TimeOrbitalMarte" cycleInterval="75" loop="true"></TimeSensor>
+            <ROUTE fromNode="TimeOrbitalMarte" fromField="fraction_changed" toNode="InterpoladorOrbitalMarte" toField="set_fraction"></ROUTE>
+            <ROUTE fromNode="InterpoladorOrbitalMarte" fromField="value_changed" toNode="rotacionOrbitalMarte" toField="set_rotation"></ROUTE>
         </Transform>
         
         <!-- Júpiter -->
@@ -144,69 +190,85 @@
                             <Material diffuseColor="0.4 0.4 0.4"/>
                         </Appearance>
                     </Shape>
+                    <OrientationInterpolator DEF="InterpoladorJupiter" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+                    <TimeSensor DEF="TimeJupiter" cycleInterval="2.9" loop="true"></TimeSensor>
+                    <ROUTE fromNode="TimeJupiter" fromField="fraction_changed" toNode="InterpoladorJupiter" toField="set_fraction"></ROUTE>
+                    <ROUTE fromNode="InterpoladorJupiter" fromField="value_changed" toNode="rotacionJupiter" toField="set_rotation"></ROUTE>
                 </Transform>
                 
                 <!-- Ío -->
                 <Transform DEF="rotacionOrbitalIo">
                     <Transform DEF="traslacionIo" translation="2.8 0 0">
-                        <Transform DEF="rotacionIo">
-                            <Shape DEF="io">
-                                <Sphere radius="0.18"/>
-                                <Appearance>
-                                    <ImageTexture url="res/io.jpg"/>
-                                    <Material diffuseColor="0.4 0.4 0.4"/>
-                                </Appearance>
-                            </Shape>
-                        </Transform>
+                        <Shape DEF="io">
+                            <Sphere radius="0.18"/>
+                            <Appearance>
+                                <ImageTexture url="res/io.jpg"/>
+                                <Material diffuseColor="0.4 0.4 0.4"/>
+                            </Appearance>
+                        </Shape>
                     </Transform>
+                    <OrientationInterpolator DEF="InterpoladorOrbitalIo" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+                    <TimeSensor DEF="TimeOrbitalIo" cycleInterval="3.3" loop="true"></TimeSensor>
+                    <ROUTE fromNode="TimeOrbitalIo" fromField="fraction_changed" toNode="InterpoladorOrbitalIo" toField="set_fraction"></ROUTE>
+                    <ROUTE fromNode="InterpoladorOrbitalIo" fromField="value_changed" toNode="rotacionOrbitalIo" toField="set_rotation"></ROUTE>
                 </Transform>
                 
                 <!-- Europa -->
                 <Transform DEF="rotacionOrbitalEuropa">
                     <Transform DEF="traslacionEuropa" translation="3.3 0 0">
-                        <Transform DEF="rotacionEuropa">
-                            <Shape DEF="europa">
-                                <Sphere radius="0.155"/>
-                                <Appearance>
-                                    <ImageTexture url="res/europa.jpg"/>
-                                    <Material diffuseColor="0.4 0.4 0.4"/>
-                                </Appearance>
-                            </Shape>
-                        </Transform>
+                        <Shape DEF="europa">
+                            <Sphere radius="0.155"/>
+                            <Appearance>
+                                <ImageTexture url="res/europa.jpg"/>
+                                <Material diffuseColor="0.4 0.4 0.4"/>
+                            </Appearance>
+                        </Shape>
                     </Transform>
+                    <OrientationInterpolator DEF="InterpoladorOrbitalEuropa" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+                    <TimeSensor DEF="TimeOrbitalEuropa" cycleInterval="3.5" loop="true"></TimeSensor>
+                    <ROUTE fromNode="TimeOrbitalEuropa" fromField="fraction_changed" toNode="InterpoladorOrbitalEuropa" toField="set_fraction"></ROUTE>
+                    <ROUTE fromNode="InterpoladorOrbitalEuropa" fromField="value_changed" toNode="rotacionOrbitalEuropa" toField="set_rotation"></ROUTE>
                 </Transform>
                 
                 <!-- Ganímedes -->
                 <Transform DEF="rotacionOrbitalGanimedes">
                     <Transform DEF="traslacionGanimedes" translation="3.9 0 0">
-                        <Transform DEF="rotacionGanimedes">
-                            <Shape DEF="ganimedes">
-                                <Sphere radius="0.265"/>
-                                <Appearance>
-                                    <ImageTexture url="res/ganimedes.jpg"/>
-                                    <Material diffuseColor="0.4 0.4 0.4"/>
-                                </Appearance>
-                            </Shape>
-                        </Transform>
+                        <Shape DEF="ganimedes">
+                            <Sphere radius="0.265"/>
+                            <Appearance>
+                                <ImageTexture url="res/ganimedes.jpg"/>
+                                <Material diffuseColor="0.4 0.4 0.4"/>
+                            </Appearance>
+                        </Shape>
                     </Transform>
+                    <OrientationInterpolator DEF="InterpoladorOrbitalGanimedes" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+                    <TimeSensor DEF="TimeOrbitalGanimedes" cycleInterval="3.75" loop="true"></TimeSensor>
+                    <ROUTE fromNode="TimeOrbitalGanimedes" fromField="fraction_changed" toNode="InterpoladorOrbitalGanimedes" toField="set_fraction"></ROUTE>
+                    <ROUTE fromNode="InterpoladorOrbitalGanimedes" fromField="value_changed" toNode="rotacionOrbitalGanimedes" toField="set_rotation"></ROUTE>
                 </Transform>
                 
                 <!-- Calisto -->
                 <Transform DEF="rotacionOrbitalCalisto">
                     <Transform DEF="traslacionCalisto" translation="4.6 0 0">
-                        <Transform DEF="rotacionCalisto">
-                            <Shape DEF="calisto">
-                                <Sphere radius="0.24"/>
-                                <Appearance>
-                                    <ImageTexture url="res/calisto.jpg"/>
-                                    <Material diffuseColor="0.4 0.4 0.4"/>
-                                </Appearance>
-                            </Shape>
-                        </Transform>
+                        <Shape DEF="calisto">
+                            <Sphere radius="0.24"/>
+                            <Appearance>
+                                <ImageTexture url="res/calisto.jpg"/>
+                                <Material diffuseColor="0.4 0.4 0.4"/>
+                            </Appearance>
+                        </Shape>
                     </Transform>
+                    <OrientationInterpolator DEF="InterpoladorOrbitalCalisto" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+                    <TimeSensor DEF="TimeOrbitalCalisto" cycleInterval="6" loop="true"></TimeSensor>
+                    <ROUTE fromNode="TimeOrbitalCalisto" fromField="fraction_changed" toNode="InterpoladorOrbitalCalisto" toField="set_fraction"></ROUTE>
+                    <ROUTE fromNode="InterpoladorOrbitalCalisto" fromField="value_changed" toNode="rotacionOrbitalCalisto" toField="set_rotation"></ROUTE>
                 </Transform>
                 
             </Transform>
+            <OrientationInterpolator DEF="InterpoladorOrbitalJupiter" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+            <TimeSensor DEF="TimeOrbitalJupiter" cycleInterval="90" loop="true"></TimeSensor>
+            <ROUTE fromNode="TimeOrbitalJupiter" fromField="fraction_changed" toNode="InterpoladorOrbitalJupiter" toField="set_fraction"></ROUTE>
+            <ROUTE fromNode="InterpoladorOrbitalJupiter" fromField="value_changed" toNode="rotacionOrbitalJupiter" toField="set_rotation"></ROUTE>
         </Transform>
         
         <!-- Saturno -->
@@ -220,6 +282,10 @@
                             <Material diffuseColor="0.4 0.4 0.4"/>
                         </Appearance>
                     </Shape>
+                    <OrientationInterpolator DEF="InterpoladorSaturno" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+                    <TimeSensor DEF="TimeSaturno" cycleInterval="2.9" loop="true"></TimeSensor>
+                    <ROUTE fromNode="TimeSaturno" fromField="fraction_changed" toNode="InterpoladorSaturno" toField="set_fraction"></ROUTE>
+                    <ROUTE fromNode="InterpoladorSaturno" fromField="value_changed" toNode="rotacionSaturno" toField="set_rotation"></ROUTE>
                 </Transform>
                 
                 <!-- Anillo A -->
@@ -233,6 +299,10 @@
                             </Appearance>
                         </Shape>
                     </Transform>
+                    <OrientationInterpolator DEF="InterpoladorAnilloA" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+                    <TimeSensor DEF="TimeAnilloA" cycleInterval="5" loop="true"></TimeSensor>
+                    <ROUTE fromNode="TimeAnilloA" fromField="fraction_changed" toNode="InterpoladorAnilloA" toField="set_fraction"></ROUTE>
+                    <ROUTE fromNode="InterpoladorAnilloA" fromField="value_changed" toNode="rotacionAnilloA" toField="set_rotation"></ROUTE>
                 </Transform>
                 
                 <!-- Anillo B -->
@@ -246,6 +316,10 @@
                             </Appearance>
                         </Shape>
                     </Transform>
+                    <OrientationInterpolator DEF="InterpoladorAnilloB" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+                    <TimeSensor DEF="TimeAnilloB" cycleInterval="5" loop="true"></TimeSensor>
+                    <ROUTE fromNode="TimeAnilloB" fromField="fraction_changed" toNode="InterpoladorAnilloB" toField="set_fraction"></ROUTE>
+                    <ROUTE fromNode="InterpoladorAnilloB" fromField="value_changed" toNode="rotacionAnilloB" toField="set_rotation"></ROUTE>
                 </Transform>
                 
                 <!-- Anillo C -->
@@ -259,9 +333,17 @@
                             </Appearance>
                         </Shape>
                     </Transform>
+                    <OrientationInterpolator DEF="InterpoladorAnilloC" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+                    <TimeSensor DEF="TimeAnilloC" cycleInterval="5" loop="true"></TimeSensor>
+                    <ROUTE fromNode="TimeAnilloC" fromField="fraction_changed" toNode="InterpoladorAnilloC" toField="set_fraction"></ROUTE>
+                    <ROUTE fromNode="InterpoladorAnilloC" fromField="value_changed" toNode="rotacionAnilloC" toField="set_rotation"></ROUTE>
                 </Transform>
                 
             </Transform>
+            <OrientationInterpolator DEF="InterpoladorOrbitalSaturno" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+            <TimeSensor DEF="TimeOrbitalSaturno" cycleInterval="120" loop="true"></TimeSensor>
+            <ROUTE fromNode="TimeOrbitalSaturno" fromField="fraction_changed" toNode="InterpoladorOrbitalSaturno" toField="set_fraction"></ROUTE>
+            <ROUTE fromNode="InterpoladorOrbitalSaturno" fromField="value_changed" toNode="rotacionOrbitalSaturno" toField="set_rotation"></ROUTE>
         </Transform>
         
         <!-- Urano -->
@@ -275,84 +357,102 @@
                             <Material diffuseColor="0.4 0.4 0.4"/>
                         </Appearance>
                     </Shape>
+                    <OrientationInterpolator DEF="InterpoladorUrano" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+                    <TimeSensor DEF="TimeUrano" cycleInterval="2.6" loop="true"></TimeSensor>
+                    <ROUTE fromNode="TimeUrano" fromField="fraction_changed" toNode="InterpoladorUrano" toField="set_fraction"></ROUTE>
+                    <ROUTE fromNode="InterpoladorUrano" fromField="value_changed" toNode="rotacionUrano" toField="set_rotation"></ROUTE>
                 </Transform>
                 
                 <!-- Miranda -->
                 <Transform DEF="rotacionOrbitalMiranda">
                     <Transform DEF="traslacionMiranda" translation="1.4 0 0">
-                        <Transform DEF="rotacionMiranda">
-                            <Shape DEF="miranda">
-                                <Sphere radius="0.02"/>
-                                <Appearance>
-                                    <ImageTexture url="res/miranda.jpg"/>
-                                    <Material diffuseColor="0.4 0.4 0.4"/>
-                                </Appearance>
-                            </Shape>
-                        </Transform>
+                        <Shape DEF="miranda">
+                            <Sphere radius="0.02"/>
+                            <Appearance>
+                                <ImageTexture url="res/miranda.jpg"/>
+                                <Material diffuseColor="0.4 0.4 0.4"/>
+                            </Appearance>
+                        </Shape>
                     </Transform>
+                    <OrientationInterpolator DEF="InterpoladorOrbitalMiranda" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+                    <TimeSensor DEF="TimeOrbitalMiranda" cycleInterval="3.25" loop="true"></TimeSensor>
+                    <ROUTE fromNode="TimeOrbitalMiranda" fromField="fraction_changed" toNode="InterpoladorOrbitalMiranda" toField="set_fraction"></ROUTE>
+                    <ROUTE fromNode="InterpoladorOrbitalMiranda" fromField="value_changed" toNode="rotacionOrbitalMiranda" toField="set_rotation"></ROUTE>
                 </Transform>
                 
                 <!-- Ariel -->
                 <Transform DEF="rotacionOrbitalAriel">
                     <Transform DEF="traslacionAriel" translation="1.55 0 0">
-                        <Transform DEF="rotacionAriel">
-                            <Shape DEF="ariel">
-                                <Sphere radius="0.05"/>
-                                <Appearance>
-                                    <ImageTexture url="res/ariel.jpg"/>
-                                    <Material diffuseColor="0.4 0.4 0.4"/>
-                                </Appearance>
-                            </Shape>
-                        </Transform>
+                        <Shape DEF="ariel">
+                            <Sphere radius="0.05"/>
+                            <Appearance>
+                                <ImageTexture url="res/ariel.jpg"/>
+                                <Material diffuseColor="0.4 0.4 0.4"/>
+                            </Appearance>
+                        </Shape>
                     </Transform>
+                    <OrientationInterpolator DEF="InterpoladorOrbitalAriel" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+                    <TimeSensor DEF="TimeOrbitalAriel" cycleInterval="3.4" loop="true"></TimeSensor>
+                    <ROUTE fromNode="TimeOrbitalAriel" fromField="fraction_changed" toNode="InterpoladorOrbitalAriel" toField="set_fraction"></ROUTE>
+                    <ROUTE fromNode="InterpoladorOrbitalAriel" fromField="value_changed" toNode="rotacionOrbitalAriel" toField="set_rotation"></ROUTE>
                 </Transform>
                 
                 <!-- Umbriel -->
                 <Transform DEF="rotacionOrbitalUmbriel">
                     <Transform DEF="traslacionUmbriel" translation="1.9 0 0">
-                        <Transform DEF="rotacionUmbriel">
-                            <Shape DEF="umbriel">
-                                <Sphere radius="0.06"/>
-                                <Appearance>
-                                    <ImageTexture url="res/umbriel.jpg"/>
-                                    <Material diffuseColor="0.4 0.4 0.4"/>
-                                </Appearance>
-                            </Shape>
-                        </Transform>
+                        <Shape DEF="umbriel">
+                            <Sphere radius="0.06"/>
+                            <Appearance>
+                                <ImageTexture url="res/umbriel.jpg"/>
+                                <Material diffuseColor="0.4 0.4 0.4"/>
+                            </Appearance>
+                        </Shape>
                     </Transform>
+                    <OrientationInterpolator DEF="InterpoladorOrbitalUmbriel" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+                    <TimeSensor DEF="TimeOrbitalUmbriel" cycleInterval="3.55" loop="true"></TimeSensor>
+                    <ROUTE fromNode="TimeOrbitalUmbriel" fromField="fraction_changed" toNode="InterpoladorOrbitalUmbriel" toField="set_fraction"></ROUTE>
+                    <ROUTE fromNode="InterpoladorOrbitalUmbriel" fromField="value_changed" toNode="rotacionOrbitalUmbriel" toField="set_rotation"></ROUTE>
                 </Transform>
                 
                 <!-- Titania -->
                 <Transform DEF="rotacionOrbitalTitania">
                     <Transform DEF="traslacionTitania" translation="2.3 0 0">
-                        <Transform DEF="rotacionTitania">
-                            <Shape DEF="titania">
-                                <Sphere radius="0.08"/>
-                                <Appearance>
-                                    <ImageTexture url="res/titania.jpg"/>
-                                    <Material diffuseColor="0.4 0.4 0.4"/>
-                                </Appearance>
-                            </Shape>
-                        </Transform>
+                        <Shape DEF="titania">
+                            <Sphere radius="0.08"/>
+                            <Appearance>
+                                <ImageTexture url="res/titania.jpg"/>
+                                <Material diffuseColor="0.4 0.4 0.4"/>
+                            </Appearance>
+                        </Shape>
                     </Transform>
+                    <OrientationInterpolator DEF="InterpoladorOrbitalTitania" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+                    <TimeSensor DEF="TimeOrbitalTitania" cycleInterval="4" loop="true"></TimeSensor>
+                    <ROUTE fromNode="TimeOrbitalTitania" fromField="fraction_changed" toNode="InterpoladorOrbitalTitania" toField="set_fraction"></ROUTE>
+                    <ROUTE fromNode="InterpoladorOrbitalTitania" fromField="value_changed" toNode="rotacionOrbitalTitania" toField="set_rotation"></ROUTE>
                 </Transform>
                 
                 <!-- Oberón -->
                 <Transform DEF="rotacionOrbitalOberon">
                     <Transform DEF="traslacionOberon" translation="2.76 0 0">
-                        <Transform DEF="rotacionOberon">
-                            <Shape DEF="oberon">
-                                <Sphere radius="0.075"/>
-                                <Appearance>
-                                    <ImageTexture url="res/oberon.jpg"/>
-                                    <Material diffuseColor="0.4 0.4 0.4"/>
-                                </Appearance>
-                            </Shape>
-                        </Transform>
+                        <Shape DEF="oberon">
+                            <Sphere radius="0.075"/>
+                            <Appearance>
+                                <ImageTexture url="res/oberon.jpg"/>
+                                <Material diffuseColor="0.4 0.4 0.4"/>
+                            </Appearance>
+                        </Shape>
                     </Transform>
+                    <OrientationInterpolator DEF="InterpoladorOrbitalOberon" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+                    <TimeSensor DEF="TimeOrbitalOberon" cycleInterval="5" loop="true"></TimeSensor>
+                    <ROUTE fromNode="TimeOrbitalOberon" fromField="fraction_changed" toNode="InterpoladorOrbitalOberon" toField="set_fraction"></ROUTE>
+                    <ROUTE fromNode="InterpoladorOrbitalOberon" fromField="value_changed" toNode="rotacionOrbitalOberon" toField="set_rotation"></ROUTE>
                 </Transform>
                 
             </Transform>
+            <OrientationInterpolator DEF="InterpoladorOrbitalUrano" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+            <TimeSensor DEF="TimeOrbitalUrano" cycleInterval="150" loop="true"></TimeSensor>
+            <ROUTE fromNode="TimeOrbitalUrano" fromField="fraction_changed" toNode="InterpoladorOrbitalUrano" toField="set_fraction"></ROUTE>
+            <ROUTE fromNode="InterpoladorOrbitalUrano" fromField="value_changed" toNode="rotacionOrbitalUrano" toField="set_rotation"></ROUTE>
         </Transform>
         
         <!-- Neptuno -->
@@ -366,24 +466,34 @@
                             <Material diffuseColor="0.4 0.4 0.4"/>
                         </Appearance>
                     </Shape>
+                    <OrientationInterpolator DEF="InterpoladorNeptuno" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+                    <TimeSensor DEF="TimeNeptuno" cycleInterval="2.9" loop="true"></TimeSensor>
+                    <ROUTE fromNode="TimeNeptuno" fromField="fraction_changed" toNode="InterpoladorNeptuno" toField="set_fraction"></ROUTE>
+                    <ROUTE fromNode="InterpoladorNeptuno" fromField="value_changed" toNode="rotacionNeptuno" toField="set_rotation"></ROUTE>
                 </Transform>
                 
                 <!-- Tritón -->
                 <Transform DEF="rotacionOrbitalTriton">
                     <Transform DEF="traslacionTriton" translation="1.6 0 0">
-                        <Transform DEF="rotacionTriton">
-                            <Shape DEF="triton">
-                                <Sphere radius="0.135"/>
-                                <Appearance>
-                                    <ImageTexture url="res/triton.jpg"/>
-                                    <Material diffuseColor="0.4 0.4 0.4"/>
-                                </Appearance>
-                            </Shape>
-                        </Transform>
+                        <Shape DEF="triton">
+                            <Sphere radius="0.135"/>
+                            <Appearance>
+                                <ImageTexture url="res/triton.jpg"/>
+                                <Material diffuseColor="0.4 0.4 0.4"/>
+                            </Appearance>
+                        </Shape>
                     </Transform>
+                    <OrientationInterpolator DEF="InterpoladorOrbitalTriton" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 6.28317  0 1 0 4.71239  0 1 0 3.14159  0 1 0 1.57079  0 1 0 0"></OrientationInterpolator>
+                    <TimeSensor DEF="TimeOrbitalTriton" cycleInterval="36" loop="true"></TimeSensor>
+                    <ROUTE fromNode="TimeOrbitalTriton" fromField="fraction_changed" toNode="InterpoladorOrbitalTriton" toField="set_fraction"></ROUTE>
+                    <ROUTE fromNode="InterpoladorOrbitalTriton" fromField="value_changed" toNode="rotacionOrbitalTriton" toField="set_rotation"></ROUTE>
                 </Transform>
                 
             </Transform>
+            <OrientationInterpolator DEF="InterpoladorOrbitalNeptuno" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317"></OrientationInterpolator>
+            <TimeSensor DEF="TimeOrbitalNeptuno" cycleInterval="200" loop="true"></TimeSensor>
+            <ROUTE fromNode="TimeOrbitalNeptuno" fromField="fraction_changed" toNode="InterpoladorOrbitalNeptuno" toField="set_fraction"></ROUTE>
+            <ROUTE fromNode="InterpoladorOrbitalNeptuno" fromField="value_changed" toNode="rotacionOrbitalNeptuno" toField="set_rotation"></ROUTE>
         </Transform>
         
     </Scene>
