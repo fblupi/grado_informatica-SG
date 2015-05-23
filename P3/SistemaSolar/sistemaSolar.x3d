@@ -6,9 +6,9 @@
         <Viewpoint DEF="camara" orientation="0 0 0 1" position="0 0 30"/>
         
         <!-- Fondo -->
-        <Background backUrl="res/bgBack.jpg" bottomUrl="res/bgBottom.jpg" 
-                    frontUrl="res/bgFront.jpg" leftUrl="res/bgLeft.jpg" 
-                    rightUrl="res/bgRight.jpg" topUrl="res/bgTop.jpg"/>
+        <Background backUrl="res/bg.jpg" bottomUrl="res/bg.jpg" 
+                    frontUrl="res/bg.jpg" leftUrl="res/bg.jpg" 
+                    rightUrl="res/bg.jpg" topUrl="res/bg.jpg"/>
      
         <!-- Sol -->
         <Transform DEF="rotacionSol">
