@@ -1,15 +1,4 @@
-var estado = {
-    "TimeOrbitalMercurio": true,
-    "TimeOrbitalVenus": true,
-    "TimeOrbitalTierra": true,
-    "TimeOrbitalMarte": true,
-    "TimeOrbitalJupiter": true,
-    "TimeOrbitalSaturno": true,
-    "TimeOrbitalUrano": true,
-    "TimeOrbitalNeptuno": true
-};
-
-function animacionOnOff(interpolator) {   
-    estado[interpolator] = !estado[interpolator];
-    document.getElementById(interpolator).setAttribute("enabled", estado[interpolator].toString());
+function animacionOnOff(interpolator) {
+    var ts = document.getElementById("sistemaSolar__" + interpolator);
+    ts.getAttribute("enabled") === "true" ? ts.setAttribute("enabled", "false") : ts.setAttribute("enabled", "true");
 }
