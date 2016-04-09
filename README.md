@@ -6,13 +6,13 @@
 
 ### Índice
 
-* Práctica 1: Sistema Solar con Java3D
+* Práctica 1: [Sistema Solar con Java3D](https://github.com/fblupi/grado_informatica-SG/tree/master/P1)
 * Práctica 2:
-	* Práctica 2.1: Tierra y Luna con WebGL
-	* Práctica 2.2: Sol, Tierra y Luna con Three.js
-* Práctica 3: Sistema Solar con X3D
+	* Práctica 2.1: [Tierra y Luna con WebGL](https://github.com/fblupi/grado_informatica-SG/tree/master/P2/P2_1)
+	* Práctica 2.2: [Sol, Tierra y Luna con Three.js](https://github.com/fblupi/grado_informatica-SG/tree/master/P2/P2_2)
+* Práctica 3: [Sistema Solar con X3D](https://github.com/fblupi/grado_informatica-SG/tree/master/P3)
 
-* Éjercicio Extra: Grúa articulada con Java3D
+* Ejercicio Extra: [Grúa articulada con Java3D](https://github.com/fblupi/grado_informatica-SG/tree/master/Grua)
 
 ### Autores
 
